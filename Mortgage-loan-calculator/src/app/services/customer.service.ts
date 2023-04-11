@@ -9,6 +9,6 @@ export class CustomerService {
   constructor(private httpClient: HttpClient) { }
 
   getCustomers() {
-    return this.httpClient.get<Customers[]>('/api/posts');
+    // return this.httpClient.get<Customers[]>('/api/posts');
   }
 }
