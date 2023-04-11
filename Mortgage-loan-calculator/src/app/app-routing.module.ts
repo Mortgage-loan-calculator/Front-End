@@ -7,7 +7,8 @@ const routes: Routes = [
 
 
 
-  { path: 'calculator', component: CalculatorFormComponent },
+  { path: '', component: HomePageComponent},
+   { path: 'calculate', component: CalculatorFormComponent },
 
 ];
 
