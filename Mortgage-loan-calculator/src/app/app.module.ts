@@ -6,6 +6,8 @@ import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HomePageComponent } from './home-page/home-page.component';
 import { CalculatorFormComponent } from './calculator-form/calculator-form.component';
+import { MaterialModule } from './material/material.module';
+
 
 @NgModule({
   declarations: [
@@ -16,7 +18,8 @@ import { CalculatorFormComponent } from './calculator-form/calculator-form.compo
   imports: [
     BrowserModule,
     AppRoutingModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    MaterialModule
   ],
   providers: [],
   bootstrap: [AppComponent]
