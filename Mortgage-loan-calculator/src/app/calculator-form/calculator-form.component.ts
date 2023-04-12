@@ -24,6 +24,7 @@ export class CalculatorFormComponent {
 
   calculateForm = fb.group(
     {
+      relationshipToggle: [false],
       homePrice: [''],
       familyIncome: [''],
       loanSlider: [1],
@@ -33,6 +34,10 @@ export class CalculatorFormComponent {
     },
     {updateOn: 'blur'}
   );
+
+  get relationshipToggle() {
+    return this.calculateForm.get('relationshipToggle') as FormControl;
+  }
 
   get homePrice() {
     return this.calculateForm.get('homePrice') as unknown as FormControl<string>;
@@ -56,6 +61,12 @@ export class CalculatorFormComponent {
 
   get citySelect() {
     return this.calculateForm.get('citySelect')?.value;
+  }
+
+  // TODO: this is linked with alone/with partner toggle.
+  // After changing to option - “With partner” all fields are the same. 
+  // But when calculating max loan field, income shared by two.
+  onChange() {
   }
 
   onSubmit() {

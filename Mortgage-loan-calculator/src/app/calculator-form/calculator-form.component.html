@@ -2,7 +2,13 @@
     <li style="float:left"><a href="#borrow">How much can you borrow</a></li>
     <li style="float:right"><a href="calculate">Calculate monthly payment</a></li>
 </ul>
+<br>
 <form [formGroup]="calculateForm">
+    <div class="toggle-container">
+        <div class="toggle-label">Alone/With partner</div>
+        <mat-slide-toggle class="toggle" (change)="onChange()" formControlName="relationshipToggle"></mat-slide-toggle>
+    </div>
+    <br>
     <div>
         <span matPrefix>Home Price:</span>
         <mat-form-field class="mat-form-field" appearance="fill">
