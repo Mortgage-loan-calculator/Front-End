@@ -2,51 +2,37 @@
  <span>Admin Panel</span>
 </mat-toolbar>
 
-
  <h3>Customer, who want to get offer:</h3>
 
+<mat-table [dataSource]="customers">
+  <ng-container matColumnDef="name">
+    <mat-header-cell *matHeaderCellDef>Name</mat-header-cell>
+    <mat-cell *matCellDef="let customer; let i = index">{{ customer.name }}</mat-cell>
+  </ng-container>
 
-<div  class="mat-elevation-z8">
-  <table  width="95%" align="center" mat-table [dataSource]="dataSource" matSort>
+  <ng-container matColumnDef="number">
+    <mat-header-cell *matHeaderCellDef>Number</mat-header-cell>
+    <mat-cell *matCellDef="let customer">{{ customer.number }}</mat-cell>
+  </ng-container>
 
-    <!-- Name Column -->
-    <ng-container matColumnDef="name">
-      <th mat-header-cell *matHeaderCellDef> Name </th>
-      <td mat-cell *matCellDef="let element"> {{element.name}} </td>
-    </ng-container>
+  <ng-container matColumnDef="email">
+    <mat-header-cell *matHeaderCellDef>E-mail</mat-header-cell>
+    <mat-cell *matCellDef="let customer">{{ customer.email }}</mat-cell>
+  </ng-container>
 
-    <!-- Number Column -->
-    <ng-container matColumnDef="number">
-      <th mat-header-cell *matHeaderCellDef> Number </th>
-      <td mat-cell *matCellDef="let element"> {{element.number}} </td>
-    </ng-container>
+  <ng-container matColumnDef="ip">
+    <mat-header-cell *matHeaderCellDef>Ip address</mat-header-cell>
+    <mat-cell *matCellDef="let customer">{{ customer.ipAddress }}</mat-cell>
+  </ng-container>
 
-    <!-- Email Column -->
-    <ng-container matColumnDef="email">
-      <th mat-header-cell *matHeaderCellDef> E-mail </th>
-      <td mat-cell *matCellDef="let element"> {{element.email}} </td>
-    </ng-container>
+  <ng-container matColumnDef="time">
+    <mat-header-cell *matHeaderCellDef>Time</mat-header-cell>
+    <mat-cell *matCellDef="let customer">{{ customer.time.slice(0, 10).replace('T', ' ') + customer.time.substring(11, 19) }}</mat-cell>
+  </ng-container>
 
-    <!-- Ip Column -->
-    <ng-container matColumnDef="ip">
-      <th mat-header-cell *matHeaderCellDef> IP address </th>
-      <td mat-cell *matCellDef="let element"> {{element.ip}} </td>
-    </ng-container>
+  <mat-header-row *matHeaderRowDef="[ 'name', 'number', 'email', 'ip', 'time']"></mat-header-row>
+  <mat-row *matRowDef="let row; columns: [ 'name', 'number', 'email', 'ip', 'time']"></mat-row>
 
-    <!-- Time Column -->
-
-    <ng-container matColumnDef="time">
-      <th mat-header-cell *matHeaderCellDef> Time </th>
-      <td mat-cell *matCellDef="let element"> {{element.time}} </td>
-    </ng-container>
-
-    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-  </table>
-
-  <mat-paginator [pageSizeOptions]="[5, 10, 20]"
-                 showFirstLastButtons
-                 aria-label="Select page of periodic elements">
-  </mat-paginator>
-</div>
+</mat-table>
+<!-- <mat-paginator [length]="customers.length" [pageSize]="10" (page)="onPageChange($event)"></mat-paginator> -->
 

@@ -1,10 +1,10 @@
-export interface Customers
+export interface Customer
 {
   name: string;
   id: number;
   number: number;
   email: string;
-  ip: number;
-  time: Date;
+  ipAddress: string;
+  time: string;
 
 }
