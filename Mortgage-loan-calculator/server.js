@@ -1,6 +1,6 @@
 var express = require('express');
 var compression = require('compression');
-var proxy = require('http-proxy-middleware');
+const { createProxyMiddleware } = require('http-proxy-middleware');
 var API_HOST = process.env.API_HOST || 'localhost:8080';
 var PORT = process.env.PORT || 8080
 
@@ -16,7 +16,7 @@ app.use(express.static(buildPath));
 app.use(compression());
 
 // Enable proxy to api
-app.use('/api', proxy({
+app.use('/api', createProxyMiddleware({
     target: API_HOST,
     changeOrigin: true,
     pathRewrite: {
