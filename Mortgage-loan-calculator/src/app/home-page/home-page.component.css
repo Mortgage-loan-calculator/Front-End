@@ -14,10 +14,28 @@ object-fit: cover;
 
 
 }
-button{
-    background-color: yellow !important; 
-    color:black !important;
+button {
+  padding: 0.5rem;
+  margin-right: 2rem;
+  margin-bottom: 1rem;
+  margin-top: 2rem;
+  display: center;
+  width: 100%;
+  max-width: 200px;
+  margin-top: 20px;
+  padding: 10px;
+  font-size: 16px;
+  border: none;
+  border-radius: 5px;
+  background-color: #F5D378  ;
+  color: #fff;
+  cursor: pointer;
 }
-.yellow{
-    background-color: yellow;
+
+button:hover {
+  background-color: #ffc107;
+}
+
+.orange{
+  background-color: #f5d378;
 }

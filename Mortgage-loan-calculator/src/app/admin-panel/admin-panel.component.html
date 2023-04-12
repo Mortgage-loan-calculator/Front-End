@@ -4,7 +4,13 @@
 
  <h3>Customer, who want to get offer:</h3>
 
+
+
+ 
 <mat-table [dataSource]="customers">
+
+
+
   <ng-container matColumnDef="name">
     <mat-header-cell *matHeaderCellDef>Name</mat-header-cell>
     <mat-cell *matCellDef="let customer; let i = index">{{ customer.name }}</mat-cell>
@@ -27,7 +33,7 @@
 
   <ng-container matColumnDef="time">
     <mat-header-cell *matHeaderCellDef>Time</mat-header-cell>
-    <mat-cell *matCellDef="let customer">{{ customer.time.slice(0, 10).replace('T', ' ') + customer.time.substring(11, 19) }}</mat-cell>
+    <mat-cell *matCellDef="let customer">{{ customer.time.slice(0, 10) + (' ') + customer.time.substring(11, 19) }}</mat-cell>
   </ng-container>
 
   <mat-header-row *matHeaderRowDef="[ 'name', 'number', 'email', 'ip', 'time']"></mat-header-row>

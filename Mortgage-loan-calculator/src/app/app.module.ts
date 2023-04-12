@@ -21,7 +21,8 @@ import { MatIconModule } from '@angular/material/icon';
 import { HttpClientModule } from '@angular/common/http';
 import { PopupFormComponent } from './popup-form/popup-form.component';
 import { MaterialModule } from './material/material.module';
-
+import {MatGridListModule} from '@angular/material/grid-list';
+import {MatListModule} from '@angular/material/list';
 @NgModule({
   declarations: [
     AppComponent,
@@ -46,7 +47,9 @@ import { MaterialModule } from './material/material.module';
     MatToolbarModule,
     MatIconModule,
     HttpClientModule,
-    MaterialModule
+    MaterialModule,
+    MatGridListModule,
+    MatListModule
   ],
   providers: [],
   bootstrap: [AppComponent]
