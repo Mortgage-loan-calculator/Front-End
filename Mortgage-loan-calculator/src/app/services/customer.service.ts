@@ -8,7 +8,7 @@ import { Observable } from 'rxjs';
 })
 export class CustomerService {
   constructor(private http: HttpClient) { }
-  customerUrl = 'http://localhost:8090/customers';
+  customerUrl = '/api/customers';
 
 public getCustomer(): Observable<Customer[]>{
   return this.http.get<Customer[]>(this.customerUrl);
