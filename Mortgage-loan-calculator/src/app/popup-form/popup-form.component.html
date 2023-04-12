@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="popup-form.component.css">
+    <title>Document</title>
+</head>
+
+<body>
+    <div class="popUpForm" id="popUpForm">
+        <form class="formContainer">
+            <button type="button" class="btnClose" aria-label="Close" onclick="document.getElementById('popUpForm').style.display='none'">&times;</button>
+            <span class="titlespan">Please enter your personal data to get personal offer:</span>
+
+            <br>
+
+            <label for="name">Name:</label>
+            <input type="text" name="name" id="name" required>
+
+            <label for="phoneNumber">Phone number:</label>
+            <input type="text" name="phoneNumber" id="phoneNumber" required>
+
+            <label for="email">Email</label>
+            <input type="text" name="email" id="email" required>
+
+            <div class="sendBtnCotainer" id="sendBtnCotainer">
+              <button type="submit" class="sendBtn" id="sendBtn">Send</button>   
+            </div>
+           
+
+        </form>
+    </div>
+</body>
+
+</html>
