@@ -15,9 +15,9 @@ object-fit: cover;
 
 }
 button{
-    background-color: yellow !important; 
+    background-color: #f5d378 !important; 
     color:black !important;
 }
 .yellow{
-    background-color: yellow;
+    background-color: #f5d378;
 }
