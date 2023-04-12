@@ -27,6 +27,7 @@ import { MaterialModule } from './material/material.module';
     BrowserAnimationsModule,
     ReactiveFormsModule,
     NgxSliderModule,
+
     HttpClientModule,
     MaterialModule
   ],
