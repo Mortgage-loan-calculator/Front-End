@@ -1,0 +1,17 @@
+.mat-elevation-z8 {
+  scale: 80%;
+}
+
+  .mat-form-field {
+    font-size: 14px;
+    width: 100%;
+  }
+
+  .orange{
+    background-color: #f5d378;
+  }
+
+  h3{
+    text-align: center;
+    padding-top: 60px;
+  }
