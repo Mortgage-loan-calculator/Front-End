@@ -6,12 +6,14 @@ import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HomePageComponent } from './home-page/home-page.component';
 import { CalculatorFormComponent } from './calculator-form/calculator-form.component';
+import { PopupFormComponent } from './popup-form/popup-form.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HomePageComponent,
-    CalculatorFormComponent
+    CalculatorFormComponent,
+    PopupFormComponent
   ],
   imports: [
     BrowserModule,
