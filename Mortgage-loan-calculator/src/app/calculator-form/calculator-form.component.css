@@ -1,0 +1,36 @@
+ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #f5d378;
+  }
+  
+  li a {
+    display: block;
+    color: black;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+  }
+  
+  li a:hover{
+    background-color: #f2c95a;
+  }
+
+.slider-container, .toggle-container, .dropdown-container{
+  display: flex;
+  align-items: center;
+}
+.slider-label, .toggle-label, .dropdown-label {
+  margin-right: 20px;
+}
+.loan-slider, .family-member-slider, .toggle, .dropdown{
+  width: 20%;
+}
+
+.calculate-button{
+  display: flex;
+  margin:0 auto;
+}
+
