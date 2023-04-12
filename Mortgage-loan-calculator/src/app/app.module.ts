@@ -39,7 +39,7 @@ import { MaterialModule } from './material/material.module';
     MatFormFieldModule,
     NgxSliderModule,
     MatSlideToggleModule,
-    MatSelectModule
+    MatSelectModule,
     MatPaginatorModule,
     MatTableModule,
     MatTooltipModule,
