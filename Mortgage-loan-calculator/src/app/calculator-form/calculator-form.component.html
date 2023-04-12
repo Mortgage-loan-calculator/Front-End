@@ -1,1 +1,50 @@
-<p>calculator-form works!</p>
+<ul>
+    <li style="float:left"><a href="#borrow">How much can you borrow</a></li>
+    <li style="float:right"><a href="calculate">Calculate monthly payment</a></li>
+</ul>
+<form [formGroup]="calculateForm">
+    <div>
+        <span matPrefix>Home Price:</span>
+        <mat-form-field class="mat-form-field" appearance="fill">
+            <input matInput formControlName="homePrice" placeholder="Enter price">
+        </mat-form-field>
+    </div>
+    <br>
+    <div>
+        <span matPrefix>Monthly family income:</span>
+        <mat-form-field class="mat-form-field">
+            <input matInput formControlName="familyIncome" placeholder="Enter income">
+        </mat-form-field>
+    </div>
+    <br>
+    <div class="slider-container">
+        <div class="slider-label">Loan term:</div>
+        <ngx-slider class="loan-slider" formControlName="loanSlider" [options]="loanOptions"></ngx-slider>
+    </div>
+    <br>
+    <div class="slider-container">
+        <div class="slider-label">Number of adult family members:</div>
+        <ngx-slider class="family-member-slider" formControlName="familyMemberSlider" [options]="adultOptions"></ngx-slider>
+    </div>
+    <br>
+    <div class="toggle-container">
+        <div class="toggle-label">Do you have children (dependents)?:</div>
+        <mat-slide-toggle class="toggle" formControlName="childrenToggle"></mat-slide-toggle>
+    </div>
+    <br><br>
+    <div class="dropdown-container">
+        <div class="dropdown-label">City of the family's residence:</div>
+        <mat-form-field class="dropdown" appearance="fill">
+            <mat-select formControlName="citySelect" placeholder="Select city">
+              <mat-option *ngFor="let city of cities" [value]="city">
+                {{city}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+    </div>
+    
+    <button type="submit" class="calculate-button">Calculate</button>
+
+</form>
+
+{{calculateForm.value | json}}
