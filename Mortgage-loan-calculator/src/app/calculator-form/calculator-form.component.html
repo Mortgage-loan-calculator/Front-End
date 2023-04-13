@@ -1,16 +1,31 @@
-<mat-toolbar class="orange">
+<div class="formOuter">
+
+
+<div class="formBlock">
+  <h2>Mortgage loan calculator </h2>
+<div class="orange">
   <div class="left-link">
     <a routerLink="/borrow">How much can you borrow</a>
   </div>
   <div class="right-link">
     <a routerLink="/calculate">Calculate monthly payment</a>  </div>
-</mat-toolbar>
+</div>
 
 <div class="box">
 
   <div class="columns">
     <form class="column" [formGroup]="calculateForm">
+
+
+
       <div>
+
+
+        <div class="toggle-container">
+          <div class="toggle-label">Alone/With partner</div>
+          <mat-slide-toggle class="toggle"  (change)="onChange()" formControlName="childrenToggle"></mat-slide-toggle>
+        </div>
+
         <mat-form-field appearance="outline">
           <mat-label>Home Price</mat-label>
           <input matInput placeholder="Enter price">
@@ -35,10 +50,14 @@
           [options]="adultOptions"></ngx-slider>
       </div>
       <br>
+
       <div class="toggle-container">
         <div class="toggle-label">Do you have children (dependents)?:</div>
         <mat-slide-toggle class="toggle" formControlName="childrenToggle"></mat-slide-toggle>
       </div>
+
+
+
       <br><br>
       <div class="dropdown-container">
         <div class="dropdown-label">City of the family's residence:</div>
@@ -56,36 +75,41 @@
     <!-- {{calculateForm.value | json}} -->
 
 
-    <form class="column" [formGroup]="submitForm">
-      <app-pie-chart></app-pie-chart>
-      <div class="form2">
-        <span matPrefix>Loan amount</span>
+
+    <form class="column2" [formGroup]="submitForm">
+    <app-pie-chart></app-pie-chart>
+<div class="grid-container">
+  <div class="grid-item">
+    <span matPrefix>Loan amount</span>
+
         <mat-form-field class="mat-form-field" appearance="outline">
           <input matInput formControlName="loanAmount">
         </mat-form-field>
       </div>
-      <br>
-      <div>
+      <div class="grid-item">
         <span matPrefix>Total interest paid</span>
         <mat-form-field class="mat-form-field" appearance="outline">
           <input matInput formControlName="totalPaid">
         </mat-form-field>
       </div>
-      <div>
+      <div class="grid-item">
         <span matPrefix>Agreement fee</span>
         <mat-form-field class="mat-form-field" appearance="outline">
           <input matInput formControlName="fee">
         </mat-form-field>
       </div>
-      <div>
+      <div class="grid-item">
         <span matPrefix>Total payment sum</span>
         <mat-form-field class="mat-form-field"appearance="outline">
           <input matInput formControlName="paymentSum">
         </mat-form-field>
       </div>
-
+ </div>
       <button mat-button type="submit" class="submit-button">Submit application</button>
 
     </form>
+
   </div>
+</div>
+</div>
 </div>

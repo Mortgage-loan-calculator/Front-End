@@ -41,7 +41,12 @@ button:hover {
   border: 2px solid #ddd;
   border-radius: 10px;
   background-color: #fff;
-  max-width: 40%;
+  width: 40%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+
 
 }
 @media only screen and (max-width: 800px) {
@@ -49,3 +54,4 @@ button:hover {
     max-width: 80%;
   }
 }
+
