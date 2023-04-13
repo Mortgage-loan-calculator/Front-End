@@ -1,8 +1,6 @@
-
-
 <mat-toolbar class="orange">
   <div class="left-link">
-    <button mat-button  routerLink="/borrow">How much can you borrow</button>
+    <button mat-button routerLink="/borrow">How much can you borrow</button>
   </div>
   <div class="right-link">
     <button mat-button routerLink="/calculate">Calculate monthly payment</button>
@@ -11,18 +9,18 @@
 
 <div class="box">
 
-<div class="columns">
+  <div class="columns">
     <form class="column" [formGroup]="calculateForm">
       <div>
         <mat-form-field appearance="fill">
-          <mat-label >Home Price</mat-label>
+          <mat-label>Home Price</mat-label>
           <input matInput placeholder="Enter price">
           <mat-hint>Enter home price</mat-hint>
         </mat-form-field>
       </div>
       <div>
         <mat-form-field appearance="fill">
-          <mat-label >Monthly family income</mat-label>
+          <mat-label>Monthly family income</mat-label>
           <input matInput placeholder="Enter monthly family income">
           <mat-hint>Monthly family income</mat-hint>
         </mat-form-field>
@@ -90,5 +88,5 @@
       <button type="submit" class="submit-button">Submit application</button>
 
     </form>
-</div>
+  </div>
 </div>

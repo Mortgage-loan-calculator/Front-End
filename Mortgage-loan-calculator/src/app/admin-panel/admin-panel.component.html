@@ -5,11 +5,8 @@
  <h3>Customer, who want to get offer:</h3>
 
 
-
- 
-<mat-table [dataSource]="customers">
-
-
+ <div class="mat-elevation-z8">
+  <table mat-table [dataSource]="customers">
 
   <ng-container matColumnDef="name">
     <mat-header-cell *matHeaderCellDef>Name</mat-header-cell>
@@ -39,6 +36,12 @@
   <mat-header-row *matHeaderRowDef="[ 'name', 'number', 'email', 'ip', 'time']"></mat-header-row>
   <mat-row *matRowDef="let row; columns: [ 'name', 'number', 'email', 'ip', 'time']"></mat-row>
 
-</mat-table>
+</table>
+
+<mat-paginator [pageSizeOptions]="[5, 10, 20]"
+               showFirstLastButtons
+               aria-label="Select page of periodic elements">
+</mat-paginator>
+</div>
 <!-- <mat-paginator [length]="customers.length" [pageSize]="10" (page)="onPageChange($event)"></mat-paginator> -->
 
