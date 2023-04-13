@@ -12,14 +12,13 @@ import { AdminPanelComponent } from './admin-panel/admin-panel.component';
 import { HttpClientModule } from '@angular/common/http';
 import { PopupFormComponent } from './popup-form/popup-form.component';
 import { MaterialModule } from './material/material.module';
-
 import { AdminLoginComponent } from './admin-login/admin-login.component';
 import {MatTabsModule} from '@angular/material/tabs';
-
-
 import {MatGridListModule} from '@angular/material/grid-list';
 import {MatListModule} from '@angular/material/list';
 import { MonthlyPaymentComponent } from './monthly-payment/monthly-payment.component';
+import { PieChartComponent } from './pie-chart/pie-chart.component';
+
 
 @NgModule({
   declarations: [
@@ -29,7 +28,9 @@ import { MonthlyPaymentComponent } from './monthly-payment/monthly-payment.compo
     AdminPanelComponent,
     PopupFormComponent,
     AdminLoginComponent,
-    MonthlyPaymentComponent
+    MonthlyPaymentComponent,
+    PieChartComponent
+
   ],
   imports: [
     BrowserModule,

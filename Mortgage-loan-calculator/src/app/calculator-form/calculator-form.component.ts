@@ -3,6 +3,7 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { MatSlideToggleChange } from '@angular/material/slide-toggle';
 import { Observable } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
 
 const fb = new FormBuilder().nonNullable;
 
@@ -12,6 +13,17 @@ const fb = new FormBuilder().nonNullable;
   styleUrls: ['./calculator-form.component.css']
 })
 export class CalculatorFormComponent {
+  title = 'json-read-example';
+  citiesInfo:any;
+  url: string = './assets/Cities.json';
+  
+  constructor(private http: HttpClient) {}
+
+  ngOnInit() {
+    this.http.get(this.url).subscribe(res => {
+      this.citiesInfo = res;
+    });
+  }
   loanOptions: Options = {
     floor: 1,
     ceil: 30
@@ -20,7 +32,7 @@ export class CalculatorFormComponent {
     floor: 1,
     ceil: 5
   };
-  cities: Array<string> = ['Vilnius', 'Kaunas', 'Klaipėda', 'Šiauliai', 'Panevėžys', 'Alytus', 'Marijampolė', 'Utena', 'Telšiai', 'Tauragė'];
+  // cities: Array<string> = ['Vilnius', 'Kaunas', 'Klaipėda', 'Šiauliai', 'Panevėžys', 'Alytus', 'Marijampolė', 'Utena', 'Telšiai', 'Tauragė'];
 
   calculateForm = fb.group(
     {
