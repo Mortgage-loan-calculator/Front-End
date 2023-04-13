@@ -1,10 +1,9 @@
 <mat-toolbar class="orange">
   <div class="left-link">
-    <button mat-button routerLink="/borrow">How much can you borrow</button>
+    <a routerLink="/borrow">How much can you borrow</a>
   </div>
   <div class="right-link">
-    <button mat-button routerLink="/calculate">Calculate monthly payment</button>
-  </div>
+    <a routerLink="/calculate">Calculate monthly payment</a>  </div>
 </mat-toolbar>
 
 <div class="box">
@@ -51,7 +50,7 @@
           </mat-select>
         </mat-form-field>
       </div>
-      <button type="submit" class="calculate-button">Calculate</button>
+      <button mat-button type="submit" class="calculate-button">Calculate</button>
     </form>
 
     <!-- {{calculateForm.value | json}} -->
@@ -85,7 +84,7 @@
         </mat-form-field>
       </div>
 
-      <button type="submit" class="submit-button">Submit application</button>
+      <button mat-button type="submit" class="submit-button">Submit application</button>
 
     </form>
   </div>
