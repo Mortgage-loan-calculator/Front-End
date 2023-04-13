@@ -12,7 +12,12 @@ import { AdminPanelComponent } from './admin-panel/admin-panel.component';
 import { HttpClientModule } from '@angular/common/http';
 import { PopupFormComponent } from './popup-form/popup-form.component';
 import { MaterialModule } from './material/material.module';
+
 import { AdminLoginComponent } from './admin-login/admin-login.component';
+
+
+import {MatGridListModule} from '@angular/material/grid-list';
+import {MatListModule} from '@angular/material/list';
 
 @NgModule({
   declarations: [
@@ -29,8 +34,11 @@ import { AdminLoginComponent } from './admin-login/admin-login.component';
     BrowserAnimationsModule,
     ReactiveFormsModule,
     NgxSliderModule,
+
     HttpClientModule,
-    MaterialModule
+    MaterialModule,
+    MatGridListModule,
+    MatListModule
   ],
   providers: [],
   bootstrap: [AppComponent]
