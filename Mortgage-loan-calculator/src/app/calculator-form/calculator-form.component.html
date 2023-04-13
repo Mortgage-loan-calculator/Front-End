@@ -44,8 +44,8 @@
         <div class="dropdown-label">City of the family's residence:</div>
         <mat-form-field class="dropdown" appearance="outline">
           <mat-select formControlName="citySelect" placeholder="Select city">
-            <mat-option *ngFor="let city of cities" [value]="city">
-              {{city}}
+            <mat-option *ngFor="let city of citiesInfo" [value]="city">
+              {{city.city}}
             </mat-option>
           </mat-select>
         </mat-form-field>
@@ -57,7 +57,7 @@
 
 
     <form class="column" [formGroup]="submitForm">
-
+      <app-pie-chart></app-pie-chart>
       <div class="form2">
         <span matPrefix>Loan amount</span>
         <mat-form-field class="mat-form-field" appearance="outline">
