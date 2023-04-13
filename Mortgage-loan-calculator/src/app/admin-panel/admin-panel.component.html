@@ -33,8 +33,13 @@
     <mat-cell *matCellDef="let customer">{{ customer.time.slice(0, 10) + (' ') + customer.time.substring(11, 19) }}</mat-cell>
   </ng-container>
 
-  <mat-header-row *matHeaderRowDef="[ 'name', 'number', 'email', 'ip', 'time']"></mat-header-row>
-  <mat-row *matRowDef="let row; columns: [ 'name', 'number', 'email', 'ip', 'time']"></mat-row>
+  <ng-container matColumnDef="action">
+    <mat-header-cell *matHeaderCellDef>Action</mat-header-cell>
+    <mat-cell *matCellDef="let customer">"Calculated" or "Submitted form"</mat-cell>
+  </ng-container>
+
+  <mat-header-row *matHeaderRowDef="[ 'name', 'number', 'email', 'ip', 'time', 'action']"></mat-header-row>
+  <mat-row *matRowDef="let row; columns: [ 'name', 'number', 'email', 'ip', 'time', 'action']"></mat-row>
 
 </table>
 
