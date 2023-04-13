@@ -73,5 +73,7 @@ export class CalculatorFormComponent {
   onSubmit() {
     const calculateFormData = this.calculateForm.value;
   }
+  onChange() {
+  }
 
 }

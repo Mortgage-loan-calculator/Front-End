@@ -10,6 +10,12 @@
 
   <div class="columns">
     <form class="column" [formGroup]="calculateForm">
+
+      <div class="toggle-container">
+        <div class="toggle-label">Alone/With partner</div>
+        <mat-slide-toggle class="toggle" (change)="onChange()" formControlName="relationshipToggle"></mat-slide-toggle>
+    </div>
+
       <div>
         <mat-form-field appearance="outline">
           <mat-label>Home Price</mat-label>
