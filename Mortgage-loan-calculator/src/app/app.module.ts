@@ -12,6 +12,7 @@ import { AdminPanelComponent } from './admin-panel/admin-panel.component';
 import { HttpClientModule } from '@angular/common/http';
 import { PopupFormComponent } from './popup-form/popup-form.component';
 import { MaterialModule } from './material/material.module';
+import { AdminLoginComponent } from './admin-login/admin-login.component';
 
 @NgModule({
   declarations: [
@@ -19,7 +20,8 @@ import { MaterialModule } from './material/material.module';
     HomePageComponent,
     CalculatorFormComponent,
     AdminPanelComponent,
-    PopupFormComponent
+    PopupFormComponent,
+    AdminLoginComponent
   ],
   imports: [
     BrowserModule,
