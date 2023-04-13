@@ -77,8 +77,8 @@
                       formControlName="citySelect"
                       placeholder="Select city"
                     >
-                      <mat-option *ngFor="let city of cities" [value]="city">
-                        {{ city }}
+                      <mat-option *ngFor="let city of citiesInfo" [value]="city">
+                        {{city.city}}
                       </mat-option>
                     </mat-select>
                   </mat-form-field>
