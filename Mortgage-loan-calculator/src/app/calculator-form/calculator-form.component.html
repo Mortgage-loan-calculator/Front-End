@@ -1,112 +1,172 @@
 <div class="formOuter">
+  <div class="formBlock">
+    <h2>Mortgage loan calculator</h2>
 
+    <div class="orange">
+      <mat-tab-group>
+        <mat-tab routerLink="/borrow" label="How much can you borrow">
+          <div class="columns">
+            <form class="column" [formGroup]="calculateForm">
+              <div>
+                <div class="toggle-container">
+                  <div class="toggle-label">Alone/With partner</div>
+                  <mat-slide-toggle
+                    class="toggle"
+                    (change)="onChange()"
+                    formControlName="childrenToggle"
+                  ></mat-slide-toggle>
+                </div>
 
-<div class="formBlock">
-  <h2>Mortgage loan calculator </h2>
-<div class="orange">
-  <div class="left-link">
-    <a routerLink="/borrow">How much can you borrow</a>
+                <mat-form-field appearance="outline">
+                  <mat-label>Home Price</mat-label>
+                  <input matInput placeholder="Enter price" />
+                  <mat-hint>Enter home price</mat-hint>
+                </mat-form-field>
+              </div>
+              <div>
+                <mat-form-field appearance="outline">
+                  <mat-label>Monthly family income</mat-label>
+                  <input matInput placeholder="Enter monthly family income" />
+                  <mat-hint>Monthly family income</mat-hint>
+                </mat-form-field>
+              </div>
+              <div class="slider-container">
+                <div class="slider-label">Loan term:</div>
+                <ngx-slider
+                  class="loan-slider"
+                  formControlName="loanSlider"
+                  [options]="loanOptions"
+                ></ngx-slider>
+              </div>
+              <div class="slider-container">
+                <div class="slider-label">Number of adult family members:</div>
+                <ngx-slider
+                  class="family-member-slider"
+                  formControlName="familyMemberSlider"
+                  [options]="adultOptions"
+                ></ngx-slider>
+              </div>
+
+              <div class="toggle-container">
+                <div class="toggle-label">
+                  Do you have children (dependents)?:
+                </div>
+                <mat-slide-toggle
+                  class="toggle"
+                  formControlName="childrenToggle"
+                ></mat-slide-toggle>
+              </div>
+
+              <div class="icon-button-container" (click)="showAdvancedOptions = !showAdvancedOptions">
+
+                <mat-icon>keyboard_arrow_right</mat-icon> <button mat-button>
+                  {{ showAdvancedOptions ? "Hide" : "Show" }} advanced options
+                </button>
+
+              </div>
+
+              <div *ngIf="showAdvancedOptions" class="advanced-options">
+                <!-- Add your additional HTML elements here -->
+                <div class="dropdown-container">
+                  <div class="dropdown-label">
+                    City of the family's residence:
+                  </div>
+                  <mat-form-field class="dropdown" appearance="outline">
+                    <mat-select
+                      formControlName="citySelect"
+                      placeholder="Select city"
+                    >
+                      <mat-option *ngFor="let city of cities" [value]="city">
+                        {{ city }}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </div>
+              </div>
+
+              <button mat-button type="submit" class="calculate-button">
+                Calculate
+              </button>
+            </form>
+
+            <!-- {{calculateForm.value | json}} -->
+
+            <form class="column2" [formGroup]="submitForm">
+              <div class="grid-container">
+                <div class="grid-item">
+                  <span matPrefix>Loan amount</span>
+                  <mat-form-field class="mat-form-field" appearance="outline">
+                    <input matInput formControlName="loanAmount" />
+                  </mat-form-field>
+                </div>
+                <div class="grid-item">
+                  <span matPrefix>Total interest paid</span>
+                  <mat-form-field class="mat-form-field" appearance="outline">
+                    <input matInput formControlName="totalPaid" />
+                  </mat-form-field>
+                </div>
+                <div class="grid-item">
+                  <span matPrefix>Agreement fee</span>
+                  <mat-form-field class="mat-form-field" appearance="outline">
+                    <input matInput formControlName="fee" />
+                  </mat-form-field>
+                </div>
+                <div class="grid-item">
+                  <span matPrefix>Total payment sum</span>
+                  <mat-form-field class="mat-form-field" appearance="outline">
+                    <input matInput formControlName="paymentSum" />
+                  </mat-form-field>
+                </div>
+              </div>
+              <button mat-button type="submit" class="submit-button">
+                Submit application
+              </button>
+            </form>
+          </div>
+        </mat-tab>
+
+        <mat-tab routerLink="/calculate" label="Calculate monthly payment">
+          <form class="column3" [formGroup]="applyForm">
+            <div class="grid-container">
+              <div class="grid-item">
+                <span matPrefix>Deal amount</span>
+                <mat-form-field class="mat-form-field" appearance="outline">
+                  <input matInput formControlName="dealAmount" />
+                </mat-form-field>
+              </div>
+              <div class="grid-item">
+                <span matPrefix>Down payment</span>
+                <mat-form-field class="mat-form-field" appearance="outline">
+                  <input matInput formControlName="downpayment" />
+                </mat-form-field>
+              </div>
+              <div class="grid-item">
+                <span matPrefix>Loan period</span>
+                <mat-form-field class="mat-form-field" appearance="outline">
+                  <input matInput formControlName="loanPeriod" />
+                </mat-form-field>
+              </div>
+              <div class="grid-item">
+                <span matPrefix>Your estimated montly payment</span>
+                <mat-form-field class="mat-form-field" appearance="outline">
+                  <input matInput formControlName="estimatedPayment" />
+                </mat-form-field>
+              </div>
+              <div class="grid-item">
+                <span matPrefix>Maximum montly loan payment</span>
+                <mat-form-field class="mat-form-field" appearance="outline">
+                  <input matInput formControlName="maxPayment" />
+                </mat-form-field>
+              </div>
+            </div>
+            <button mat-button type="submit" class="submit-button">
+              Apply
+            </button>
+          </form>
+        </mat-tab>
+      </mat-tab-group>
+    </div>
+
+    <div class="box"></div>
   </div>
-  <div class="right-link">
-    <a routerLink="/calculate">Calculate monthly payment</a>  </div>
-</div>
-
-<div class="box">
-
-  <div class="columns">
-    <form class="column" [formGroup]="calculateForm">
-
-
-
-      <div>
-
-
-        <div class="toggle-container">
-          <div class="toggle-label">Alone/With partner</div>
-          <mat-slide-toggle class="toggle"  (change)="onChange()" formControlName="childrenToggle"></mat-slide-toggle>
-        </div>
-
-        <mat-form-field appearance="outline">
-          <mat-label>Home Price</mat-label>
-          <input matInput placeholder="Enter price">
-          <mat-hint>Enter home price</mat-hint>
-        </mat-form-field>
-      </div>
-      <div>
-        <mat-form-field appearance="outline">
-          <mat-label>Monthly family income</mat-label>
-          <input matInput placeholder="Enter monthly family income">
-          <mat-hint>Monthly family income</mat-hint>
-        </mat-form-field>
-      </div>
-      <div class="slider-container">
-        <div class="slider-label">Loan term:</div>
-        <ngx-slider class="loan-slider" formControlName="loanSlider" [options]="loanOptions"></ngx-slider>
-      </div>
-      <br>
-      <div class="slider-container">
-        <div class="slider-label">Number of adult family members:</div>
-        <ngx-slider class="family-member-slider" formControlName="familyMemberSlider"
-          [options]="adultOptions"></ngx-slider>
-      </div>
-      <br>
-
-      <div class="toggle-container">
-        <div class="toggle-label">Do you have children (dependents)?:</div>
-        <mat-slide-toggle class="toggle" formControlName="childrenToggle"></mat-slide-toggle>
-      </div>
-
-
-
-      <br><br>
-      <div class="dropdown-container">
-        <div class="dropdown-label">City of the family's residence:</div>
-        <mat-form-field class="dropdown" appearance="outline">
-          <mat-select formControlName="citySelect" placeholder="Select city">
-            <mat-option *ngFor="let city of cities" [value]="city">
-              {{city}}
-            </mat-option>
-          </mat-select>
-        </mat-form-field>
-      </div>
-      <button mat-button type="submit" class="calculate-button">Calculate</button>
-    </form>
-
-    <!-- {{calculateForm.value | json}} -->
-
-
-    <form class="column2" [formGroup]="submitForm">
-<div class="grid-container">
-  <div class="grid-item">
-    <span matPrefix>Loan amount</span>
-        <mat-form-field class="mat-form-field" appearance="outline">
-          <input matInput formControlName="loanAmount">
-        </mat-form-field>
-      </div>
-      <div class="grid-item">
-        <span matPrefix>Total interest paid</span>
-        <mat-form-field class="mat-form-field" appearance="outline">
-          <input matInput formControlName="totalPaid">
-        </mat-form-field>
-      </div>
-      <div class="grid-item">
-        <span matPrefix>Agreement fee</span>
-        <mat-form-field class="mat-form-field" appearance="outline">
-          <input matInput formControlName="fee">
-        </mat-form-field>
-      </div>
-      <div class="grid-item">
-        <span matPrefix>Total payment sum</span>
-        <mat-form-field class="mat-form-field"appearance="outline">
-          <input matInput formControlName="paymentSum">
-        </mat-form-field>
-      </div>
- </div>
-      <button mat-button type="submit" class="submit-button">Submit application</button>
-
-    </form>
-
-  </div>
-</div>
-</div>
 </div>
