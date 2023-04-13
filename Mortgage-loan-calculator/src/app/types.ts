@@ -1,10 +1,10 @@
 export interface Customer
 {
-  name: string;
   id: string;
+  name: string;
   phonenumber: number;
   email: string;
   ipAddress: string;
-  time: string;
+  time: Date;
 
 }
