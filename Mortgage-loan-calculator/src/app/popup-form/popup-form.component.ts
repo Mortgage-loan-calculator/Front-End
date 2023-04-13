@@ -9,20 +9,19 @@ const fb = new FormBuilder().nonNullable;
 @Component({
   selector: 'app-popup-form',
   templateUrl: './popup-form.component.html',
-  styleUrls: ['./popup-form.component.css']
+  styleUrls: ['./popup-form.component.css'],
 })
 export class PopupFormComponent {
+  constructor(private customerservice: CustomerService) {}
 
-  constructor(private customerservice: CustomerService) { }
-
-  date:Date = new Date();
+  date: Date = new Date();
 
   postForm = fb.group({
     name: [''],
     phoneNumber: [''],
     email: [''],
     ipAddress: ['lallalala'],
-    time: [this.date]
+    time: [this.date],
   });
 
   get name() {
@@ -38,21 +37,19 @@ export class PopupFormComponent {
   }
 
   onPostFormSubmit() {
-   
     if (this.postForm.valid) {
       this.customerservice
-      .saveCustomerInfo(this.postForm.value as Customer)
-      .pipe(
-        tap(() => {
-          console.log('Post added: ', this.postForm.value);
-          this.postForm.reset();
-        }))
+        .saveCustomerInfo(this.postForm.value as Customer)
+        .pipe(
+          tap(() => {
+            console.log('Post added: ', this.postForm.value);
+            this.postForm.reset();
+          })
+        )
         .subscribe();
     }
-    
   }
   onPostFormReset() {
     this.postForm.reset();
   }
-
 }
