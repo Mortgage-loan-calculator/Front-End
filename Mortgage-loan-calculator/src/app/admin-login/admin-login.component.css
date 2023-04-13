@@ -3,3 +3,49 @@ form{
     flex-direction: column;
     align-items: center;
 }
+
+
+
+button {
+  padding: 0.5rem;
+  margin-right: 2rem;
+  margin-bottom: 1rem;
+  margin-top: 2rem;
+  display: center;
+  width: 100%;
+  max-width: 200px;
+  margin-top: 20px;
+  padding: 10px;
+  font-size: 16px;
+  border: none;
+  border-radius: 5px;
+  background-color: #F5D378  ;
+  color: white;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #ffc107;
+}
+
+
+.box{
+  justify-content: center;
+
+  align-items: center;
+  margin-top: 20px;
+  margin-bottom: 50px;
+  margin-right: 50px;
+  margin-left: 50px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  border: 2px solid #ddd;
+  border-radius: 10px;
+  background-color: #fff;
+  max-width: 40%;
+
+}
+@media only screen and (max-width: 800px) {
+  .box {
+    max-width: 80%;
+  }
+}
