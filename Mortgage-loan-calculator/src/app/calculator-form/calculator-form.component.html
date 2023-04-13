@@ -11,14 +11,14 @@
   <div class="columns">
     <form class="column" [formGroup]="calculateForm">
       <div>
-        <mat-form-field appearance="fill">
+        <mat-form-field appearance="outline">
           <mat-label>Home Price</mat-label>
           <input matInput placeholder="Enter price">
           <mat-hint>Enter home price</mat-hint>
         </mat-form-field>
       </div>
       <div>
-        <mat-form-field appearance="fill">
+        <mat-form-field appearance="outline">
           <mat-label>Monthly family income</mat-label>
           <input matInput placeholder="Enter monthly family income">
           <mat-hint>Monthly family income</mat-hint>
@@ -42,7 +42,7 @@
       <br><br>
       <div class="dropdown-container">
         <div class="dropdown-label">City of the family's residence:</div>
-        <mat-form-field class="dropdown" appearance="fill">
+        <mat-form-field class="dropdown" appearance="outline">
           <mat-select formControlName="citySelect" placeholder="Select city">
             <mat-option *ngFor="let city of cities" [value]="city">
               {{city}}
@@ -58,28 +58,28 @@
 
     <form class="column" [formGroup]="submitForm">
 
-      <div>
+      <div class="form2">
         <span matPrefix>Loan amount</span>
-        <mat-form-field class="mat-form-field" appearance="fill">
+        <mat-form-field class="mat-form-field" appearance="outline">
           <input matInput formControlName="loanAmount">
         </mat-form-field>
       </div>
       <br>
       <div>
         <span matPrefix>Total interest paid</span>
-        <mat-form-field class="mat-form-field">
+        <mat-form-field class="mat-form-field" appearance="outline">
           <input matInput formControlName="totalPaid">
         </mat-form-field>
       </div>
       <div>
         <span matPrefix>Agreement fee</span>
-        <mat-form-field class="mat-form-field">
+        <mat-form-field class="mat-form-field" appearance="outline">
           <input matInput formControlName="fee">
         </mat-form-field>
       </div>
       <div>
         <span matPrefix>Total payment sum</span>
-        <mat-form-field class="mat-form-field">
+        <mat-form-field class="mat-form-field"appearance="outline">
           <input matInput formControlName="paymentSum">
         </mat-form-field>
       </div>
