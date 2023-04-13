@@ -34,6 +34,18 @@ export class CalculatorFormComponent {
     {updateOn: 'blur'}
   );
 
+
+  submitForm = fb.group(
+    {
+      loadAmount: [''],
+      totalPaid: [''],
+      fee: [''],
+      paymentSum: ['']
+
+    },
+    {updateOn: 'blur'}
+  );
+
   get homePrice() {
     return this.calculateForm.get('homePrice') as unknown as FormControl<string>;
   }
