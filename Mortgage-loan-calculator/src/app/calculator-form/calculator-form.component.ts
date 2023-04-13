@@ -16,7 +16,7 @@ export class CalculatorFormComponent {
   title = 'json-read-example';
   citiesInfo:any;
   url: string = './assets/Cities.json';
-  
+
   constructor(private http: HttpClient) {}
 
   ngOnInit() {
@@ -32,7 +32,7 @@ export class CalculatorFormComponent {
     floor: 1,
     ceil: 5
   };
-  // cities: Array<string> = ['Vilnius', 'Kaunas', 'Klaipėda', 'Šiauliai', 'Panevėžys', 'Alytus', 'Marijampolė', 'Utena', 'Telšiai', 'Tauragė'];
+  cities: Array<string> = ['Vilnius', 'Kaunas', 'Klaipėda', 'Šiauliai', 'Panevėžys', 'Alytus', 'Marijampolė', 'Utena', 'Telšiai', 'Tauragė'];
 
   calculateForm = fb.group(
     {
