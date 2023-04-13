@@ -13,6 +13,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { PopupFormComponent } from './popup-form/popup-form.component';
 import { MaterialModule } from './material/material.module';
 import { AdminLoginComponent } from './admin-login/admin-login.component';
+import {MatTabsModule} from '@angular/material/tabs';
 import {MatGridListModule} from '@angular/material/grid-list';
 import {MatListModule} from '@angular/material/list';
 import { MonthlyPaymentComponent } from './monthly-payment/monthly-payment.component';
@@ -37,7 +38,7 @@ import { PieChartComponent } from './pie-chart/pie-chart.component';
     BrowserAnimationsModule,
     ReactiveFormsModule,
     NgxSliderModule,
-
+    MatTabsModule,
     HttpClientModule,
     MaterialModule,
     MatGridListModule,

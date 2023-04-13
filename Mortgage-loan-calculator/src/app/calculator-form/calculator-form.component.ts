@@ -1,6 +1,6 @@
 import { Options } from '@angular-slider/ngx-slider';
 import { Component } from '@angular/core';
-import { FormBuilder, FormControl } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { MatSlideToggleChange } from '@angular/material/slide-toggle';
 import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
@@ -49,10 +49,22 @@ export class CalculatorFormComponent {
 
   submitForm = fb.group(
     {
-      loadAmount: [''],
+      loanAmount: [''],
       totalPaid: [''],
       fee: [''],
       paymentSum: ['']
+
+    },
+    {updateOn: 'blur'}
+  );
+
+  applyForm = fb.group(
+    {
+      dealAmount: [''],
+      downpayment: [''],
+      loanPeriod: [''],
+      estimatedPayment: [''],
+      maxPayment: ['']
 
     },
     {updateOn: 'blur'}
@@ -87,5 +99,7 @@ export class CalculatorFormComponent {
   }
   onChange() {
   }
+  showAdvancedOptions = false;
+
 
 }

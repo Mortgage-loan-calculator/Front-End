@@ -12,7 +12,7 @@ import { Observable } from 'rxjs';
 export class AdminPanelComponent implements AfterViewInit {
 
   customers: MatTableDataSource<Customer> = new MatTableDataSource<Customer>();
-  displayedColumns: string[] = ['name', 'number', 'email', 'ip', 'time'];
+  displayedColumns: string[] = ['name', 'number', 'email', 'ip', 'time', 'action'];
 
   @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator;
 
