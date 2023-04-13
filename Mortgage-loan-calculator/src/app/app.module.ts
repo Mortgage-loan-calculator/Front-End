@@ -18,6 +18,7 @@ import { AdminLoginComponent } from './admin-login/admin-login.component';
 
 import {MatGridListModule} from '@angular/material/grid-list';
 import {MatListModule} from '@angular/material/list';
+import { MonthlyPaymentComponent } from './monthly-payment/monthly-payment.component';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,8 @@ import {MatListModule} from '@angular/material/list';
     CalculatorFormComponent,
     AdminPanelComponent,
     PopupFormComponent,
-    AdminLoginComponent
+    AdminLoginComponent,
+    MonthlyPaymentComponent
   ],
   imports: [
     BrowserModule,
