@@ -13,13 +13,20 @@ import { HttpClientModule } from '@angular/common/http';
 import { PopupFormComponent } from './popup-form/popup-form.component';
 import { MaterialModule } from './material/material.module';
 
+import { AdminLoginComponent } from './admin-login/admin-login.component';
+
+
+import {MatGridListModule} from '@angular/material/grid-list';
+import {MatListModule} from '@angular/material/list';
+
 @NgModule({
   declarations: [
     AppComponent,
     HomePageComponent,
     CalculatorFormComponent,
     AdminPanelComponent,
-    PopupFormComponent
+    PopupFormComponent,
+    AdminLoginComponent
   ],
   imports: [
     BrowserModule,
@@ -29,7 +36,9 @@ import { MaterialModule } from './material/material.module';
     NgxSliderModule,
 
     HttpClientModule,
-    MaterialModule
+    MaterialModule,
+    MatGridListModule,
+    MatListModule
   ],
   providers: [],
   bootstrap: [AppComponent]
