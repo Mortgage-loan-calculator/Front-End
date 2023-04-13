@@ -1,8 +1,11 @@
 
 .column3{
  width: 800px;
-
+ margin-top: 50px;
+ margin-bottom: 20px;
   .grid-container {
+    padding-left: 20px;
+
     display: grid;
     grid-template-columns: 1fr;
     grid-template-rows: repeat(5, 1fr);
@@ -30,15 +33,18 @@
   }
 
   .grid-item {
+
   display: flex;
   align-items: center;
   gap: 10px;
 }
 
 .grid-item span {
+
   display: block;
   width: 150px;
 }
+
 }
 .orange {
 
@@ -108,10 +114,10 @@
 .box {
   margin: 0 auto;
   max-width: 800px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 0 10px rgba(0, 0, 0, 3);
   border: 2px solid #ddd;
   border-radius: 10px;
-  background-color: #fff;
+  background-color: #FBB126;
 }
 
 
@@ -141,10 +147,10 @@
   }
 
   .column,
-  .column2,
-  .column3{
-    padding-top: 50px;
-    padding-left: 20px;
+  .column2
+  {
+    margin-top: 50px;
+    margin-left: 20px;
     margin-bottom: 20px;
 
   }

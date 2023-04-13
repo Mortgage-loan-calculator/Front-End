@@ -3,7 +3,9 @@
     <h2>Mortgage loan calculator</h2>
 
     <div class="orange">
+       <div class="box">
       <mat-tab-group>
+
         <mat-tab routerLink="/borrow" label="How much can you borrow">
           <div class="columns">
             <form class="column" [formGroup]="calculateForm">
@@ -66,7 +68,6 @@
               </div>
 
               <div *ngIf="showAdvancedOptions" class="advanced-options">
-                <!-- Add your additional HTML elements here -->
                 <div class="dropdown-container">
                   <div class="dropdown-label">
                     City of the family's residence:
@@ -167,6 +168,6 @@
       </mat-tab-group>
     </div>
 
-    <div class="box"></div>
+   </div>
   </div>
 </div>
