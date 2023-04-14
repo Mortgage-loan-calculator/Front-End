@@ -1,10 +1,10 @@
-var express = require('express');
-var compression = require('compression');
-const { createProxyMiddleware } = require('http-proxy-middleware');
-var API_HOST = process.env.API_HOST || 'localhost:8080';
+var express = require("express");
+var compression = require("compression");
+const { createProxyMiddleware } = require("http-proxy-middleware");
+var API_HOST = process.env.API_HOST || "localhost:8080";
 var PORT = process.env.PORT || 4200;
 
-var buildPath = 'dist/mortgage-loan-calculator';
+var buildPath = "dist/mortgage-loan-calculator";
 
 // Initialize
 var app = express();
@@ -16,17 +16,20 @@ app.use(express.static(buildPath));
 app.use(compression());
 
 // Enable proxy to api
-app.use('/api', createProxyMiddleware({
-  target: API_HOST,
-  changeOrigin: true,
-  pathRewrite: {
-    '^/api': ''
-  }
-}));
+app.use(
+  "/api",
+  createProxyMiddleware({
+    target: API_HOST,
+    changeOrigin: true,
+    pathRewrite: {
+      "^/api": "",
+    },
+  })
+);
 
 // Otherwise serve index.html
-app.get('*', function (req, res) {
-  res.sendFile(__dirname + '/' + buildPath + "/index.html");
+app.get("*", function (req, res) {
+  res.sendFile(__dirname + "/" + buildPath + "/index.html");
 });
 
 app.listen(PORT);
