@@ -35,7 +35,9 @@
 
   <ng-container matColumnDef="action">
     <mat-header-cell *matHeaderCellDef>Action</mat-header-cell>
-    <mat-cell *matCellDef="let customer">"Calculated" or "Submitted form"</mat-cell>
+    <mat-cell *matCellDef="let customer">
+      {{ calculatorFormComponent?.actionText }}
+    </mat-cell>
   </ng-container>
 
   <mat-header-row *matHeaderRowDef="[ 'name', 'number', 'email', 'ip', 'time', 'action']"></mat-header-row>
