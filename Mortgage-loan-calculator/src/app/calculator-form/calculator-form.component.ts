@@ -32,7 +32,6 @@ export class CalculatorFormComponent {
     floor: 1,
     ceil: 5
   };
-  cities: Array<string> = ['Vilnius', 'Kaunas', 'Klaipėda', 'Šiauliai', 'Panevėžys', 'Alytus', 'Marijampolė', 'Utena', 'Telšiai', 'Tauragė'];
 
   calculateForm = fb.group(
     {
@@ -94,7 +93,14 @@ export class CalculatorFormComponent {
     return this.calculateForm.get('citySelect')?.value;
   }
 
+  actionText: string = '';
+
+  onCalculate() {
+    this.actionText = 'Calculated';
+  }
   onSubmit() {
+    this.actionText = 'Submitted form';
+
     const calculateFormData = this.calculateForm.value;
   }
   onChange() {
