@@ -1,12 +1,12 @@
 <mat-toolbar class="orange">
- <span>Admin Panel</span>
+  <span>Admin Panel</span>
 </mat-toolbar>
 
- <h3>Customer, who want to get offer:</h3>
+<h3>Customer, who want to get offer:</h3>
 
-
- <div class="mat-elevation-z8">
+<div class="mat-elevation-z8">
   <table mat-table [dataSource]="customers">
+
 
   <ng-container matColumnDef="name">
     <mat-header-cell *matHeaderCellDef>Name</mat-header-cell>
@@ -50,4 +50,5 @@
                aria-label="Select page of periodic elements">
 </mat-paginator>
 </div>
+
 

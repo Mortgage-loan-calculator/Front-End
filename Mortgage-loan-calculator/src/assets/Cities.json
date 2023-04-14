@@ -1428,5 +1428,15 @@
     "capital": "admin", 
     "population": "", 
     "population_proper": ""
-  }
+  },
+  {"city":"Alytaus apskritis"},
+  {"city":"Kauno apskritis"},
+  {"city":"Klaipėdos apskritis"},
+  {"city":"Marijampolės apskritis"},
+  {"city":"Panevėžio apskritis"},
+  {"city":"Šiaulių apskritis"},
+  {"city":"Tauragės apskritis"},
+  {"city":"Utenos apskritis"},
+  {"city":"Vilniaus apskritis"}
+
 ]
