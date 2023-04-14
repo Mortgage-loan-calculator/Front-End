@@ -9,8 +9,7 @@ import { Observable } from 'rxjs';
 export class CustomerService {
   constructor(private http: HttpClient) { }
 
-  customerUrl = 'http://localhost:8080/customers';
-
+customerUrl = 'https://mortgage-loan-calculator-back-end.onrender.com/customers';
 
 public getCustomer(): Observable<Customer[]>{
   return this.http.get<Customer[]>(this.customerUrl);
