@@ -12,6 +12,7 @@ import { CalculatorFormComponent } from '../calculator-form/calculator-form.comp
 })
 export class AdminPanelComponent implements AfterViewInit, OnInit {
   customers: MatTableDataSource<Customer> = new MatTableDataSource<Customer>();
+
   displayedColumns: string[] = [
     'name',
     'phoneNumber',
@@ -34,4 +35,5 @@ export class AdminPanelComponent implements AfterViewInit, OnInit {
       this.customers.paginator = this.paginator;
     });
   }
+
 }
