@@ -14,7 +14,7 @@ export class AdminPanelComponent implements AfterViewInit, OnInit {
   customers: MatTableDataSource<Customer> = new MatTableDataSource<Customer>();
   displayedColumns: string[] = [
     'name',
-    'number',
+    'phoneNumber',
     'email',
     'ip',
     'time',
