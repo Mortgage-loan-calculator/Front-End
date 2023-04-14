@@ -152,8 +152,15 @@
             </ng-template>
           </mat-tab>
 
-          <mat-tab routerLink="/calculate" label="Calculate monthly payment">
-            <form class="column3" [formGroup]="applyForm">
+
+              <button mat-button type="calculate" class="calculate-button" (click)="onCalculate()">
+                Calculate
+              </button>
+            </form>
+
+            <!-- {{calculateForm.value | json}} -->
+
+            <form class="column2" [formGroup]="submitFor
               <div class="grid-container">
                 <div class="grid-item">
                   <span matPrefix>Deal amount</span>
@@ -186,8 +193,10 @@
                   </mat-form-field>
                 </div>
               </div>
-              <button mat-button type="submit" class="submit-button">
-                Apply
+
+              <button mat-button type="submit" class="submit-button" (click)="onSubmit()">
+                Submit application
+
               </button>
             </form>
           </mat-tab>
