@@ -4,5 +4,5 @@ export interface Customer {
   phonenumber: number;
   email: string;
   ipAddress: string;
-  time: string;
+  time: Date;
 }

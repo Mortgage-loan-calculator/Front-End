@@ -12,7 +12,6 @@ export class CustomerService {
   customerUrl =
     'https://mortgage-loan-calculator-back-end.onrender.com/customers';
 
-
   public getCustomer(): Observable<Customer[]> {
     return this.http.get<Customer[]>(this.customerUrl);
   }
