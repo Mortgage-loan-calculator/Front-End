@@ -13,9 +13,9 @@
     <mat-cell *matCellDef="let customer; let i = index">{{ customer.name }}</mat-cell>
   </ng-container>
 
-  <ng-container matColumnDef="number">
+  <ng-container matColumnDef="phoneNumber">
     <mat-header-cell *matHeaderCellDef>Number</mat-header-cell>
-    <mat-cell *matCellDef="let customer">{{ customer.number }}</mat-cell>
+    <mat-cell *matCellDef="let customer">{{ customer.phoneNumber }}</mat-cell>
   </ng-container>
 
   <ng-container matColumnDef="email">
@@ -40,8 +40,8 @@
     </mat-cell>
   </ng-container>
 
-  <mat-header-row *matHeaderRowDef="[ 'name', 'number', 'email', 'ip', 'time', 'action']"></mat-header-row>
-  <mat-row *matRowDef="let row; columns: [ 'name', 'number', 'email', 'ip', 'time', 'action']"></mat-row>
+  <mat-header-row *matHeaderRowDef="[ 'name', 'phoneNumber', 'email', 'ip', 'time', 'action']"></mat-header-row>
+  <mat-row *matRowDef="let row; columns: [ 'name', 'phoneNumber', 'email', 'ip', 'time', 'action']"></mat-row>
 
 </table>
 
