@@ -1,10 +1,8 @@
-export interface Customer
-{
-  id: string;
+export interface Customer {
   name: string;
-  phoneNumber: string;
+  id: string;
+  phonenumber: number;
   email: string;
   ipAddress: string;
-  time: Date;
-
+  time: string;
 }

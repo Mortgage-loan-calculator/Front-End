@@ -38,7 +38,7 @@ export class PopupFormComponent {
   onPostFormSubmit() {
     if (this.postForm.valid) {
       this.customerservice
-        .saveCustomerInfo(this.postForm.value as Customer)
+        .saveCustomerInfo(this.postForm.value as unknown as Customer)
         .pipe(
           tap(() => {
             console.log('Post added: ', this.postForm.value);

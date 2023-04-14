@@ -8,7 +8,9 @@ import { Observable } from 'rxjs';
 })
 export class CustomerService {
   constructor(private http: HttpClient) { }
+
   customerUrl = 'http://localhost:8080/customers';
+
 
 public getCustomer(): Observable<Customer[]>{
   return this.http.get<Customer[]>(this.customerUrl);
@@ -17,4 +19,5 @@ public getCustomer(): Observable<Customer[]>{
 public saveCustomerInfo(customer: Customer){
   return this.http.post<Customer>(this.customerUrl, customer);
 }
+
 }
