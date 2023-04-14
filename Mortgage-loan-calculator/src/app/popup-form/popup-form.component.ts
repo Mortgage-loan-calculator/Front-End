@@ -1,6 +1,7 @@
+import { getLocaleDateTimeFormat } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormBuilder, FormControl } from '@angular/forms';
-import { tap } from 'rxjs';
+import { tap, timestamp } from 'rxjs';
 import { CustomerService } from '../services/customer.service';
 import { Customer } from '../types';
 
@@ -14,14 +15,12 @@ const fb = new FormBuilder().nonNullable;
 export class PopupFormComponent {
   constructor(private customerservice: CustomerService) {}
 
-  date: Date = new Date();
-
   postForm = fb.group({
     name: [''],
     phoneNumber: [''],
     email: [''],
-    ipAddress: ['lallalala'],
-    time: [this.date],
+    ipAddress: [''],
+    time: [new Date()],
   });
 
   get name() {
