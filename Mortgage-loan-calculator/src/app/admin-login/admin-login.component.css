@@ -37,12 +37,12 @@ form {
   transition: all 0.3s ease;
 }
 .my-button:hover {
-  box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
 }
 .login-button {
-  background-color: #f6f916;
+  background-color: #ffd700;
 }
 .login-button:hover {
-  background-color: #f6f916;
-  border: 2px solid #b4b667;
+  background-color: #ffd700;
+  border: 2px solid #ffd700;
 }
