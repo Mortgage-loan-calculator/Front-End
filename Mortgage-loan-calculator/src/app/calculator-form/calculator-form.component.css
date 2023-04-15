@@ -173,9 +173,8 @@ mat-divider[vertical="true"] {
   margin-top: 20px;
   margin-bottom: 20px;
 }
-.submit-button{
+.submit-button {
   margin-top: 15px;
-
 }
 
 @media screen and (max-width: 800px) {
@@ -229,4 +228,3 @@ mat-divider[vertical="true"] {
   background-color: #ffa500;
   border: 2px solid #ffa500;
 }
-

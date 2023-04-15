@@ -1,4 +1,3 @@
-
 <head>
   <script src="scale.js"></script>
 </head>
@@ -12,7 +11,7 @@
           <mat-tab routerLink="/borrow" label="How much can you borrow">
             <ng-template matTabContent>
               <div class="columns">
-                <form class="column scale"  [formGroup]="calculateForm">
+                <form class="column scale" [formGroup]="calculateForm">
                   <div>
                     <div class="toggle-container">
                       <div class="toggle-label">Alone/With partner</div>
@@ -111,12 +110,16 @@
                 </form>
 
                 <!-- <mat-divider [vertical]="true" style="height: 100px;"></mat-divider> -->
-                <form class="column2" style="display:none;" [formGroup]="submitForm">
-                <!-- {{calculateForm.value | json}} -->
-                <div class="chart-container-div">
-                  <app-pie-chart></app-pie-chart><mat-divider [vertical]="true"></mat-divider>
-
-                </div>
+                <form
+                  class="column2"
+                  style="display: none"
+                  [formGroup]="submitForm"
+                >
+                  <!-- {{calculateForm.value | json}} -->
+                  <div class="chart-container-div">
+                    <app-pie-chart></app-pie-chart
+                    ><mat-divider [vertical]="true"></mat-divider>
+                  </div>
 
                   <div class="form2">
                     <div class="grid-container">
