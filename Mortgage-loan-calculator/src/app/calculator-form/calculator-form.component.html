@@ -11,33 +11,56 @@
           <mat-tab routerLink="/borrow" label="How much can you borrow">
             <ng-template matTabContent>
               <div class="columns">
-                <form class="column scale" [formGroup]="calculateForm">
-                  <div>
-                    <div class="toggle-container">
-                      <div class="toggle-label">Alone/With partner</div>
-                      <mat-slide-toggle
-                        class="toggle"
-                        (change)="onChange()"
-                        formControlName="childrenToggle"
-                      ></mat-slide-toggle>
-                    </div>
+                <form
+                  class="column scale"
+                  [formGroup]="calculateForm"
+                  (ngSubmit)="onSubmit()"
+                >
+                  <div class="toggle-container">
+                    <div class="toggle-label">Alone/With partner</div>
+                    <mat-slide-toggle
+                      class="toggle"
+                      (change)="onChange()"
+                      formControlName="childrenToggle"
+                    ></mat-slide-toggle>
+                  </div>
 
-                    <mat-form-field appearance="outline">
-                      <mat-label>Home Price</mat-label>
-                      <input matInput placeholder="Enter price" />
-                      <mat-hint>Enter home price</mat-hint>
-                    </mat-form-field>
-                  </div>
-                  <div>
-                    <mat-form-field appearance="outline">
-                      <mat-label>Monthly family income</mat-label>
-                      <input
-                        matInput
-                        placeholder="Enter monthly family income"
-                      />
-                      <mat-hint>Monthly family income</mat-hint>
-                    </mat-form-field>
-                  </div>
+                  <mat-form-field class="homePrice" appearance="outline">
+                    <mat-label>Home Price</mat-label>
+                    <input
+                      matInput
+                      placeholder="Enter price"
+                      formControlName="homePrice"
+                    />
+                    <mat-hint>Enter home price</mat-hint>
+                    <mat-error
+                      *ngIf="calculateForm.controls.homePrice.errors?.['required']"
+                    >
+                      Home price is required.
+                    </mat-error>
+                    <mat-error
+                      *ngIf="calculateForm.controls.homePrice.errors?.['numbersOnly']"
+                    >
+                      Input should accept only numbers.
+                    </mat-error>
+                  </mat-form-field>
+
+                  <mat-form-field class="montlyIncome" appearance="outline">
+                    <mat-label>Monthly family income</mat-label>
+                    <input
+                      matInput
+                      placeholder="Monthly family income"
+                      formControlName="familyIncome"
+                    />
+                    <mat-hint> Enter monthly family income</mat-hint>
+                    <mat-error *ngIf="familyIncome.hasError('required')">
+                      This field is required.
+                    </mat-error>
+                    <mat-error *ngIf="familyIncome.hasError('numbersOnly')">
+                      Input should accept only numbers.
+                    </mat-error>
+                  </mat-form-field>
+
                   <div class="slider-container">
                     <div class="slider-label">Loan term:</div>
                     <ngx-slider
