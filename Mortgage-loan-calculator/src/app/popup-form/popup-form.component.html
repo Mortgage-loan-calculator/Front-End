@@ -11,41 +11,87 @@
   <body>
     <div class="popUpForm" id="popUpForm">
       <form
+        class="box"
         [formGroup]="postForm"
         (ngSubmit)="onPostFormSubmit()"
         (reset)="onPostFormReset()"
         class="formContainer"
       >
-        <button
+        <mat-icon
           type="button"
           class="btnClose"
           aria-label="Close"
           onclick="document.getElementById('popUpForm').style.display='none'"
-        >
-          &times;
-        </button>
-        <span class="titlespan"
-          >Please enter your personal data to get personal offer:</span
+          >cancel</mat-icon
         >
 
-        <br />
+        <h3 class="titlespan">
+          Please enter your personal data to get personal offer:
+        </h3>
 
-        <label for="name">Name:</label>
-        <input type="text" formControlName="name" id="name" required />
+        <mat-form-field class="example-form-field">
+          <mat-label>Name:</mat-label>
+          <input
+            matInput
+            type="text"
+            formControlName="name"
+            id="name"
+            required
+          />
+          <button
+            matSuffix
+            mat-icon-button
+            aria-label="Clear"
+            *ngIf="name.value"
+            (click)="name.setValue('')"
+          >
+            <mat-icon>close</mat-icon>
+          </button>
+        </mat-form-field>
 
-        <label for="phoneNumber">Phone number:</label>
-        <input
-          type="text"
-          formControlName="phoneNumber"
-          id="phoneNumber"
-          required
-        />
+        <mat-form-field class="example-form-field">
+          <mat-label>Phone number:</mat-label>
+          <input
+            matInput
+            type="text"
+            formControlName="phoneNumber"
+            id="phoneNumber"
+            required
+          />
+          <button
+            *ngIf="phoneNumber.value"
+            matSuffix
+            mat-icon-button
+            aria-label="Clear"
+            (click)="phoneNumber.setValue('')"
+          >
+            <mat-icon>close</mat-icon>
+          </button>
+        </mat-form-field>
 
-        <label for="email">Email</label>
-        <input type="email" formControlName="email" id="email" required />
-
+        <mat-form-field class="example-form-field">
+          <mat-label>Email</mat-label>
+          <input
+            matInput
+            type="email"
+            formControlName="email"
+            id="email"
+            required
+          />
+          <button
+            *ngIf="email.value"
+            matSuffix
+            mat-icon-button
+            aria-label="Clear"
+            (click)="email.setValue('')"
+          >
+            <mat-icon>close</mat-icon>
+          </button>
+        </mat-form-field>
         <div class="sendBtnCotainer" id="sendBtnCotainer">
-          <button type="submit" class="sendBtn" id="sendBtn">Send</button>
+          <button mat-button type="submit" class="sendBtn" id="sendBtn">
+            Send
+          </button>
         </div>
       </form>
     </div>
