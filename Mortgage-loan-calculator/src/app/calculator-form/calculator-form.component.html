@@ -121,7 +121,7 @@
                       </mat-form-field>
                     </div>
                   </div>
-
+                  <div class="button-container">
                   <button
                     mat-button
                     type="calculate"
@@ -130,6 +130,7 @@
                   >
                     Calculate
                   </button>
+                </div>
                 </form>
 
                 <!-- <mat-divider [vertical]="true" style="height: 100px;"></mat-divider> -->
@@ -196,6 +197,8 @@
                         </mat-form-field>
                       </div>
                     </div>
+                    <div class="button-container">
+
                     <button
                       mat-button
                       type="submit"
@@ -204,6 +207,7 @@
                     >
                       Submit application
                     </button>
+                    </div>
                   </div>
                 </form>
               </div>
@@ -244,9 +248,14 @@
                   </mat-form-field>
                 </div>
               </div>
-              <button mat-button type="apply" class="my-button apply-button">
-                Apply
-              </button>
+              <div class="button-container">
+                <button mat-button type="apply" class="my-button apply-button">
+                  Apply
+                </button>
+                <button mat-button type="apply" class="my-button apply-button">
+                  Offers
+                </button>
+              </div>
             </form>
           </mat-tab>
         </mat-tab-group>
