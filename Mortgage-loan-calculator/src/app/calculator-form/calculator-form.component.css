@@ -213,6 +213,9 @@ mat-divider[vertical="true"] {
   cursor: pointer;
   transition: all 0.3s ease;
 }
+.my-button:hover {
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+}
 
 .calculate-button,
 .apply-button {
@@ -227,15 +230,13 @@ mat-divider[vertical="true"] {
 .submit-button {
   background-color: #ffa500;
 }
-
-.my-button:hover {
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-}
-
 .submit-button:hover {
   background-color: #ffa500;
   border: 2px solid #ffa500;
 }
+
+
+
 
 .column3 {
   height: 500px;
