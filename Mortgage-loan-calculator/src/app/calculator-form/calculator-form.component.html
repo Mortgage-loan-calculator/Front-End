@@ -1,3 +1,6 @@
+<head>
+  <script src="scale.js"></script>
+</head>
 <div class="formOuter">
   <div class="formBlock">
     <h2>Mortgage loan calculator</h2>
@@ -8,33 +11,56 @@
           <mat-tab routerLink="/borrow" label="How much can you borrow">
             <ng-template matTabContent>
               <div class="columns">
-                <form class="column" [formGroup]="calculateForm">
-                  <div>
-                    <div class="toggle-container">
-                      <div class="toggle-label">Alone/With partner</div>
-                      <mat-slide-toggle
-                        class="toggle"
-                        (change)="onChange()"
-                        formControlName="childrenToggle"
-                      ></mat-slide-toggle>
-                    </div>
+                <form
+                  class="column scale"
+                  [formGroup]="calculateForm"
+                  (ngSubmit)="onSubmit()"
+                >
+                  <div class="toggle-container">
+                    <div class="toggle-label">Alone/With partner</div>
+                    <mat-slide-toggle
+                      class="toggle"
+                      (change)="onChange()"
+                      formControlName="childrenToggle"
+                    ></mat-slide-toggle>
+                  </div>
 
-                    <mat-form-field appearance="outline">
-                      <mat-label>Home Price</mat-label>
-                      <input matInput placeholder="Enter price" />
-                      <mat-hint>Enter home price</mat-hint>
-                    </mat-form-field>
-                  </div>
-                  <div>
-                    <mat-form-field appearance="outline">
-                      <mat-label>Monthly family income</mat-label>
-                      <input
-                        matInput
-                        placeholder="Enter monthly family income"
-                      />
-                      <mat-hint>Monthly family income</mat-hint>
-                    </mat-form-field>
-                  </div>
+                  <mat-form-field class="homePrice" appearance="outline">
+                    <mat-label>Home Price</mat-label>
+                    <input
+                      matInput
+                      placeholder="Enter price"
+                      formControlName="homePrice"
+                    />
+                    <mat-hint>Enter home price</mat-hint>
+                    <mat-error
+                      *ngIf="calculateForm.controls.homePrice.errors?.['required']"
+                    >
+                      Home price is required.
+                    </mat-error>
+                    <mat-error
+                      *ngIf="calculateForm.controls.homePrice.errors?.['numbersOnly']"
+                    >
+                      Input should accept only numbers.
+                    </mat-error>
+                  </mat-form-field>
+
+                  <mat-form-field class="montlyIncome" appearance="outline">
+                    <mat-label>Monthly family income</mat-label>
+                    <input
+                      matInput
+                      placeholder="Monthly family income"
+                      formControlName="familyIncome"
+                    />
+                    <mat-hint> Enter monthly family income</mat-hint>
+                    <mat-error *ngIf="familyIncome.hasError('required')">
+                      This field is required.
+                    </mat-error>
+                    <mat-error *ngIf="familyIncome.hasError('numbersOnly')">
+                      Input should accept only numbers.
+                    </mat-error>
+                  </mat-form-field>
+
                   <div class="slider-container">
                     <div class="slider-label">Loan term:</div>
                     <ngx-slider
@@ -99,64 +125,86 @@
                   <button
                     mat-button
                     type="calculate"
-                    class="calculate-button"
+                    class="my-button calculate-button"
                     (click)="onCalculate()"
                   >
                     Calculate
                   </button>
                 </form>
 
-                <!-- {{calculateForm.value | json}} -->
-                <div class="chart-container-div">
-                  <app-pie-chart></app-pie-chart>
-                </div>
-                <form class="column2" [formGroup]="submitForm">
-                  <div class="grid-container">
-                    <div class="grid-item">
-                      <span matPrefix>Loan amount</span>
-                      <mat-form-field
-                        class="mat-form-field"
-                        appearance="outline"
-                      >
-                        <input matInput formControlName="loanAmount" />
-                      </mat-form-field>
-                    </div>
-                    <div class="grid-item">
-                      <span matPrefix>Total interest paid</span>
-                      <mat-form-field
-                        class="mat-form-field"
-                        appearance="outline"
-                      >
-                        <input matInput formControlName="totalPaid" />
-                      </mat-form-field>
-                    </div>
-                    <div class="grid-item">
-                      <span matPrefix>Agreement fee</span>
-                      <mat-form-field
-                        class="mat-form-field"
-                        appearance="outline"
-                      >
-                        <input matInput formControlName="fee" />
-                      </mat-form-field>
-                    </div>
-                    <div class="grid-item">
-                      <span matPrefix>Total payment sum</span>
-                      <mat-form-field
-                        class="mat-form-field"
-                        appearance="outline"
-                      >
-                        <input matInput formControlName="paymentSum" />
-                      </mat-form-field>
-                    </div>
+                <!-- <mat-divider [vertical]="true" style="height: 100px;"></mat-divider> -->
+                <form
+                  class="column2"
+                  style="display: none"
+                  [formGroup]="submitForm"
+                >
+                  <!-- {{calculateForm.value | json}} -->
+                  <div class="chart-container-div">
+                    <app-pie-chart></app-pie-chart
+                    ><mat-divider [vertical]="true"></mat-divider>
                   </div>
-                  <button
-                    mat-button
-                    type="submit"
-                    class="submit-button"
-                    (click)="onSubmit()"
-                  >
-                    Submit application
-                  </button>
+
+                  <div class="form2">
+                    <div class="grid-container">
+                      <div class="grid-item">
+                        <mat-icon class="brightness-1-icon"
+                          >brightness_1</mat-icon
+                        >
+
+                        <span matPrefix>Loan amount</span>
+                        <mat-form-field
+                          class="mat-form-field"
+                          appearance="outline"
+                        >
+                          <input matInput formControlName="loanAmount" />
+                        </mat-form-field>
+                      </div>
+                      <div class="grid-item">
+                        <mat-icon class="brightness-2-icon"
+                          >brightness_1</mat-icon
+                        >
+
+                        <span matPrefix>Total interest paid</span>
+                        <mat-form-field
+                          class="mat-form-field"
+                          appearance="outline"
+                        >
+                          <input matInput formControlName="totalPaid" />
+                        </mat-form-field>
+                      </div>
+
+                      <div class="grid-item">
+                        <mat-icon class="brightness-3-icon"
+                          >brightness_1</mat-icon
+                        >
+
+                        <span matPrefix>Agreement fee</span>
+                        <mat-form-field
+                          class="mat-form-field"
+                          appearance="outline"
+                        >
+                          <input matInput formControlName="fee" />
+                        </mat-form-field>
+                      </div>
+                      <div class="grid-item">
+                        <span matPrefix>Total payment sum</span>
+                        <mat-form-field
+                          class="mat-form-field"
+                          appearance="outline"
+                        >
+                          <input matInput formControlName="paymentSum" />
+                        </mat-form-field>
+                      </div>
+                    </div>
+                    <button
+                      mat-button
+                      type="submit"
+                      class="my-button submit-button"
+                      (click)="onSubmit()"
+                    >
+                      Submit application
+                    </button>
+                  </div>
                 </form>
               </div>
             </ng-template>
@@ -196,7 +244,7 @@
                   </mat-form-field>
                 </div>
               </div>
-              <button mat-button type="submit" class="submit-button">
+              <button mat-button type="apply" class="my-button apply-button">
                 Apply
               </button>
             </form>

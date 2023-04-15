@@ -1,60 +1,70 @@
 import { Options } from '@angular-slider/ngx-slider';
 import { Component } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import {
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  Validators,
+} from '@angular/forms';
 import { MatSlideToggleChange } from '@angular/material/slide-toggle';
 import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
+import { Customer } from '../types';
 
 const fb = new FormBuilder().nonNullable;
 
 @Component({
   selector: 'app-calculator-form',
   templateUrl: './calculator-form.component.html',
-  styleUrls: ['./calculator-form.component.css']
+  styleUrls: ['./calculator-form.component.css'],
 })
 export class CalculatorFormComponent {
   title = 'json-read-example';
-  citiesInfo:any;
+  citiesInfo: any;
   url: string = './assets/Cities.json';
 
   constructor(private http: HttpClient) {}
 
   ngOnInit() {
-    this.http.get(this.url).subscribe(res => {
+    this.http.get(this.url).subscribe((res) => {
       this.citiesInfo = res;
     });
   }
   loanOptions: Options = {
     floor: 1,
-    ceil: 30
+    ceil: 30,
   };
   adultOptions: Options = {
     floor: 1,
-    ceil: 5
+    ceil: 5,
   };
+  numbersOnly(control: FormControl): { [key: string]: any } | null {
+    const value = control.value;
+    const isValid = /^[0-9]*$/.test(value) && value >= 0;
+    return isValid ? null : { numbersOnly: { value: control.value } };
+  }
+  errorMessage: string = 'Input should accept only numbers.';
 
   calculateForm = fb.group(
     {
-      homePrice: [''],
-      familyIncome: [''],
+      homePrice: ['', [Validators.required, this.numbersOnly]],
+      familyIncome: ['', [Validators.required, this.numbersOnly]],
       loanSlider: [1],
       familyMemberSlider: [1],
       childrenToggle: [false],
-      citySelect: ['']
+      citySelect: ['', Validators.required],
     },
-    {updateOn: 'blur'}
+    { updateOn: 'blur' }
   );
-
 
   submitForm = fb.group(
     {
       loanAmount: [''],
       totalPaid: [''],
       fee: [''],
-      paymentSum: ['']
-
+      paymentSum: [''],
     },
-    {updateOn: 'blur'}
+    { updateOn: 'blur' }
   );
 
   applyForm = fb.group(
@@ -63,18 +73,21 @@ export class CalculatorFormComponent {
       downpayment: [''],
       loanPeriod: [''],
       estimatedPayment: [''],
-      maxPayment: ['']
-
+      maxPayment: [''],
     },
-    {updateOn: 'blur'}
+    { updateOn: 'blur' }
   );
 
   get homePrice() {
-    return this.calculateForm.get('homePrice') as unknown as FormControl<string>;
+    return this.calculateForm.get(
+      'homePrice'
+    ) as unknown as FormControl<string>;
   }
 
   get familyIncome() {
-    return this.calculateForm.get('familyIncome') as unknown as FormControl<string>;
+    return this.calculateForm.get(
+      'familyIncome'
+    ) as unknown as FormControl<string>;
   }
 
   get loanSlider() {
@@ -97,16 +110,17 @@ export class CalculatorFormComponent {
 
   onCalculate() {
     this.actionText = 'Calculated';
+    const column2 = document.querySelector('.column2') as HTMLElement;
+    column2.style.display = 'block';
   }
   onSubmit() {
-    this.actionText = 'Submitted form';
-
-    const calculateFormData = this.calculateForm.value;
+    if (this.calculateForm.valid) {
+      this.actionText = 'Submitted form';
+      const calculateFormData = this.calculateForm.value;
+    } else {
+      alert('Please fill out all required fields correctly.');
+    }
   }
-  onChange() {
-  }
+  onChange() {}
   showAdvancedOptions = false;
-
-  
-
 }

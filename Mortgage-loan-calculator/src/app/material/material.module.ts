@@ -12,9 +12,10 @@ import { MatInputModule } from '@angular/material/input'
 import { MatFormFieldModule } from '@angular/material/form-field';
 import {  MatCardModule} from '@angular/material/card'
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
+import { MatDividerModule } from '@angular/material/divider';
 const MaterialComponents=[
 MatButtonModule,
-
+MatDividerModule,
 MatSlideToggleModule,
 MatSelectModule,
 MatPaginatorModule,
