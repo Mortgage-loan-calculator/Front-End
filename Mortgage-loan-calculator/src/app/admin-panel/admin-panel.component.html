@@ -6,49 +6,52 @@
 
 <div class="mat-elevation-z8">
   <table mat-table [dataSource]="customers">
+    <ng-container matColumnDef="name">
+      <mat-header-cell *matHeaderCellDef>Name</mat-header-cell>
+      <mat-cell *matCellDef="let customer; let i = index">{{
+        customer.name
+      }}</mat-cell>
+    </ng-container>
 
+    <ng-container matColumnDef="phoneNumber">
+      <mat-header-cell *matHeaderCellDef>Number</mat-header-cell>
+      <mat-cell *matCellDef="let customer">{{ customer.phoneNumber }}</mat-cell>
+    </ng-container>
 
-  <ng-container matColumnDef="name">
-    <mat-header-cell *matHeaderCellDef>Name</mat-header-cell>
-    <mat-cell *matCellDef="let customer; let i = index">{{ customer.name }}</mat-cell>
-  </ng-container>
+    <ng-container matColumnDef="email">
+      <mat-header-cell *matHeaderCellDef>E-mail</mat-header-cell>
+      <mat-cell *matCellDef="let customer">{{ customer.email }}</mat-cell>
+    </ng-container>
 
-  <ng-container matColumnDef="phoneNumber">
-    <mat-header-cell *matHeaderCellDef>Number</mat-header-cell>
-    <mat-cell *matCellDef="let customer">{{ customer.phoneNumber }}</mat-cell>
-  </ng-container>
+    <ng-container matColumnDef="time">
+      <mat-header-cell *matHeaderCellDef>Time</mat-header-cell>
+      <mat-cell *matCellDef="let customer">{{
+        customer.time.slice(0, 10) + " " + customer.time.substring(11, 19)
+      }}</mat-cell>
+    </ng-container>
 
-  <ng-container matColumnDef="email">
-    <mat-header-cell *matHeaderCellDef>E-mail</mat-header-cell>
-    <mat-cell *matCellDef="let customer">{{ customer.email }}</mat-cell>
-  </ng-container>
+    <ng-container matColumnDef="action">
+      <mat-header-cell *matHeaderCellDef>Action</mat-header-cell>
+      <mat-cell *matCellDef="let customer">
+        {{ calculatorFormComponent?.actionText }}
+      </mat-cell>
+    </ng-container>
 
-  <ng-container matColumnDef="ip">
-    <mat-header-cell *matHeaderCellDef>Ip address</mat-header-cell>
-    <mat-cell *matCellDef="let customer">{{ customer.ipAddress }}</mat-cell>
-  </ng-container>
+    <mat-header-row
+      *matHeaderRowDef="['name', 'phoneNumber', 'email', 'time', 'action']"
+    ></mat-header-row>
+    <mat-row
+      *matRowDef="
+        let row;
+        columns: ['name', 'phoneNumber', 'email', 'time', 'action']
+      "
+    ></mat-row>
+  </table>
 
-  <ng-container matColumnDef="time">
-    <mat-header-cell *matHeaderCellDef>Time</mat-header-cell>
-    <mat-cell *matCellDef="let customer">{{ customer.time.slice(0, 10) + (' ') + customer.time.substring(11, 19) }}</mat-cell>
-  </ng-container>
-
-  <ng-container matColumnDef="action">
-    <mat-header-cell *matHeaderCellDef>Action</mat-header-cell>
-    <mat-cell *matCellDef="let customer">
-      {{ calculatorFormComponent?.actionText }}
-    </mat-cell>
-  </ng-container>
-
-  <mat-header-row *matHeaderRowDef="[ 'name', 'phoneNumber', 'email', 'ip', 'time', 'action']"></mat-header-row>
-  <mat-row *matRowDef="let row; columns: [ 'name', 'phoneNumber', 'email', 'ip', 'time', 'action']"></mat-row>
-
-</table>
-
-<mat-paginator [pageSizeOptions]="[5, 10, 20]"
-               showFirstLastButtons
-               aria-label="Select page of periodic elements">
-</mat-paginator>
+  <mat-paginator
+    [pageSizeOptions]="[5, 10, 20]"
+    showFirstLastButtons
+    aria-label="Select page of periodic elements"
+  >
+  </mat-paginator>
 </div>
-
-
