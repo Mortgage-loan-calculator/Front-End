@@ -1,114 +1,92 @@
-/*
-.container{
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+.hero {
   width: 100%;
-  min-width: 300px;
-  height: 100%;
+  height: 100vh;
+  background: rgba(10, 0, 0, 0.9);
+  background: linear-gradient(
+    0deg,
+    rgba(10, 0, 0) 0%,
+    rgba(91, 67, 189, 0.01) 100%
+  );
+  opacity: 1;
 }
-img{
-width:100% ;
-max-height: 45%;
-object-fit: cover;
 
-
-}
-
-
-
-.orange{
-background-color: #f5d378;
-}
- */
-
-
-.hero{
-  width:100%;
- height: 100vh;
- /* background: url('https://cdn.pixabay.com/photo/2018/01/24/15/08/live-3104077_960_720.jpg') no-repeat center center/cover; */
- background: rgba(10,0,0,0.9); background: linear-gradient(0deg,rgba(10,0,0) 0%,rgba(91,67,189,0.01) 100%);  opacity: 1; ;
-
- }
-
- .hero:before {
-  content: '';
+.hero:before {
+  content: "";
   position: absolute;
   height: 100%;
   width: 100%;
   z-index: -1;
-  background: url('https://cdn.pixabay.com/photo/2018/01/24/15/08/live-3104077_960_720.jpg') no-repeat center center/cover;
-
-
+  background: url("https://cdn.pixabay.com/photo/2018/01/24/15/08/live-3104077_960_720.jpg")
+    no-repeat center center/cover;
 }
 
- .hero .container{
+.hero .container {
   max-width: 1240px;
   margin: auto;
   height: 100%;
   position: relative;
-     display: grid;
-     grid-template-columns: repat(2,1fr);
- }
+  display: grid;
+  grid-template-columns: repat(2, 1fr);
+}
 
- button {
-  padding: 0.5rem;
-  margin-right: 2rem;
-  margin-bottom: 1rem;
-  margin-top: 2rem;
-  display: center;
-  width: 100%;
-  max-width: 200px;
-  margin-top: 20px;
-  padding: 10px;
+.my-button {
+  width: 200px;
   font-size: 16px;
   border: none;
   border-radius: 5px;
-  background-color: #F5D378  ;
-  color: #fff;
+  color: white;
   cursor: pointer;
-  }
+  transition: all 0.3s ease;
+}
 
-  button:hover {
-  background-color: #ffc107;
-  }
+.calculate-mortgage-button {
+  background-color: #baa48b;
+}
+.calculate-mortgage-button:hover {
+  background-color: #A29587
+  ;
+  border: 2px solid #A29587
 
+  ;
+}
 
- .hero .content{
-     height: 75vh;
-     display: flex;
-     flex-direction: column;
-     justify-content: center;
-     margin-left: 6rem;
- }
+.hero .content {
+  height: 75vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin-left: 6rem;
+}
 
- .hero h1{
-      font-family: 'Quicksand', serif;
-
+.hero h1 {
+  font-family: "Quicksand", serif;
   width: 45%;
-     color: #f8f8f8;
-     font-size: 2rem;
- }
+  color: #f8f8f8;
+  font-size: 2rem;
+}
 
- .hero .title{
- color: orange;
- }
+.hero .title {
+  color: #baa48b;
+}
 
-
- .hero button{
+.hero button {
   margin-top: 70px;
-   }
- @media screen and (max-width:940px)
- {
-     .hero .container{margin-left: 1rem;}
-     .hero h1{ width: 80%;}
- }
+}
+@media screen and (max-width: 940px) {
+  .hero .container {
+    margin-left: 1rem;
+  }
+  .hero h1 {
+    width: 80%;
+  }
+}
 
- .txt-effect {
-     animation: txtEffect 2s both;
-   }
-   @keyframes txtEffect {
-     100% {
-       opacity: .5;
-       font-size: 48px;
-     }}
+.txt-effect {
+  animation: txtEffect 2s both;
+}
+@keyframes txtEffect {
+  100% {
+    opacity: 0.5;
+    font-size: 48px;
+  }
+}

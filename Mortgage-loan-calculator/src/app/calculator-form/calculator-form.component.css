@@ -210,6 +210,10 @@ mat-divider[vertical="true"] {
 .calculate-button {
   background-color: #5cb85c;
 }
+.calculate-button:hover {
+  background-color: #449d44;
+  border: 2px solid #449d44;
+}
 
 .submit-button {
   background-color: #ffa500;
@@ -219,10 +223,7 @@ mat-divider[vertical="true"] {
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
 }
 
-.calculate-button:hover {
-  background-color: #449d44;
-  border: 2px solid #449d44;
-}
+
 
 .submit-button:hover {
   background-color: #ffa500;
