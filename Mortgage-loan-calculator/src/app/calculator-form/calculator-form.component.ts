@@ -10,27 +10,27 @@ const fb = new FormBuilder().nonNullable;
 @Component({
   selector: 'app-calculator-form',
   templateUrl: './calculator-form.component.html',
-  styleUrls: ['./calculator-form.component.css']
+  styleUrls: ['./calculator-form.component.css'],
 })
 export class CalculatorFormComponent {
   title = 'json-read-example';
-  citiesInfo:any;
+  citiesInfo: any;
   url: string = './assets/Cities.json';
 
   constructor(private http: HttpClient) {}
 
   ngOnInit() {
-    this.http.get(this.url).subscribe(res => {
+    this.http.get(this.url).subscribe((res) => {
       this.citiesInfo = res;
     });
   }
   loanOptions: Options = {
     floor: 1,
-    ceil: 30
+    ceil: 30,
   };
   adultOptions: Options = {
     floor: 1,
-    ceil: 5
+    ceil: 5,
   };
 
   calculateForm = fb.group(
@@ -40,21 +40,19 @@ export class CalculatorFormComponent {
       loanSlider: [1],
       familyMemberSlider: [1],
       childrenToggle: [false],
-      citySelect: ['']
+      citySelect: [''],
     },
-    {updateOn: 'blur'}
+    { updateOn: 'blur' }
   );
-
 
   submitForm = fb.group(
     {
       loanAmount: [''],
       totalPaid: [''],
       fee: [''],
-      paymentSum: ['']
-
+      paymentSum: [''],
     },
-    {updateOn: 'blur'}
+    { updateOn: 'blur' }
   );
 
   applyForm = fb.group(
@@ -63,18 +61,21 @@ export class CalculatorFormComponent {
       downpayment: [''],
       loanPeriod: [''],
       estimatedPayment: [''],
-      maxPayment: ['']
-
+      maxPayment: [''],
     },
-    {updateOn: 'blur'}
+    { updateOn: 'blur' }
   );
 
   get homePrice() {
-    return this.calculateForm.get('homePrice') as unknown as FormControl<string>;
+    return this.calculateForm.get(
+      'homePrice'
+    ) as unknown as FormControl<string>;
   }
 
   get familyIncome() {
-    return this.calculateForm.get('familyIncome') as unknown as FormControl<string>;
+    return this.calculateForm.get(
+      'familyIncome'
+    ) as unknown as FormControl<string>;
   }
 
   get loanSlider() {
@@ -97,16 +98,14 @@ export class CalculatorFormComponent {
 
   onCalculate() {
     this.actionText = 'Calculated';
+    const column2 = document.querySelector('.column2') as HTMLElement;
+    column2.style.display = 'block';
   }
   onSubmit() {
     this.actionText = 'Submitted form';
 
     const calculateFormData = this.calculateForm.value;
   }
-  onChange() {
-  }
+  onChange() {}
   showAdvancedOptions = false;
-
-  
-
 }
