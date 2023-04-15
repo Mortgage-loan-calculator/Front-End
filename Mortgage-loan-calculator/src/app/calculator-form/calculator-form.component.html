@@ -80,19 +80,9 @@
                       <div class="dropdown-label">
                         City of the family's residence:
                       </div>
-                      <mat-form-field class="dropdown" appearance="outline">
-                        <mat-select
-                          formControlName="citySelect"
-                          placeholder="Select city"
-                        >
-                          <mat-option
-                            *ngFor="let city of citiesInfo"
-                            [value]="city"
-                          >
-                            {{ city.city }}
-                          </mat-option>
-                        </mat-select>
-                      </mat-form-field>
+                      <app-autocomplete
+                        [options]="citiesInfo"
+                      ></app-autocomplete>
                     </div>
                   </div>
 
@@ -206,3 +196,4 @@
     </div>
   </div>
 </div>
+<app-autocomplete [options]="citiesInfo"></app-autocomplete>
