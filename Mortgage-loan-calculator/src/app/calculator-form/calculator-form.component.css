@@ -235,9 +235,6 @@ mat-divider[vertical="true"] {
   border: 2px solid #ffa500;
 }
 
-
-
-
 .column3 {
   height: 500px;
   margin-left: 20px;
@@ -252,4 +249,13 @@ mat-divider[vertical="true"] {
 }
 .montlyIncome {
   margin-top: 30px;
+}
+
+.my-button {
+  display: inline-block;
+  margin-right: 10px;
+}
+.button-container {
+  display: flex;
+  justify-content: space-between;
 }
