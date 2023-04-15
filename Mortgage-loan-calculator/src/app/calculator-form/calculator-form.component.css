@@ -32,6 +32,7 @@ h2 {
 }
 
 .column2 {
+  margin-top:30px;
   flex-basis: 50%;
   box-sizing: border-box;
 }
@@ -115,7 +116,7 @@ mat-icon.brightness-3-icon {
 
 .form2 {
   margin-top: 20px;
-  margin-left: 100px;
+  /* margin-left: 100px; */
 }
 
 .grid-container {
@@ -190,9 +191,15 @@ mat-divider[vertical="true"] {
     order: 2;
   }
   .form2 {
+    margin-left: 40px;
     scale: 90%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
   }
   .submit-button {
+    margin-top: 40px;
     width: 200px;
   }
 }
@@ -207,10 +214,12 @@ mat-divider[vertical="true"] {
   transition: all 0.3s ease;
 }
 
-.calculate-button {
+.calculate-button,
+.apply-button {
   background-color: #5cb85c;
 }
-.calculate-button:hover {
+.calculate-button:hover,
+.apply-button:hover {
   background-color: #449d44;
   border: 2px solid #449d44;
 }
@@ -222,8 +231,6 @@ mat-divider[vertical="true"] {
 .my-button:hover {
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
 }
-
-
 
 .submit-button:hover {
   background-color: #ffa500;
