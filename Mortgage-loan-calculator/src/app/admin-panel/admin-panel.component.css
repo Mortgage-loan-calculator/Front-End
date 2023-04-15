@@ -1,7 +1,7 @@
 .mat-elevation-z8 {
   scale: 80%;
 }
-mat-cell{
+mat-cell {
   padding: 10px;
   font-size: 1.5em;
 }
@@ -16,16 +16,21 @@ mat-cell{
   }
 }
 
-  .mat-form-field {
-    font-size: 14px;
-    width: 100%;
-  }
+.mat-form-field {
+  font-size: 14px;
+  width: 100%;
+}
 
-  .orange{
-    background-color: #f5d378;
-  }
+.header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.header span {
+  margin: 0;
+}
 
-  h3{
-    text-align: center;
-    padding-top: 60px;
-  }
+h3 {
+  text-align: center;
+  padding-top: 60px;
+}
