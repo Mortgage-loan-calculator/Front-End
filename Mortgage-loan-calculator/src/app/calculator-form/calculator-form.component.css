@@ -259,3 +259,6 @@ mat-divider[vertical="true"] {
   display: flex;
   justify-content: space-between;
 }
+mat-error {
+  white-space: nowrap;
+}

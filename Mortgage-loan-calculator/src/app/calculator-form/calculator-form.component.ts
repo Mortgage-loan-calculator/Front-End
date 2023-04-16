@@ -43,12 +43,42 @@ export class CalculatorFormComponent {
     const isValid = /^[0-9]*$/.test(value) && value >= 0;
     return isValid ? null : { numbersOnly: { value: control.value } };
   }
+  validateMaxNumbers(control: FormControl) {
+    const value = control.value;
+
+    if (value && value.toString().length > 12) {
+      return { ['maxNumbersReached']: true };
+    } else if (value && value.toString().length === 12) {
+      return { ['maxNumbersReached']: 'Maximum number of digits reached.' };
+    }
+
+    return null;
+  }
+
   errorMessage: string = 'Input should accept only numbers.';
 
   calculateForm = fb.group(
     {
-      homePrice: ['', [Validators.required, this.numbersOnly]],
-      familyIncome: ['', [Validators.required, this.numbersOnly]],
+      homePrice: [
+        '',
+        [
+          Validators.required,
+          this.numbersOnly,
+          Validators.min(1),
+          Validators.max(999999999999),
+          this.validateMaxNumbers.bind(this),
+        ],
+      ],
+      familyIncome: [
+        '',
+        [
+          Validators.required,
+          this.numbersOnly,
+          Validators.min(1),
+          Validators.max(999999999999),
+          this.validateMaxNumbers.bind(this),
+        ],
+      ],
       loanSlider: [1],
       familyMemberSlider: [1],
       childrenToggle: [false],

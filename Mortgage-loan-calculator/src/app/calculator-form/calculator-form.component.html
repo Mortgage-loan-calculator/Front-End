@@ -31,6 +31,7 @@
                       matInput
                       placeholder="Enter price"
                       formControlName="homePrice"
+                      maxlength="12"
                     />
                     <mat-hint>Enter home price</mat-hint>
                     <mat-error
@@ -43,11 +44,22 @@
                     >
                       Input should accept only numbers.
                     </mat-error>
+                    <mat-error
+                      *ngIf="calculateForm.controls.homePrice.errors?.['min']"
+                    >
+                      Home price should be at least 1.
+                    </mat-error>
+                    <mat-error
+                      *ngIf="calculateForm.controls.homePrice.errors?.['maxNumbersReached']"
+                    >
+                      Maximum input of 12 numbers reached.
+                    </mat-error>
                   </mat-form-field>
 
                   <mat-form-field class="montlyIncome" appearance="outline">
                     <mat-label>Monthly family income</mat-label>
                     <input
+                      maxlength="12"
                       matInput
                       placeholder="Monthly family income"
                       formControlName="familyIncome"
@@ -58,6 +70,16 @@
                     </mat-error>
                     <mat-error *ngIf="familyIncome.hasError('numbersOnly')">
                       Input should accept only numbers.
+                    </mat-error>
+                    <mat-error
+                      *ngIf="calculateForm.controls.familyIncome.errors?.['min']"
+                    >
+                      Home price should be at least 1.
+                    </mat-error>
+                    <mat-error
+                      *ngIf="calculateForm.controls.familyIncome.errors?.['maxNumbersReached']"
+                    >
+                      Maximum input of 12 numbers reached.
                     </mat-error>
                   </mat-form-field>
 
@@ -122,15 +144,15 @@
                     </div>
                   </div>
                   <div class="button-container">
-                  <button
-                    mat-button
-                    type="calculate"
-                    class="my-button calculate-button"
-                    (click)="onCalculate()"
-                  >
-                    Calculate
-                  </button>
-                </div>
+                    <button
+                      mat-button
+                      type="calculate"
+                      class="my-button calculate-button"
+                      (click)="onCalculate()"
+                    >
+                      Calculate
+                    </button>
+                  </div>
                 </form>
 
                 <!-- <mat-divider [vertical]="true" style="height: 100px;"></mat-divider> -->
@@ -198,15 +220,14 @@
                       </div>
                     </div>
                     <div class="button-container">
-
-                    <button
-                      mat-button
-                      type="submit"
-                      class="my-button submit-button"
-                      (click)="onSubmit()"
-                    >
-                      Submit application
-                    </button>
+                      <button
+                        mat-button
+                        type="submit"
+                        class="my-button submit-button"
+                        (click)="onSubmit()"
+                      >
+                        Submit application
+                      </button>
                     </div>
                   </div>
                 </form>
