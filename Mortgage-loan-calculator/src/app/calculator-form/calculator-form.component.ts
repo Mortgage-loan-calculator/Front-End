@@ -114,12 +114,14 @@ export class CalculatorFormComponent {
     column2.style.display = 'block';
   }
   onSubmit() {
+
     if (this.calculateForm.valid) {
       this.actionText = 'Submitted form';
       const calculateFormData = this.calculateForm.value;
     } else {
       alert('Please fill out all required fields correctly.');
     }
+
   }
   onChange() {}
   showAdvancedOptions = false;

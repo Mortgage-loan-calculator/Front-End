@@ -18,6 +18,7 @@ import {MatGridListModule} from '@angular/material/grid-list';
 import {MatListModule} from '@angular/material/list';
 import { MonthlyPaymentComponent } from './monthly-payment/monthly-payment.component';
 import { PieChartComponent } from './pie-chart/pie-chart.component';
+import { AutocompleteComponent } from './autocomplete/autocomplete.component';
 
 
 @NgModule({
@@ -29,7 +30,8 @@ import { PieChartComponent } from './pie-chart/pie-chart.component';
     PopupFormComponent,
     AdminLoginComponent,
     MonthlyPaymentComponent,
-    PieChartComponent
+    PieChartComponent,
+    AutocompleteComponent
 
   ],
   imports: [
