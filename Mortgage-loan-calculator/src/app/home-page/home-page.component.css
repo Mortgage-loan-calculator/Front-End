@@ -59,7 +59,7 @@
 
 .hero h1 {
   font-family: "Quicksand", serif;
-  width: 45%;
+  width: 50%;
   color: #f8f8f8;
   font-size: 2rem;
 }
@@ -71,14 +71,6 @@
 .hero button {
   margin-top: 70px;
 }
-@media screen and (max-width: 940px) {
-  .hero .container {
-    margin-left: 1rem;
-  }
-  .hero h1 {
-    width: 80%;
-  }
-}
 
 .txt-effect {
   animation: txtEffect 2s both;
@@ -87,5 +79,24 @@
   100% {
     opacity: 0.5;
     font-size: 48px;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .hero .container {
+    grid-template-columns: 1fr;
+    margin-left: -60px;
+    padding: 0 20px;
+  }
+  .hero .content {
+    margin-top: 70px;
+  }
+  .hero h1 {
+    width: 100%;
+    font-size: 24px;
+    text-align: left;
+  }
+  .hero button {
+    margin-top: 40px;
   }
 }
