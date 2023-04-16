@@ -1,6 +1,6 @@
 <form class="example-form">
-  <mat-form-field class="example-full-width" appearance="fill">
-    <mat-label>Number</mat-label>
+  <mat-form-field class="example-full-width" appearance="outline">
+    <mat-label>City</mat-label>
     <input
       type="text"
       placeholder="Pick one"
@@ -8,6 +8,7 @@
       matInput
       [formControl]="myControl"
       [matAutocomplete]="auto"
+      (blur)="selectCityValue(myControl.value)"
     />
     <mat-autocomplete #auto="matAutocomplete">
       <mat-option

@@ -130,6 +130,7 @@
                       </div>
                       <app-autocomplete
                         [options]="citiesInfo"
+                        (onChangeEvent)="citySelect($event)"
                       ></app-autocomplete>
                     </div>
                   </div>
@@ -274,4 +275,3 @@
     </div>
   </div>
 </div>
-<app-autocomplete [options]="citiesInfo"></app-autocomplete>

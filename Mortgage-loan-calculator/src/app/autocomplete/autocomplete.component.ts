@@ -1,7 +1,15 @@
-import { Component, Input, OnInit, OnChanges } from '@angular/core';
+import {
+  Component,
+  Input,
+  OnInit,
+  OnChanges,
+  Output,
+  EventEmitter,
+} from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
+import {} from '@angular/core';
 interface Option {
   name: string;
   [key: string]: any;
@@ -17,7 +25,13 @@ export class AutocompleteComponent implements OnChanges {
   @Input() options: Option[] = [];
   optionStrings: string[] = [];
   filteredOptions!: Observable<string[]>;
+  @Output() onChangeEvent = new EventEmitter<string>();
 
+  selectCityValue(value: string | null) {
+    if (value != null) {
+      this.onChangeEvent.emit(value);
+    }
+  }
   ngOnChanges() {
     if (this.options != null) {
       this.optionStrings = this.options.map((option) => option.name);
