@@ -36,8 +36,12 @@
             type="text"
             formControlName="name"
             id="name"
+            maxlength="15"
             required
           />
+          <mat-error *ngIf="postForm.controls.name.errors?.['required']">
+            Name is required.
+          </mat-error>
           <button
             matSuffix
             mat-icon-button
@@ -58,6 +62,9 @@
             id="phoneNumber"
             required
           />
+          <mat-error *ngIf="postForm.controls.phoneNumber.errors?.['required']">
+            Phone number is required.
+          </mat-error>
           <button
             *ngIf="phoneNumber.value"
             matSuffix
@@ -78,6 +85,9 @@
             id="email"
             required
           />
+          <mat-error *ngIf="postForm.controls.email.errors?.['required']">
+            Email is required.
+          </mat-error>
           <button
             *ngIf="email.value"
             matSuffix
