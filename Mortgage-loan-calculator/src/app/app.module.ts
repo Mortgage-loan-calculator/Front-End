@@ -3,7 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { BrowserAnimationsModule, NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { HomePageComponent } from './home-page/home-page.component';
 import { CalculatorFormComponent } from './calculator-form/calculator-form.component';
 import { ReactiveFormsModule } from '@angular/forms';
@@ -33,6 +33,8 @@ import { PieChartComponent } from './pie-chart/pie-chart.component';
 
   ],
   imports: [
+    NoopAnimationsModule,
+    BrowserAnimationsModule,
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,

@@ -1,15 +1,9 @@
 import { Options } from '@angular-slider/ngx-slider';
-import { Component } from '@angular/core';
-import {
-  FormBuilder,
-  FormControl,
-  FormGroup,
-  Validators,
-} from '@angular/forms';
-import { MatSlideToggleChange } from '@angular/material/slide-toggle';
-import { Observable } from 'rxjs';
+import { Component, ViewChild } from '@angular/core';
+import { FormBuilder, FormControl, Validators } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
-import { Customer } from '../types';
+import { animate, style, transition, trigger } from '@angular/animations';
+import { PieChartComponent } from '../pie-chart/pie-chart.component';
 
 const fb = new FormBuilder().nonNullable;
 
@@ -17,8 +11,24 @@ const fb = new FormBuilder().nonNullable;
   selector: 'app-calculator-form',
   templateUrl: './calculator-form.component.html',
   styleUrls: ['./calculator-form.component.css'],
+
+  animations: [
+    trigger('form2Animation', [
+      transition(':enter', [
+        style({ opacity: 0, transform: 'translateX(50px)' }),
+        animate('900ms', style({ opacity: 1, transform: 'translateX(0)' })),
+      ]),
+      transition(':leave', [
+        animate('500ms', style({ opacity: 0, transform: 'translateX(50px)' })),
+      ]),
+    ]),
+  ],
 })
 export class CalculatorFormComponent {
+  private pieChart!: any;
+
+  @ViewChild(PieChartComponent) PieChartComponent!: PieChartComponent;
+
   title = 'json-read-example';
   citiesInfo: any;
   url: string = './assets/Cities.json';
@@ -108,6 +118,16 @@ export class CalculatorFormComponent {
     { updateOn: 'blur' }
   );
 
+  showColumn2 = false;
+  ngAfterViewInit() {
+    const calculateBtn = document.getElementById('calculate-btn');
+    const column2 = document.querySelector('.column2');
+
+    calculateBtn?.addEventListener('click', () => {
+      column2?.classList.add('show');
+    });
+  }
+
   get homePrice() {
     return this.calculateForm.get(
       'homePrice'
@@ -140,8 +160,8 @@ export class CalculatorFormComponent {
 
   onCalculate() {
     this.actionText = 'Calculated';
-    const column2 = document.querySelector('.column2') as HTMLElement;
-    column2.style.display = 'block';
+    this.showColumn2 = true;
+    this.pieChart.animateChart();
   }
   onSubmit() {
     if (this.calculateForm.valid) {
@@ -151,6 +171,7 @@ export class CalculatorFormComponent {
       alert('Please fill out all required fields correctly.');
     }
   }
+
   onChange() {}
   showAdvancedOptions = false;
 }
