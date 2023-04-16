@@ -51,4 +51,6 @@ export class PopupFormComponent {
   onPostFormReset() {
     this.postForm.reset();
   }
+
+  
 }

@@ -9,101 +9,106 @@
   </head>
 
   <body>
-    <div class="popUpForm" id="popUpForm">
-      <form
-        class="box"
-        [formGroup]="postForm"
-        (ngSubmit)="onPostFormSubmit()"
-        (reset)="onPostFormReset()"
-        class="formContainer"
-      >
-        <mat-icon
-          type="button"
-          class="btnClose"
-          aria-label="Close"
-          onclick="document.getElementById('popUpForm').style.display='none'"
-          >cancel</mat-icon
+    <div class="modalContainer" id="modalContainer">
+      <div class="popUpForm" id="popUpForm" #popUpForm>
+        <form
+          class="box"
+          [formGroup]="postForm"
+          (ngSubmit)="onPostFormSubmit()"
+          (reset)="onPostFormReset()"
+          class="formContainer"
         >
-
-        <h3 class="titlespan">
-          Please enter your personal data to get personal offer:
-        </h3>
-
-        <mat-form-field class="example-form-field" appearance="outline">
-          <mat-label>Name:</mat-label>
-          <input
-            matInput
-            type="text"
-            formControlName="name"
-            id="name"
-            maxlength="15"
-            required
-          />
-          <mat-error *ngIf="postForm.controls.name.errors?.['required']">
-            Name is required.
-          </mat-error>
-          <button
-            matSuffix
-            mat-icon-button
-            aria-label="Clear"
-            *ngIf="name.value"
-            (click)="name.setValue('')"
+          <mat-icon
+            type="button"
+            class="btnClose"
+            aria-label="Close"
+            onclick="document.getElementById('popUpForm').style.display='none'"
+            onclick="document.getElementById('modalContainer').style.display='none'"
+            >cancel</mat-icon
           >
-            <mat-icon>close</mat-icon>
-          </button>
-        </mat-form-field>
 
-        <mat-form-field class="example-form-field" appearance="outline">
-          <mat-label>Phone number:</mat-label>
-          <input
-            matInput
-            type="text"
-            formControlName="phoneNumber"
-            id="phoneNumber"
-            required
-          />
-          <mat-error *ngIf="postForm.controls.phoneNumber.errors?.['required']">
-            Phone number is required.
-          </mat-error>
-          <button
-            *ngIf="phoneNumber.value"
-            matSuffix
-            mat-icon-button
-            aria-label="Clear"
-            (click)="phoneNumber.setValue('')"
-          >
-            <mat-icon>close</mat-icon>
-          </button>
-        </mat-form-field>
+          <h3 class="titlespan">
+            Please enter your personal data to get personal offer:
+          </h3>
 
-        <mat-form-field class="example-form-field" appearance="outline">
-          <mat-label>Email</mat-label>
-          <input
-            matInput
-            type="email"
-            formControlName="email"
-            id="email"
-            required
-          />
-          <mat-error *ngIf="postForm.controls.email.errors?.['required']">
-            Email is required.
-          </mat-error>
-          <button
-            *ngIf="email.value"
-            matSuffix
-            mat-icon-button
-            aria-label="Clear"
-            (click)="email.setValue('')"
-          >
-            <mat-icon>close</mat-icon>
-          </button>
-        </mat-form-field>
-        <div class="sendBtnCotainer" id="sendBtnCotainer">
-          <button mat-button type="submit" class="sendBtn" id="sendBtn">
-            Send
-          </button>
-        </div>
-      </form>
+          <mat-form-field class="example-form-field" appearance="outline">
+            <mat-label>Name:</mat-label>
+            <input
+              matInput
+              type="text"
+              formControlName="name"
+              id="name"
+              maxlength="15"
+              required
+            />
+            <mat-error *ngIf="postForm.controls.name.errors?.['required']">
+              Name is required.
+            </mat-error>
+            <button
+              matSuffix
+              mat-icon-button
+              aria-label="Clear"
+              *ngIf="name.value"
+              (click)="name.setValue('')"
+            >
+              <mat-icon>close</mat-icon>
+            </button>
+          </mat-form-field>
+
+          <mat-form-field class="example-form-field" appearance="outline">
+            <mat-label>Phone number:</mat-label>
+            <input
+              matInput
+              type="text"
+              formControlName="phoneNumber"
+              id="phoneNumber"
+              required
+            />
+            <mat-error
+              *ngIf="postForm.controls.phoneNumber.errors?.['required']"
+            >
+              Phone number is required.
+            </mat-error>
+            <button
+              *ngIf="phoneNumber.value"
+              matSuffix
+              mat-icon-button
+              aria-label="Clear"
+              (click)="phoneNumber.setValue('')"
+            >
+              <mat-icon>close</mat-icon>
+            </button>
+          </mat-form-field>
+
+          <mat-form-field class="example-form-field" appearance="outline">
+            <mat-label>Email</mat-label>
+            <input
+              matInput
+              type="email"
+              formControlName="email"
+              id="email"
+              required
+            />
+            <mat-error *ngIf="postForm.controls.email.errors?.['required']">
+              Email is required.
+            </mat-error>
+            <button
+              *ngIf="email.value"
+              matSuffix
+              mat-icon-button
+              aria-label="Clear"
+              (click)="email.setValue('')"
+            >
+              <mat-icon>close</mat-icon>
+            </button>
+          </mat-form-field>
+          <div class="sendBtnCotainer" id="sendBtnCotainer">
+            <button mat-button type="submit" class="sendBtn" id="sendBtn">
+              Send
+            </button>
+          </div>
+        </form>
+      </div>
     </div>
   </body>
 </html>
