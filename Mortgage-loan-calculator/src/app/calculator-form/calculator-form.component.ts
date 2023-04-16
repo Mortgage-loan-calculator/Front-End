@@ -132,8 +132,9 @@ export class CalculatorFormComponent {
     return this.calculateForm.get('childrenToggle') as FormControl;
   }
 
-  get citySelect() {
-    return this.calculateForm.get('citySelect')?.value;
+  public citySelect(city: string) {
+    // return this.calculateForm.get('citySelect')?.value;
+    return city;
   }
 
   actionText: string = '';
@@ -144,14 +145,12 @@ export class CalculatorFormComponent {
     column2.style.display = 'block';
   }
   onSubmit() {
-
     if (this.calculateForm.valid) {
       this.actionText = 'Submitted form';
       const calculateFormData = this.calculateForm.value;
     } else {
       alert('Please fill out all required fields correctly.');
     }
-
   }
   onChange() {}
   showAdvancedOptions = false;
