@@ -4,6 +4,8 @@ import { FormBuilder, FormControl, Validators } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { animate, style, transition, trigger } from '@angular/animations';
 import { PieChartComponent } from '../pie-chart/pie-chart.component';
+import { CalculatorService } from './service/calculator.service';
+import { CalculateFormDto } from './calculate-form-dto';
 
 const fb = new FormBuilder().nonNullable;
 
@@ -30,16 +32,16 @@ export class CalculatorFormComponent {
   @ViewChild(PieChartComponent) PieChartComponent!: PieChartComponent;
 
   title = 'json-read-example';
-  citiesInfo: any;
-  url: string = './assets/Cities.json';
+  citiesInfo$: any;
+  calculateFormDto: CalculateFormDto = {} as CalculateFormDto;
 
-  constructor(private http: HttpClient) {}
+  constructor(private calculatorService: CalculatorService) {
+    this.citiesInfo$ = calculatorService.getCities();
+  }
 
   ngOnInit() {
-    this.http.get(this.url).subscribe((res) => {
-      this.citiesInfo = res;
-    });
   }
+
   loanOptions: Options = {
     floor: 1,
     ceil: 30,
@@ -160,6 +162,20 @@ export class CalculatorFormComponent {
   actionText: string = '';
 
   onCalculate() {
+
+    this.calculateFormDto = this.calculateForm.value;
+    this.calculatorService.sendData(this.calculateFormDto).subscribe((data: CalculateFormDto) => {
+      this.calculateFormDto = data;
+    });
+
+    this.calculatorService
+        .getCalculationResults(this.calculateFormDto.homePrice, 
+                              this.calculateFormDto.familyIncome, 
+                              this.calculateFormDto.loanSlider).subscribe((data: CalculateFormDto) => {
+                                this.calculateFormDto = data;
+                              });
+
+
     this.actionText = 'Calculated';
     this.showColumn2 = true;
     this.pieChart.animateChart();

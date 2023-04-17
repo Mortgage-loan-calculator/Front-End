@@ -129,7 +129,7 @@
                         City of the family's residence:
                       </div>
                       <app-autocomplete
-                        [options]="citiesInfo"
+                        [options]="citiesInfo$"
                         (onChangeEvent)="citySelect($event)"
                       ></app-autocomplete>
                     </div>
@@ -170,8 +170,8 @@
                         <mat-form-field
                           class="mat-form-field"
                           appearance="outline"
-                        >
-                          <input matInput formControlName="loanAmount" />
+                        >{{calculateFormDto.maxLoan}}
+                          <input matInput formControlName="loanAmount" readonly />
                         </mat-form-field>
                       </div>
                       <div class="grid-item">
@@ -183,8 +183,8 @@
                         <mat-form-field
                           class="mat-form-field"
                           appearance="outline"
-                        >
-                          <input matInput formControlName="totalPaid" />
+                        >{{calculateFormDto.totalInterestPaid}}
+                          <input matInput formControlName="totalPaid" readonly />
                         </mat-form-field>
                       </div>
 
@@ -197,8 +197,8 @@
                         <mat-form-field
                           class="mat-form-field"
                           appearance="outline"
-                        >
-                          <input matInput formControlName="fee" />
+                        >{{calculateFormDto.agreementFee}}
+                          <input matInput formControlName="fee" readonly />
                         </mat-form-field>
                       </div>
                       <div class="grid-item">
@@ -206,8 +206,8 @@
                         <mat-form-field
                           class="mat-form-field"
                           appearance="outline"
-                        >
-                          <input matInput formControlName="paymentSum" />
+                        >{{calculateFormDto.totalPaymentSum}}
+                          <input matInput formControlName="paymentSum" readonly />
                         </mat-form-field>
                       </div>
                     </div>
