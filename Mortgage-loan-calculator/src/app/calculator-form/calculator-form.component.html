@@ -265,7 +265,7 @@
                 <button mat-button type="apply" class="my-button apply-button">
                   Apply
                 </button>
-                <button mat-button type="apply" class="my-button apply-button" 
+                <button mat-button type="apply" class="my-button apply-button"
                 (click)="showPopupForm()">
                   Offers
                 </button>
@@ -277,4 +277,4 @@
     </div>
   </div>
 </div>
-<app-popup-form *ngIf="showPopup"></app-popup-form>
+<app-popup-form *ngIf="showPopup" (onClose)="showPopup = false"></app-popup-form>
