@@ -2,10 +2,10 @@ export interface CalculateFormDto {
 
     homePrice?: any;
     monthlyFamilyIncome?: any;
-    loanTerm?: any;
-    familyMembers?: any;
-    haveChildren?: any;
-    city?: any
+    loanSlider?: any;
+    familyMembersSlider?: any;
+    childrenToggle?: any;
+    citySelect?: any
 
     maxLoan?: any;
     totalInterestPaid?: any;

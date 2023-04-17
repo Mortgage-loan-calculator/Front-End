@@ -1,4 +1,4 @@
-import { Options } from '@angular-slider/ngx-slider';
+import { LabelType, Options } from '@angular-slider/ngx-slider';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormControl, Validators } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
@@ -32,6 +32,19 @@ interface City {
 export class CalculatorFormComponent implements OnInit {
   private pieChart!: any;
 
+  adultOptions: Options = {
+    floor: 1,
+    ceil: 5,
+    translate: (value: number, label: LabelType): string => {
+      if (label === LabelType.Floor) {
+        return value.toString();
+      } else if (label === LabelType.Ceil) {
+        return '5+';
+      } else {
+        return value.toString();
+      }
+    },
+  };
   @ViewChild(PieChartComponent) PieChartComponent!: PieChartComponent;
 
   title = 'json-read-example';
@@ -50,10 +63,7 @@ export class CalculatorFormComponent implements OnInit {
     floor: 1,
     ceil: 30,
   };
-  adultOptions: Options = {
-    floor: 1,
-    ceil: 5,
-  };
+
   numbersOnly(control: FormControl): { [key: string]: any } | null {
     const value = control.value;
     const isValid = /^[0-9]*$/.test(value) && value >= 0;
@@ -96,10 +106,10 @@ export class CalculatorFormComponent implements OnInit {
           this.validateMaxNumbers.bind(this),
         ],
       ],
-      loanTerm: [''],
-      familyMembers: [''],
-      haveChildren: [''],
-      // city: ['', Validators.required],
+      loanSlider: [1],
+      familyMemberSlider: [1],
+      childrenToggle: [false],
+      citySelect: ['', [Validators.required]],
     },
     { updateOn: 'blur' }
   );
@@ -151,16 +161,16 @@ export class CalculatorFormComponent implements OnInit {
     ) as unknown as FormControl<string>;
   }
 
-  get loanTerm() {
-    return this.calculateForm.get('loanTerm') as FormControl;
+  get loanSlider() {
+    return this.calculateForm.get('loanSlider') as FormControl;
   }
 
-  get familyMembers() {
-    return this.calculateForm.get('familyMembers') as FormControl;
+  get familyMemberSlider() {
+    return this.calculateForm.get('familyMemberSlider') as FormControl;
   }
 
-  get haveChildren() {
-    return this.calculateForm.get('haveChildren') as FormControl;
+  get childrenToggle() {
+    return this.calculateForm.get('childrenToggle') as FormControl;
   }
 
   public citySelect(city: string) {
@@ -182,7 +192,7 @@ export class CalculatorFormComponent implements OnInit {
 
       .getCalculationResults(
         this.calculateFormDto.homePrice,
-        this.calculateFormDto.loanTerm
+        this.calculateFormDto.loanSlider
       )
       .subscribe((data: CalculateFormDto) => {
         this.calculateFormDto = data;
