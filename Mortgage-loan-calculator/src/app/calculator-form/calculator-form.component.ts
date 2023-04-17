@@ -175,4 +175,10 @@ export class CalculatorFormComponent {
 
   onChange() {}
   showAdvancedOptions = false;
+
+  showPopup = false;
+
+  showPopupForm() {
+    this.showPopup = true;
+  }
 }

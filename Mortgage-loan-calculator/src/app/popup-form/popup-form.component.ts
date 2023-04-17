@@ -1,6 +1,6 @@
 import { getLocaleDateTimeFormat } from '@angular/common';
 import { Component } from '@angular/core';
-import { FormBuilder, FormControl } from '@angular/forms';
+import { FormBuilder, FormControl, Validators } from '@angular/forms';
 import { tap, timestamp } from 'rxjs';
 import { CustomerService } from '../services/customer.service';
 import { Customer } from '../types';
@@ -16,9 +16,9 @@ export class PopupFormComponent {
   constructor(private customerservice: CustomerService) {}
 
   postForm = fb.group({
-    name: [''],
-    phoneNumber: [''],
-    email: [''],
+    name: ['', [Validators.required, Validators.maxLength(15)]],
+    phoneNumber: ['', [Validators.required, Validators.maxLength(15)]],
+    email: ['', [Validators.required, Validators.email]],
     ipAddress: [''],
     time: [new Date()],
   });
@@ -51,6 +51,4 @@ export class PopupFormComponent {
   onPostFormReset() {
     this.postForm.reset();
   }
-
-  
 }

@@ -92,6 +92,9 @@
             <mat-error *ngIf="postForm.controls.email.errors?.['required']">
               Email is required.
             </mat-error>
+            <mat-error *ngIf="email.hasError('email')">
+              Wrong email format.
+            </mat-error>
             <button
               *ngIf="email.value"
               matSuffix
