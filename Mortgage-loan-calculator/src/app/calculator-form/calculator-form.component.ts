@@ -71,6 +71,7 @@ export class CalculatorFormComponent {
 
   calculateForm = fb.group(
     {
+      partnerToggle:[false],
       homePrice: [
         '',
         [
@@ -94,7 +95,7 @@ export class CalculatorFormComponent {
       loanSlider: [1],
       familyMemberSlider: [1],
       childrenToggle: [false],
-      citySelect: ['', Validators.required],
+      // citySelect: ['', Validators.required],
     },
     { updateOn: 'blur' }
   );
@@ -128,6 +129,10 @@ export class CalculatorFormComponent {
     calculateBtn?.addEventListener('click', () => {
       column2?.classList.add('show');
     });
+  }
+
+  get partnerToggle() {
+    return this.calculateForm.get('partnerToggle') as FormControl;
   }
 
   get homePrice() {
