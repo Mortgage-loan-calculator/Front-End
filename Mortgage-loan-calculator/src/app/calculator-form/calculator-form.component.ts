@@ -1,4 +1,4 @@
-import { Options } from '@angular-slider/ngx-slider';
+import { LabelType, Options } from '@angular-slider/ngx-slider';
 import { Component, ViewChild } from '@angular/core';
 import { FormBuilder, FormControl, Validators } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
@@ -27,6 +27,19 @@ const fb = new FormBuilder().nonNullable;
 export class CalculatorFormComponent {
   private pieChart!: any;
 
+  adultOptions: Options = {
+    floor: 1,
+    ceil: 5,
+    translate: (value: number, label: LabelType): string => {
+      if (label === LabelType.Floor) {
+        return value.toString();
+      } else if (label === LabelType.Ceil) {
+        return '5+';
+      } else {
+        return value.toString();
+      }
+    },
+  };
   @ViewChild(PieChartComponent) PieChartComponent!: PieChartComponent;
 
   title = 'json-read-example';
@@ -44,10 +57,7 @@ export class CalculatorFormComponent {
     floor: 1,
     ceil: 30,
   };
-  adultOptions: Options = {
-    floor: 1,
-    ceil: 5,
-  };
+
   numbersOnly(control: FormControl): { [key: string]: any } | null {
     const value = control.value;
     const isValid = /^[0-9]*$/.test(value) && value >= 0;
@@ -91,7 +101,7 @@ export class CalculatorFormComponent {
       ],
       loanSlider: [1],
       familyMemberSlider: [1],
-      childrenToggle: [false],
+      childrenToggle: ['', Validators.required],
       citySelect: ['', Validators.required],
     },
     { updateOn: 'blur' }
