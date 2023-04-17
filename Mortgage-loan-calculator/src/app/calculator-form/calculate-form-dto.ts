@@ -1,5 +1,6 @@
 export interface CalculateFormDto {
 
+    partnerToggle?: boolean;
     homePrice?: any;
     familyIncome?: any;
     loanSlider?: any;
