@@ -33,18 +33,19 @@ export class CalculatorFormComponent implements OnInit {
   private pieChart!: any;
 
   adultOptions: Options = {
-    floor: 1,
+    floor: 0,
     ceil: 5,
     translate: (value: number, label: LabelType): string => {
       if (label === LabelType.Floor) {
         return value.toString();
-      } else if (label === LabelType.Ceil) {
+      } else if (value >= 5) {
         return '5+';
       } else {
         return value.toString();
       }
     },
   };
+
   @ViewChild(PieChartComponent) PieChartComponent!: PieChartComponent;
 
   title = 'json-read-example';
@@ -106,8 +107,14 @@ export class CalculatorFormComponent implements OnInit {
           this.validateMaxNumbers.bind(this),
         ],
       ],
-      loanSlider: [1],
-      familyMemberSlider: [1],
+      loanSlider: [
+        0,
+        [Validators.required, Validators.min(1), Validators.max(30)],
+      ],
+      familyMemberSlider: [
+        0,
+        [Validators.required, Validators.min(1), Validators.max(30)],
+      ],
       childrenToggle: [false],
       citySelect: ['', [Validators.required]],
     },
