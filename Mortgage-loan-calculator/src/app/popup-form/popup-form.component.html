@@ -44,7 +44,11 @@
             <mat-error *ngIf="postForm.controls.name.errors?.['required']">
               Name is required.
             </mat-error>
-        
+            <mat-error
+            *ngIf="postForm.controls.name.errors?.['maxNumbersReached']"
+          >
+            Maximum input of 30 numbers reached.
+          </mat-error>
             <button
               matSuffix
               mat-icon-button
@@ -55,7 +59,7 @@
               <mat-icon>close</mat-icon>
             </button>
           </mat-form-field>
-
+          <p>
           <mat-form-field class="example-form-field" appearance="outline">
             <mat-label>Phone number:</mat-label>
             <input
@@ -63,6 +67,8 @@
               type="text"
               formControlName="phoneNumber"
               id="phoneNumber"
+              maxlength="20"
+
             />
 
             <button
@@ -75,7 +81,7 @@
               <mat-icon>close</mat-icon>
             </button>
           </mat-form-field>
-
+          <p>
           <mat-form-field class="example-form-field" appearance="outline">
             <mat-label>Email</mat-label>
             <input

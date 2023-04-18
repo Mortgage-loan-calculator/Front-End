@@ -60,7 +60,7 @@ export class CalculatorFormComponent implements OnInit {
   }
 
   loanOptions: Options = {
-    floor: 1,
+    floor: 0,
     ceil: 30,
   };
 
