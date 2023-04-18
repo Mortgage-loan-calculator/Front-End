@@ -1,8 +1,8 @@
 <head>
   <script src="./show.js"></script>
 </head>
-<div  class="formOuter">
-  <div class="formBlock" >
+<div class="formOuter">
+  <div class="formBlock">
     <h2>Mortgage loan calculator</h2>
 
     <div class="orange">
@@ -112,27 +112,11 @@
                     ></mat-slide-toggle>
                   </div>
 
-                  <!-- <div
-                    class="icon-button-container"
-                    (click)="showAdvancedOptions = !showAdvancedOptions"
-                  >
-                    <mat-icon>keyboard_arrow_right</mat-icon>
-                    <button mat-button>
-                      {{ showAdvancedOptions ? "Hide" : "Show" }} advanced
-                      options
-                    </button>
-                  </div> -->
-
-                  <div *ngIf="showAdvancedOptions" class="advanced-options">
-                    <div class="dropdown-container">
-                      <div class="dropdown-label">
-                        City of the family's residence:
-                      </div>
-                      <app-autocomplete
-                        [options]="citiesInfo$"
-                        (onChangeEvent)="citySelect($event)"
-                      ></app-autocomplete>
+                  <div class="dropdown-container">
+                    <div class="dropdown-label">
+                      City of the family's residence:
                     </div>
+                    <app-autocomplete [options]="citiesInfo"></app-autocomplete>
                   </div>
                   <div class="button-container">
                     <button
@@ -155,8 +139,12 @@
                 >
                   <!-- {{calculateForm.value | json}} -->
                   <div class="chart-container-div">
-                    <app-pie-chart></app-pie-chart
-                    ><mat-divider [vertical]="true"></mat-divider>
+                    <app-pie-chart
+                      [loanAmount]="calculateFormDto.maxLoan"
+                      [intrestPaid]="calculateFormDto.totalInterestPaid"
+                      [agreementFee]="calculateFormDto.agreementFee"
+                    ></app-pie-chart>
+                    <mat-divider [vertical]="true"></mat-divider>
                   </div>
 
                   <div class="form2">
@@ -170,8 +158,12 @@
                         <mat-form-field
                           class="mat-form-field"
                           appearance="outline"
-                        >{{calculateFormDto.maxLoan}}
-                          <input matInput formControlName="loanAmount" readonly />
+                          >{{ calculateFormDto.maxLoan }}
+                          <input
+                            matInput
+                            formControlName="loanAmount"
+                            readonly
+                          />
                         </mat-form-field>
                       </div>
                       <div class="grid-item">
@@ -183,8 +175,12 @@
                         <mat-form-field
                           class="mat-form-field"
                           appearance="outline"
-                        >{{calculateFormDto.totalInterestPaid}}
-                          <input matInput formControlName="totalPaid" readonly />
+                          >{{ calculateFormDto.totalInterestPaid }}
+                          <input
+                            matInput
+                            formControlName="totalPaid"
+                            readonly
+                          />
                         </mat-form-field>
                       </div>
 
@@ -197,7 +193,7 @@
                         <mat-form-field
                           class="mat-form-field"
                           appearance="outline"
-                        >{{calculateFormDto.agreementFee}}
+                          >{{ calculateFormDto.agreementFee }}
                           <input matInput formControlName="fee" readonly />
                         </mat-form-field>
                       </div>
@@ -206,8 +202,12 @@
                         <mat-form-field
                           class="mat-form-field"
                           appearance="outline"
-                        >{{calculateFormDto.totalPaymentSum}}
-                          <input matInput formControlName="paymentSum" readonly />
+                          >{{ calculateFormDto.totalPaymentSum }}
+                          <input
+                            matInput
+                            formControlName="paymentSum"
+                            readonly
+                          />
                         </mat-form-field>
                       </div>
                     </div>
@@ -261,15 +261,18 @@
                   </mat-form-field>
                 </div>
               </div>
-              <div class="button-container">
+             <div class="button-container">
                 <button mat-button type="apply" class="my-button apply-button">
                   Apply
                 </button>
-                <button mat-button type="apply" class="my-button apply-button" 
+
+                <button mat-button type="apply" class="my-button apply-button"
                 (click)="showPopupForm()">
+
                   Offers
                 </button>
               </div>
+              
             </form>
           </mat-tab>
         </mat-tab-group>
@@ -277,4 +280,4 @@
     </div>
   </div>
 </div>
-<app-popup-form *ngIf="showPopup"></app-popup-form>
+<app-popup-form *ngIf="showPopup" (onClose)="showPopup = false"></app-popup-form>

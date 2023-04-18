@@ -3,12 +3,11 @@
     <mat-label>City</mat-label>
     <input
       type="text"
-      placeholder="Pick one"
+      placeholder="City name"
       aria-label="City"
       matInput
       [formControl]="myControl"
       [matAutocomplete]="auto"
-      (blur)="selectCityValue(myControl.value)"
     />
     <mat-autocomplete #auto="matAutocomplete">
       <mat-option
