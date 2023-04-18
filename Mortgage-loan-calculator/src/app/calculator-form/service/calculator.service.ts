@@ -22,10 +22,9 @@ export class CalculatorService {
     return this.http.post<CalculateFormDto>('https://mortgage-loan-calculator-back-end.onrender.com/calculate', calculateFormDto);
   }
 
-  getCalculationResults(homePrice: number, monthlyIncome: number, loanTerm: number): Observable<CalculateFormDto> {
+  getCalculationResults(homePrice: number, loanTerm: number): Observable<CalculateFormDto> {
     const params = new HttpParams()
       .set('homePrice', homePrice.toString())
-      .set('monthlyIncome', monthlyIncome.toString())
       .set('loanTerm', loanTerm.toString());
   
     return this.http.get<CalculateFormDto>('https://mortgage-loan-calculator-back-end.onrender.com/calculate', { params });

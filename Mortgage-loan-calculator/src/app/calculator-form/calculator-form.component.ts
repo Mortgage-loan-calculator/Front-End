@@ -179,8 +179,8 @@ export class CalculatorFormComponent implements OnInit {
     });
 
     this.calculatorService
+
         .getCalculationResults(this.calculateFormDto.homePrice,
-                              this.calculateFormDto.familyIncome,
                               this.calculateFormDto.loanSlider).subscribe((data: CalculateFormDto) => {
                                 this.calculateFormDto = data;
                               });
