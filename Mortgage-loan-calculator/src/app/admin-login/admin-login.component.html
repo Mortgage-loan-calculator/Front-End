@@ -1,19 +1,39 @@
 <div class="box">
-  <mat-card style="align-items: center;">
+  <mat-card style="align-items: center">
     <mat-card-header>
-      <mat-card-title style="margin-bottom: 20px;">Admin Login</mat-card-title>
+      <mat-card-title style="margin-bottom: 20px">Admin Login</mat-card-title>
     </mat-card-header>
     <mat-card-content>
       <form [formGroup]="loginForm" (ngSubmit)="onLoginFormSubmit()">
-
         <mat-form-field class="mat-form-field" appearance="outline">
-          <input type="text" matInput placeholder="Username" formControlName="username">
-        </mat-form-field><br>
+          <input
+            type="text"
+            matInput
+            placeholder="Username"
+            formControlName="username"
+          /> </mat-form-field
+        ><br />
         <mat-form-field class="mat-form-field" appearance="outline">
-          <input type="password" matInput placeholder="Password" formControlName="password">
+          <input
+            type="password"
+            matInput
+            placeholder="Password"
+            formControlName="password"
+          />
+          <mat-error
+            *ngIf="loginForm.controls.password.errors?.['required'] || 
+                  loginForm.controls.password.errors?.['minlength'] || 
+                  loginForm.controls.password.errors?.['pattern']"
+          >
+            Password should contain 9 characters, one uppercase and one number
+          </mat-error>
         </mat-form-field>
         <div class="button">
-          <button mat-button type="login" class="my-button login-button">Login</button>
+          <button mat-button type="login" class="my-button login-button">
+            Login
+          </button>
         </div>
       </form>
     </mat-card-content>
+  </mat-card>
+</div>
