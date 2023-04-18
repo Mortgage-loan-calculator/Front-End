@@ -132,7 +132,6 @@ export class CalculatorFormComponent {
   ngAfterViewInit() {
     const calculateBtn = document.getElementById('calculate-btn');
     const column2 = document.querySelector('.column2');
-
     calculateBtn?.addEventListener('click', () => {
       column2?.classList.add('show');
     });
@@ -185,7 +184,6 @@ export class CalculatorFormComponent {
 
   onChange() {}
   showAdvancedOptions = false;
-
   showPopup = false;
 
   showPopupForm() {
