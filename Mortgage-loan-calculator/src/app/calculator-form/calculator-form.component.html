@@ -88,10 +88,21 @@
                   <div class="slider-container">
                     <div class="slider-label">Loan term:</div>
                     <ngx-slider
+                      required
                       class="loan-slider"
                       formControlName="loanSlider"
                       [options]="loanOptions"
                     ></ngx-slider>
+                    <mat-error
+                      *ngIf="
+                        calculateForm.get('loanSlider')?.invalid &&
+                        (calculateForm.get('loanSlider')?.dirty ||
+                          calculateForm.get('loanSlider')?.touched)
+                      "
+                      class="error-message"
+                    >
+                      Please select a value between 1 and 30.
+                    </mat-error>
                   </div>
                   <div class="slider-container">
                     <div class="slider-label">
@@ -102,6 +113,16 @@
                       formControlName="familyMemberSlider"
                       [options]="adultOptions"
                     ></ngx-slider>
+                    <mat-error
+                      *ngIf="
+                        calculateForm.get('familyMemberSlider')?.invalid &&
+                        (calculateForm.get('familyMemberSlider')?.dirty ||
+                          calculateForm.get('familyMemberSlider')?.touched)
+                      "
+                      class="error-message"
+                    >
+                      Please select a value between 1 and 30.
+                    </mat-error>
                   </div>
 
                   <div class="toggle-container">
@@ -251,13 +272,13 @@
                   </mat-form-field>
                 </div>
                 <div class="grid-item">
-                  <span matPrefix>Your estimated montly payment</span>
+                  <span matPrefix>Your estimated monthly payment</span>
                   <mat-form-field class="mat-form-field" appearance="outline">
                     <input matInput formControlName="estimatedPayment" />
                   </mat-form-field>
                 </div>
                 <div class="grid-item">
-                  <span matPrefix>Maximum montly loan payment</span>
+                  <span matPrefix>Maximum monthly loan payment</span>
                   <mat-form-field class="mat-form-field" appearance="outline">
                     <input matInput formControlName="maxPayment" />
                   </mat-form-field>

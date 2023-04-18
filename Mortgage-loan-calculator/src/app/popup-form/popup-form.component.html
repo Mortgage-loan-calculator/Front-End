@@ -44,11 +44,12 @@
             <mat-error *ngIf="postForm.controls.name.errors?.['required']">
               Name is required.
             </mat-error>
-            <mat-error
-            *ngIf="postForm.controls.name.errors?.['maxNumbersReached']"
-          >
-            Maximum input of 30 numbers reached.
-          </mat-error>
+            <mat-error *ngIf="postForm.controls.name.errors?.['pattern']">
+              Only alphabets are allowed.
+            </mat-error>
+            <mat-error *ngIf="postForm.controls.name.errors?.['maxNumbersReached']">
+              Maximum input of 30 characters reached.
+            </mat-error>
             <button
               matSuffix
               mat-icon-button
@@ -59,6 +60,7 @@
               <mat-icon>close</mat-icon>
             </button>
           </mat-form-field>
+
           <p>
           <mat-form-field class="example-form-field" appearance="outline">
             <mat-label>Phone number:</mat-label>
@@ -90,12 +92,17 @@
               formControlName="email"
               id="email"
               required
+              maxlength="30"
+
             />
+            <mat-error *ngIf="postForm.controls.email.errors?.['maxNumbersReached']">
+              Maximum input of 30 characters reached.
+            </mat-error>
             <mat-error *ngIf="postForm.controls.email.errors?.['required']">
               Email is required.
             </mat-error>
-            <mat-error *ngIf="email.hasError('email')">
-              Wrong email format.
+            <mat-error *ngIf="postForm.controls.email.errors?.['invalidEmail']">
+              Invalid email format. Please enter a valid email.
             </mat-error>
             <button
               *ngIf="email.value"
