@@ -7,6 +7,7 @@ import { CalculateFormDto } from '../calculate-form-dto';
 @Injectable({
   providedIn: 'root'
 })
+
 export class CalculatorService {
 
   url: string = './assets/Cities.json';
@@ -18,7 +19,7 @@ export class CalculatorService {
   }
 
   sendData(calculateFormDto: CalculateFormDto): Observable<CalculateFormDto> {
-    return this.http.post<CalculateFormDto>('/api/calculate', calculateFormDto);
+    return this.http.post<CalculateFormDto>('https://mortgage-loan-calculator-back-end.onrender.com/calculate', calculateFormDto);
   }
 
   getCalculationResults(homePrice: number, monthlyIncome: number, loanTerm: number): Observable<CalculateFormDto> {
@@ -27,6 +28,6 @@ export class CalculatorService {
       .set('monthlyIncome', monthlyIncome.toString())
       .set('loanTerm', loanTerm.toString());
   
-    return this.http.get<CalculateFormDto>('/api/calculate', { params });
+    return this.http.get<CalculateFormDto>('https://mortgage-loan-calculator-back-end.onrender.com/calculate', { params });
   }
 }

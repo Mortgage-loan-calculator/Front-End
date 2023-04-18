@@ -1,5 +1,5 @@
 import { Options } from '@angular-slider/ngx-slider';
-import { Component, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormControl, Validators } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { animate, style, transition, trigger } from '@angular/animations';
@@ -8,7 +8,10 @@ import { CalculatorService } from './service/calculator.service';
 import { CalculateFormDto } from './calculate-form-dto';
 
 const fb = new FormBuilder().nonNullable;
-
+interface City {
+  name: string;
+  [key: string]: any;
+}
 @Component({
   selector: 'app-calculator-form',
   templateUrl: './calculator-form.component.html',
@@ -26,20 +29,22 @@ const fb = new FormBuilder().nonNullable;
     ]),
   ],
 })
-export class CalculatorFormComponent {
+export class CalculatorFormComponent implements OnInit {
   private pieChart!: any;
 
   @ViewChild(PieChartComponent) PieChartComponent!: PieChartComponent;
 
   title = 'json-read-example';
-  citiesInfo$: any;
+  citiesInfo: City[] = [];
   calculateFormDto: CalculateFormDto = {} as CalculateFormDto;
 
   constructor(private calculatorService: CalculatorService) {
-    this.citiesInfo$ = calculatorService.getCities();
   }
 
   ngOnInit() {
+    this.calculatorService.getCities().subscribe((res) => {
+      this.citiesInfo = res;
+    });
   }
 
   loanOptions: Options = {
@@ -71,6 +76,7 @@ export class CalculatorFormComponent {
 
   calculateForm = fb.group(
     {
+      partnerToggle:[false],
       homePrice: [
         '',
         [
@@ -94,7 +100,7 @@ export class CalculatorFormComponent {
       loanSlider: [1],
       familyMemberSlider: [1],
       childrenToggle: [false],
-      citySelect: ['', Validators.required],
+      // citySelect: ['', Validators.required],
     },
     { updateOn: 'blur' }
   );
@@ -128,6 +134,10 @@ export class CalculatorFormComponent {
     calculateBtn?.addEventListener('click', () => {
       column2?.classList.add('show');
     });
+  }
+
+  get partnerToggle() {
+    return this.calculateForm.get('partnerToggle') as FormControl;
   }
 
   get homePrice() {
@@ -169,8 +179,8 @@ export class CalculatorFormComponent {
     });
 
     this.calculatorService
-        .getCalculationResults(this.calculateFormDto.homePrice, 
-                              this.calculateFormDto.familyIncome, 
+        .getCalculationResults(this.calculateFormDto.homePrice,
+                              this.calculateFormDto.familyIncome,
                               this.calculateFormDto.loanSlider).subscribe((data: CalculateFormDto) => {
                                 this.calculateFormDto = data;
                               });
@@ -197,4 +207,5 @@ export class CalculatorFormComponent {
   showPopupForm() {
     this.showPopup = true;
   }
+  
 }
