@@ -17,7 +17,7 @@ export class PopupFormComponent {
 
   postForm = fb.group({
     name: ['', [Validators.required, Validators.pattern(/^[a-zA-Z]{1,30}$/)]],
-    phoneNumber: ['', [Validators.required, Validators.maxLength(15)]],
+    phoneNumber: ['', [ Validators.maxLength(20)]],
     email: ['', [Validators.required, Validators.email]],
     ipAddress: [''],
     time: [new Date()],
