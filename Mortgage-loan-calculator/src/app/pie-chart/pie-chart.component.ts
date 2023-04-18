@@ -17,9 +17,9 @@ import Chart from 'chart.js/auto';
 export class PieChartComponent {
   @ViewChild('chartCanvas') chartCanvas?: ElementRef;
 
-  private _loanAmount: number = 2;
-  private _intrestPaid: number = 3;
-  private _agreementFee: number = 1;
+  private _loanAmount: number = 0;
+  private _intrestPaid: number = 0;
+  private _agreementFee: number = 0;
 
   public chart: any;
 
@@ -37,7 +37,6 @@ export class PieChartComponent {
 
   @Input() set loanAmount(value: number) {
     this._loanAmount = value;
-    this.updateChart();
   }
 
   get loanAmount(): number {
@@ -46,7 +45,6 @@ export class PieChartComponent {
 
   @Input() set intrestPaid(value: number) {
     this._intrestPaid = value;
-    this.updateChart();
   }
 
   get intrestPaid(): number {
@@ -55,7 +53,6 @@ export class PieChartComponent {
 
   @Input() set agreementFee(value: number) {
     this._agreementFee = value;
-    this.updateChart();
   }
 
   get agreementFee(): number {
