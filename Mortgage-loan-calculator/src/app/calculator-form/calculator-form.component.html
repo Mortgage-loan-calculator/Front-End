@@ -139,8 +139,12 @@
                 >
                   <!-- {{calculateForm.value | json}} -->
                   <div class="chart-container-div">
-                    <app-pie-chart></app-pie-chart
-                    ><mat-divider [vertical]="true"></mat-divider>
+                    <app-pie-chart
+                      [loanAmount]="calculateFormDto.maxLoan"
+                      [intrestPaid]="calculateFormDto.totalInterestPaid"
+                      [agreementFee]="calculateFormDto.agreementFee"
+                    ></app-pie-chart>
+                    <mat-divider [vertical]="true"></mat-divider>
                   </div>
 
                   <div class="form2">
@@ -261,8 +265,10 @@
                 <button mat-button type="apply" class="my-button apply-button">
                   Apply
                 </button>
+
                 <button mat-button type="apply" class="my-button apply-button"
                 (click)="showPopupForm()">
+
                   Offers
                 </button>
               </div>
