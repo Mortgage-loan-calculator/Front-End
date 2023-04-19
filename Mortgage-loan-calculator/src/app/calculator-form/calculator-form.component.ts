@@ -1,9 +1,15 @@
 import { LabelType, Options } from '@angular-slider/ngx-slider';
 import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
+
 import { FormBuilder, FormControl, Validators } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { animate, style, transition, trigger } from '@angular/animations';
 import { PieChartComponent } from '../pie-chart/pie-chart.component';
+
+import { Observable, map, startWith } from 'rxjs';
+
+import { CalculatorService } from './service/calculator.service';
+import { CalculateFormDto } from './calculate-form-dto';
 
 const fb = new FormBuilder().nonNullable;
 interface City {
@@ -70,11 +76,18 @@ export class CalculatorFormComponent implements OnInit {
   citiesInfo: City[] = [];
   calculateFormDto: CalculateFormDto = {} as CalculateFormDto;
 
-  constructor(private calculatorService: CalculatorService) {}
+  constructor(
+    private http: HttpClient,
+    private calculatorService: CalculatorService
+  ) {}
 
   ngOnInit() {
-    this.http.get(this.url).subscribe((res) => {
-      this.citiesInfo = res;
+    this.http.get('./assets/Cities.json').subscribe((res: any) => {
+      this.cityNames = res.map((city: any) => city.name);
+      this.filteredOptions = this.myControl.valueChanges.pipe(
+        startWith(''),
+        map((value) => this._filter(value || ''))
+      );
     });
   }
 
@@ -104,6 +117,8 @@ export class CalculatorFormComponent implements OnInit {
 
   calculateForm = fb.group(
     {
+      partnerToggle: [false],
+
       homePrice: [
         '',
         [
@@ -124,15 +139,9 @@ export class CalculatorFormComponent implements OnInit {
           this.validateMaxNumbers.bind(this),
         ],
       ],
-      loanSlider: [
-        0,
-        [Validators.required, Validators.min(1), Validators.max(30)],
-      ],
-      familyMemberSlider: [
-        0,
-        [Validators.required, Validators.min(1), Validators.max(30)],
-      ],
-      childrenToggle: ['', Validators.required],
+      loanSlider: [''],
+      familyMemberSlider: [''],
+      childrenToggle: [''],
       citySelect: ['', [Validators.required]],
     },
     { updateOn: 'blur' }
@@ -188,11 +197,11 @@ export class CalculatorFormComponent implements OnInit {
     return this.calculateForm.get('loanSlider') as FormControl;
   }
 
-  get familyMemberSlider() {
+  get familyMembers() {
     return this.calculateForm.get('familyMemberSlider') as FormControl;
   }
 
-  get childrenToggle() {
+  get haveChildren() {
     return this.calculateForm.get('childrenToggle') as FormControl;
   }
 
@@ -203,13 +212,24 @@ export class CalculatorFormComponent implements OnInit {
 
   actionText: string = '';
 
-
   onSubmit() {
-    console.log(this.myControl.valid);
-    console.log(this.calculateForm.controls.homePrice.value);
-
     if (this.calculateForm.valid) {
-      
+      this.calculateFormDto = this.calculateForm.value;
+      this.calculatorService
+        .sendData(this.calculateFormDto)
+        .subscribe((data: CalculateFormDto) => {
+          this.calculateFormDto = data;
+        });
+
+      this.calculatorService
+
+        .getCalculationResults(
+          this.calculateFormDto.homePrice,
+          this.calculateFormDto.loanSlider
+        )
+        .subscribe((data: CalculateFormDto) => {
+          this.calculateFormDto = data;
+        });
 
       this.actionText = 'Submitted form';
       const calculateFormData = this.calculateForm.value;
