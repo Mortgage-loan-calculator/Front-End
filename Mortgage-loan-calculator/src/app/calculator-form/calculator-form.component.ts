@@ -133,7 +133,7 @@ export class CalculatorFormComponent implements OnInit {
         [Validators.required, Validators.min(1), Validators.max(30)],
       ],
       childrenToggle: ['', Validators.required],
-      citySelect: ['', Validators.required],
+      citySelect: ['', [Validators.required]],
     },
     { updateOn: 'blur' }
   );
@@ -203,17 +203,14 @@ export class CalculatorFormComponent implements OnInit {
 
   actionText: string = '';
 
-  onCalculate() {
-    this.actionText = 'Calculated';
-    this.showColumn2 = true;
-    this.pieChart.animateChart();
-  }
+
   onSubmit() {
-    console.log(this.calculateForm.get('citySelect')?.valid);
-
-
+    console.log(this.myControl.valid);
+    console.log(this.calculateForm.controls.homePrice.value);
 
     if (this.calculateForm.valid) {
+      
+
       this.actionText = 'Submitted form';
       const calculateFormData = this.calculateForm.value;
       this.actionText = 'Calculated';

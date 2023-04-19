@@ -115,6 +115,7 @@
                     ></mat-slide-toggle>
                   </div>
 
+<<<<<<< HEAD
                   <!-- <div
                     class="icon-button-container"
                     (click)="showAdvancedOptions = !showAdvancedOptions"
@@ -125,6 +126,40 @@
                       options
                     </button>
                   </div> -->
+=======
+                  <div class="dropdown-container">
+                    <div class="dropdown-label">
+                      City of the family's residence:
+                    </div>
+
+                      <mat-form-field
+
+                        class="example-full-width"
+                        appearance="outline"
+
+                      >
+                        <mat-label>City</mat-label>
+                        <input
+                        formControlName="citySelect"
+
+                          type="text"
+                          placeholder="City name"
+                          aria-label="City"
+                          matInput
+
+                          [matAutocomplete]="auto"
+                          name="citySelect"
+                        />
+                        <mat-autocomplete #auto="matAutocomplete">
+                          <mat-option
+                            *ngFor="let option of filteredOptions | async"
+                            [value]="option"
+                          >
+                            {{ option }}
+                          </mat-option>
+                        </mat-autocomplete>
+                      </mat-form-field>
+>>>>>>> aa6ceb8 (myControl gets true)
 
                   <div *ngIf="showAdvancedOptions" class="advanced-options">
                     <div class="dropdown-container">
