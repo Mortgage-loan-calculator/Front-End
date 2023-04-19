@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormControl, Validators } from '@angular/forms';
+import { LoginService } from '../services/login.service';
+import { login } from './login';
 const fb = new FormBuilder().nonNullable;
 @Component({
   selector: 'app-admin-login',
@@ -7,6 +9,7 @@ const fb = new FormBuilder().nonNullable;
   styleUrls: ['./admin-login.component.css'],
 })
 export class AdminLoginComponent {
+  constructor(private LoginService: LoginService) {}
   loginForm = fb.group(
     {
       username: [''],
@@ -32,5 +35,6 @@ export class AdminLoginComponent {
   }
   onLoginFormSubmit() {
     const loginFormData = this.loginForm.value;
+    this.LoginService.PostLogin(loginFormData as unknown as login).subscribe();
   }
 }
