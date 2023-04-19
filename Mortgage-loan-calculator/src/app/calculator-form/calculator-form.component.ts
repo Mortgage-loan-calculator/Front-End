@@ -1,9 +1,10 @@
 import { LabelType, Options } from '@angular-slider/ngx-slider';
-import { Component, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, ViewChild } from '@angular/core';
 import { FormBuilder, FormControl, Validators } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { animate, style, transition, trigger } from '@angular/animations';
 import { PieChartComponent } from '../pie-chart/pie-chart.component';
+import { Observable, map, startWith } from 'rxjs';
 
 const fb = new FormBuilder().nonNullable;
 
@@ -28,7 +29,7 @@ export class CalculatorFormComponent {
   private pieChart!: any;
 
   adultOptions: Options = {
-    floor: 0,
+    floor: 1,
     ceil: 5,
     translate: (value: number, label: LabelType): string => {
       if (label === LabelType.Floor) {
@@ -41,8 +42,28 @@ export class CalculatorFormComponent {
     },
   };
 
-  @ViewChild(PieChartComponent) PieChartComponent!: PieChartComponent;
+  myControl = new FormControl('');
+  cityNames: string[] = [];
+  filteredOptions!: Observable<string[]>;
 
+  ngOnChanges() {
+    if (this.citiesInfo != null) {
+      this.cityNames = this.citiesInfo.map((city: any) => city.name);
+      this.filteredOptions = this.myControl.valueChanges.pipe(
+        startWith(''),
+        map((value) => this._filter(value || ''))
+      );
+    }
+  }
+
+  private _filter(value: string): string[] {
+    const filterValue = value.toLowerCase();
+    return this.cityNames.filter((name) =>
+      name.toLowerCase().includes(filterValue)
+    );
+  }
+
+  @ViewChild(PieChartComponent) PieChartComponent!: PieChartComponent;
   title = 'json-read-example';
   citiesInfo: any;
   url: string = './assets/Cities.json';
@@ -50,12 +71,16 @@ export class CalculatorFormComponent {
   constructor(private http: HttpClient) {}
 
   ngOnInit() {
-    this.http.get(this.url).subscribe((res) => {
-      this.citiesInfo = res;
+    this.http.get('./assets/Cities.json').subscribe((res: any) => {
+      this.cityNames = res.map((city: any) => city.name);
+      this.filteredOptions = this.myControl.valueChanges.pipe(
+        startWith(''),
+        map((value) => this._filter(value || ''))
+      );
     });
   }
   loanOptions: Options = {
-    floor: 0,
+    floor: 1,
     ceil: 30,
   };
 
@@ -80,6 +105,8 @@ export class CalculatorFormComponent {
 
   calculateForm = fb.group(
     {
+      partnerToggle: [''],
+
       homePrice: [
         '',
         [
@@ -100,15 +127,9 @@ export class CalculatorFormComponent {
           this.validateMaxNumbers.bind(this),
         ],
       ],
-      loanSlider: [
-        0,
-        [Validators.required, Validators.min(1), Validators.max(30)],
-      ],
-      familyMemberSlider: [
-        0,
-        [Validators.required, Validators.min(1), Validators.max(30)],
-      ],
-      childrenToggle: ['', Validators.required],
+      loanSlider: [''],
+      familyMemberSlider: [''],
+      childrenToggle: [''],
       citySelect: ['', Validators.required],
     },
     { updateOn: 'blur' }
@@ -175,17 +196,18 @@ export class CalculatorFormComponent {
 
   actionText: string = '';
 
-  onCalculate() {
-    this.actionText = 'Calculated';
-    this.showColumn2 = true;
-    this.pieChart.animateChart();
-  }
+
   onSubmit() {
+    console.log(this.calculateForm.get('citySelect')?.valid);
+
+
+
     if (this.calculateForm.valid) {
       this.actionText = 'Submitted form';
       const calculateFormData = this.calculateForm.value;
-    } else {
-      alert('Please fill out all required fields correctly.');
+      this.actionText = 'Calculated';
+      this.showColumn2 = true;
+      this.pieChart.animateChart();
     }
   }
 

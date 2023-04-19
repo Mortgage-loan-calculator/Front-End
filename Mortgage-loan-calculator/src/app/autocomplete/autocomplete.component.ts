@@ -1,16 +1,9 @@
-import {
-  Component,
-  Input,
-  OnInit,
-  OnChanges,
-  Output,
-  EventEmitter,
-} from '@angular/core';
+import { Component, Input, OnInit, OnChanges } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
-import {} from '@angular/core';
-interface Option {
+
+interface City {
   name: string;
   [key: string]: any;
 }
@@ -22,19 +15,13 @@ interface Option {
 })
 export class AutocompleteComponent implements OnChanges {
   myControl = new FormControl('');
-  @Input() options: Option[] = [];
-  optionStrings: string[] = [];
+  @Input() options: City[] = [];
+  cityNames: string[] = [];
   filteredOptions!: Observable<string[]>;
-  @Output() onChangeEvent = new EventEmitter<string>();
 
-  selectCityValue(value: string | null) {
-    if (value != null) {
-      this.onChangeEvent.emit(value);
-    }
-  }
   ngOnChanges() {
     if (this.options != null) {
-      this.optionStrings = this.options.map((option) => option.name);
+      this.cityNames = this.options.map((city) => city.name);
       this.filteredOptions = this.myControl.valueChanges.pipe(
         startWith(''),
         map((value) => this._filter(value || ''))
@@ -45,8 +32,8 @@ export class AutocompleteComponent implements OnChanges {
   private _filter(value: string): string[] {
     const filterValue = value.toLowerCase();
 
-    return this.optionStrings.filter((option) =>
-      option.toLowerCase().includes(filterValue)
+    return this.cityNames.filter((name) =>
+      name.toLowerCase().includes(filterValue)
     );
   }
 }

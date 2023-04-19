@@ -28,24 +28,14 @@ export class PopupFormComponent {
       [
         Validators.required,
         Validators.pattern(/^[a-zA-Z\s]{1,30}$/),
-        this.validate.bind(this),
+        Validators.maxLength(30),
       ],
     ],
     phoneNumber: ['', [Validators.maxLength(20)]],
-    email: ['', [Validators.required, this.validate.bind(this)]],
+    email: ['', [Validators.required, Validators.maxLength(30)]],
     ipAddress: [''],
     time: [new Date()],
   });
-
-  validate(control: FormControl): ValidationErrors | null {
-    const value = control.value;
-
-    if (value && value.toString().length > 30) {
-      return { maxNumbersReached: 'Maximum input of 30 characters reached.' };
-    }
-
-    return null;
-  }
 
   emailValidator(control: FormControl): ValidationErrors | null {
     const value = control.value;
