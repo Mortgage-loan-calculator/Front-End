@@ -23,7 +23,7 @@
                     <mat-slide-toggle
                       class="toggle"
                       (change)="onChange()"
-                      formControlName="childrenToggle"
+                      formControlName="partnerToggle"
                     ></mat-slide-toggle>
                   </div>
 
@@ -93,16 +93,6 @@
                       formControlName="loanSlider"
                       [options]="loanOptions"
                     ></ngx-slider>
-                    <mat-error
-                      *ngIf="
-                        calculateForm.get('loanSlider')?.invalid &&
-                        (calculateForm.get('loanSlider')?.dirty ||
-                          calculateForm.get('loanSlider')?.touched)
-                      "
-                      class="error-message"
-                    >
-                      Please select a value between 1 and 30.
-                    </mat-error>
                   </div>
                   <div class="slider-container">
                     <div class="slider-label">
@@ -113,16 +103,6 @@
                       formControlName="familyMemberSlider"
                       [options]="adultOptions"
                     ></ngx-slider>
-                    <mat-error
-                      *ngIf="
-                        calculateForm.get('familyMemberSlider')?.invalid &&
-                        (calculateForm.get('familyMemberSlider')?.dirty ||
-                          calculateForm.get('familyMemberSlider')?.touched)
-                      "
-                      class="error-message"
-                    >
-                      Please select a value between 1 and 30.
-                    </mat-error>
                   </div>
 
                   <div class="toggle-container">
@@ -135,18 +115,34 @@
                     ></mat-slide-toggle>
                   </div>
 
-                  <div class="dropdown-container">
-                    <div class="dropdown-label">
-                      City of the family's residence:
+                  <!-- <div
+                    class="icon-button-container"
+                    (click)="showAdvancedOptions = !showAdvancedOptions"
+                  >
+                    <mat-icon>keyboard_arrow_right</mat-icon>
+                    <button mat-button>
+                      {{ showAdvancedOptions ? "Hide" : "Show" }} advanced
+                      options
+                    </button>
+                  </div> -->
+
+                  <div *ngIf="showAdvancedOptions" class="advanced-options">
+                    <div class="dropdown-container">
+                      <div class="dropdown-label">
+                        City of the family's residence:
+                      </div>
+                      <app-autocomplete
+                        [options]="citiesInfo"
+                        (onChangeEvent)="citySelect($event)"
+                      ></app-autocomplete>
                     </div>
-                    <app-autocomplete [options]="citiesInfo"></app-autocomplete>
                   </div>
+
                   <div class="button-container">
                     <button
                       mat-button
-                      type="calculate"
+                      type="submit"
                       class="my-button calculate-button"
-                      (click)="showColumn2 = true; onCalculate()"
                     >
                       Calculate
                     </button>
@@ -240,6 +236,7 @@
                         type="submit"
                         class="my-button submit-button"
                         (click)="onSubmit()"
+                        (click)="showPopupForm()"
                       >
                         Submit application
                       </button>
@@ -288,8 +285,12 @@
                 <button mat-button type="apply" class="my-button apply-button">
                   Apply
                 </button>
-                <button mat-button type="apply" class="my-button apply-button"
-                (click)="showPopupForm()">
+                <button
+                  mat-button
+                  type="apply"
+                  class="my-button apply-button"
+                  (click)="showPopupForm()"
+                >
                   Offers
                 </button>
               </div>

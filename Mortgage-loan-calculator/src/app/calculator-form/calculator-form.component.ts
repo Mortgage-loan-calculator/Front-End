@@ -1,11 +1,9 @@
 import { LabelType, Options } from '@angular-slider/ngx-slider';
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormControl, Validators } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { animate, style, transition, trigger } from '@angular/animations';
 import { PieChartComponent } from '../pie-chart/pie-chart.component';
-import { CalculatorService } from './service/calculator.service';
-import { CalculateFormDto } from './calculate-form-dto';
 
 const fb = new FormBuilder().nonNullable;
 interface City {
@@ -33,7 +31,7 @@ export class CalculatorFormComponent implements OnInit {
   private pieChart!: any;
 
   adultOptions: Options = {
-    floor: 0,
+    floor: 1,
     ceil: 5,
     translate: (value: number, label: LabelType): string => {
       if (label === LabelType.Floor) {
@@ -46,8 +44,28 @@ export class CalculatorFormComponent implements OnInit {
     },
   };
 
-  @ViewChild(PieChartComponent) PieChartComponent!: PieChartComponent;
+  myControl = new FormControl('');
+  cityNames: string[] = [];
+  filteredOptions!: Observable<string[]>;
 
+  ngOnChanges() {
+    if (this.citiesInfo != null) {
+      this.cityNames = this.citiesInfo.map((city: any) => city.name);
+      this.filteredOptions = this.myControl.valueChanges.pipe(
+        startWith(''),
+        map((value) => this._filter(value || ''))
+      );
+    }
+  }
+
+  private _filter(value: string): string[] {
+    const filterValue = value.toLowerCase();
+    return this.cityNames.filter((name) =>
+      name.toLowerCase().includes(filterValue)
+    );
+  }
+
+  @ViewChild(PieChartComponent) PieChartComponent!: PieChartComponent;
   title = 'json-read-example';
   citiesInfo: City[] = [];
   calculateFormDto: CalculateFormDto = {} as CalculateFormDto;
@@ -55,13 +73,13 @@ export class CalculatorFormComponent implements OnInit {
   constructor(private calculatorService: CalculatorService) {}
 
   ngOnInit() {
-    this.calculatorService.getCities().subscribe((res) => {
+    this.http.get(this.url).subscribe((res) => {
       this.citiesInfo = res;
     });
   }
 
   loanOptions: Options = {
-    floor: 0,
+    floor: 1,
     ceil: 30,
   };
 
@@ -86,7 +104,6 @@ export class CalculatorFormComponent implements OnInit {
 
   calculateForm = fb.group(
     {
-      partnerToggle: [false],
       homePrice: [
         '',
         [
@@ -115,8 +132,8 @@ export class CalculatorFormComponent implements OnInit {
         0,
         [Validators.required, Validators.min(1), Validators.max(30)],
       ],
-      childrenToggle: [false],
-      citySelect: ['', [Validators.required]],
+      childrenToggle: ['', Validators.required],
+      citySelect: ['', Validators.required],
     },
     { updateOn: 'blur' }
   );
@@ -187,33 +204,21 @@ export class CalculatorFormComponent implements OnInit {
   actionText: string = '';
 
   onCalculate() {
-    this.calculateFormDto = this.calculateForm.value;
-    this.calculatorService
-      .sendData(this.calculateFormDto)
-      .subscribe((data: CalculateFormDto) => {
-        this.calculateFormDto = data;
-      });
-
-    this.calculatorService
-
-      .getCalculationResults(
-        this.calculateFormDto.homePrice,
-        this.calculateFormDto.loanSlider
-      )
-      .subscribe((data: CalculateFormDto) => {
-        this.calculateFormDto = data;
-      });
-
     this.actionText = 'Calculated';
     this.showColumn2 = true;
     this.pieChart.animateChart();
   }
   onSubmit() {
+    console.log(this.calculateForm.get('citySelect')?.valid);
+
+
+
     if (this.calculateForm.valid) {
       this.actionText = 'Submitted form';
       const calculateFormData = this.calculateForm.value;
-    } else {
-      alert('Please fill out all required fields correctly.');
+      this.actionText = 'Calculated';
+      this.showColumn2 = true;
+      this.pieChart.animateChart();
     }
   }
 
