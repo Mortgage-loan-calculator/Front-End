@@ -1,21 +1,27 @@
 import { Component } from '@angular/core';
-import { FormBuilder, FormControl } from '@angular/forms';
+import { FormBuilder, FormControl, Validators } from '@angular/forms';
 const fb = new FormBuilder().nonNullable;
 @Component({
   selector: 'app-admin-login',
   templateUrl: './admin-login.component.html',
-  styleUrls: ['./admin-login.component.css']
+  styleUrls: ['./admin-login.component.css'],
 })
 export class AdminLoginComponent {
   loginForm = fb.group(
     {
       username: [''],
-     password: ['']
-     
+      password: [
+        '',
+        [
+          Validators.required,
+          Validators.minLength(9),
+          Validators.pattern(
+            '^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)[a-zA-Z\\d]{9,}$'
+          ),
+        ],
+      ],
     },
-    {updateOn: 'blur'}
-
-
+    { updateOn: 'blur' }
   );
 
   get username() {
@@ -24,8 +30,7 @@ export class AdminLoginComponent {
   get password() {
     return this.loginForm.get('password') as unknown as FormControl<string>;
   }
-   onLoginFormSubmit() {
+  onLoginFormSubmit() {
     const loginFormData = this.loginForm.value;
-    console.log(this.loginForm.value)
   }
 }

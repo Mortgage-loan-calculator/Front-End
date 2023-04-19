@@ -1,4 +1,5 @@
 import { getLocaleDateTimeFormat } from '@angular/common';
+
 import { Component } from '@angular/core';
 import {
   AbstractControl,
@@ -8,6 +9,10 @@ import {
   ValidatorFn,
   Validators,
 } from '@angular/forms';
+
+import { Component, EventEmitter, Output } from '@angular/core';
+import { FormBuilder, FormControl, Validators } from '@angular/forms';
+
 import { tap, timestamp } from 'rxjs';
 import { CustomerService } from '../services/customer.service';
 import { Customer } from '../types';
@@ -20,6 +25,8 @@ const fb = new FormBuilder().nonNullable;
   styleUrls: ['./popup-form.component.css'],
 })
 export class PopupFormComponent {
+  @Output() onClose = new EventEmitter<void>();
+
   constructor(private customerservice: CustomerService) {}
 
   postForm = fb.group({

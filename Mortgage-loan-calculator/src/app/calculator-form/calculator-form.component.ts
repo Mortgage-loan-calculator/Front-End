@@ -1,13 +1,24 @@
+
 import { LabelType, Options } from '@angular-slider/ngx-slider';
 import { ChangeDetectorRef, Component, ViewChild } from '@angular/core';
+
+import { Options } from '@angular-slider/ngx-slider';
+
 import { FormBuilder, FormControl, Validators } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { animate, style, transition, trigger } from '@angular/animations';
 import { PieChartComponent } from '../pie-chart/pie-chart.component';
+
 import { Observable, map, startWith } from 'rxjs';
 
-const fb = new FormBuilder().nonNullable;
+import { CalculatorService } from './service/calculator.service';
+import { CalculateFormDto } from './calculate-form-dto';
 
+const fb = new FormBuilder().nonNullable;
+interface City {
+  name: string;
+  [key: string]: any;
+}
 @Component({
   selector: 'app-calculator-form',
   templateUrl: './calculator-form.component.html',
@@ -25,7 +36,7 @@ const fb = new FormBuilder().nonNullable;
     ]),
   ],
 })
-export class CalculatorFormComponent {
+export class CalculatorFormComponent implements OnInit {
   private pieChart!: any;
 
   adultOptions: Options = {
@@ -65,12 +76,12 @@ export class CalculatorFormComponent {
 
   @ViewChild(PieChartComponent) PieChartComponent!: PieChartComponent;
   title = 'json-read-example';
-  citiesInfo: any;
-  url: string = './assets/Cities.json';
+  citiesInfo: City[] = [];
+  calculateFormDto: CalculateFormDto = {} as CalculateFormDto;
 
-  constructor(private http: HttpClient) {}
+  constructor(private calculatorService: CalculatorService) {}
 
-  ngOnInit() {
+ ngOnInit() {
     this.http.get('./assets/Cities.json').subscribe((res: any) => {
       this.cityNames = res.map((city: any) => city.name);
       this.filteredOptions = this.myControl.valueChanges.pipe(
@@ -79,6 +90,7 @@ export class CalculatorFormComponent {
       );
     });
   }
+
   loanOptions: Options = {
     floor: 1,
     ceil: 30,
@@ -105,7 +117,10 @@ export class CalculatorFormComponent {
 
   calculateForm = fb.group(
     {
-      partnerToggle: [''],
+
+
+
+      partnerToggle: [false],
 
       homePrice: [
         '',
@@ -117,7 +132,7 @@ export class CalculatorFormComponent {
           this.validateMaxNumbers.bind(this),
         ],
       ],
-      familyIncome: [
+      monthlyFamilyIncome: [
         '',
         [
           Validators.required,
@@ -127,7 +142,7 @@ export class CalculatorFormComponent {
           this.validateMaxNumbers.bind(this),
         ],
       ],
-      loanSlider: [''],
+     loanSlider: [''],
       familyMemberSlider: [''],
       childrenToggle: [''],
       citySelect: ['', Validators.required],
@@ -137,10 +152,10 @@ export class CalculatorFormComponent {
 
   submitForm = fb.group(
     {
-      loanAmount: [''],
-      totalPaid: [''],
-      fee: [''],
-      paymentSum: [''],
+      maxLoan: [''],
+      totalInterestPaid: [''],
+      agreementFee: [''],
+      totalPaymentSum: [''],
     },
     { updateOn: 'blur' }
   );
@@ -165,32 +180,36 @@ export class CalculatorFormComponent {
     });
   }
 
+  get partnerToggle() {
+    return this.calculateForm.get('partnerToggle') as FormControl;
+  }
+
   get homePrice() {
     return this.calculateForm.get(
       'homePrice'
     ) as unknown as FormControl<string>;
   }
 
-  get familyIncome() {
+  get monthlyFamilyIncome() {
     return this.calculateForm.get(
-      'familyIncome'
+      'monthlyFamilyIncome'
     ) as unknown as FormControl<string>;
   }
 
-  get loanSlider() {
-    return this.calculateForm.get('loanSlider') as FormControl;
+  get loanTerm() {
+    return this.calculateForm.get('loanTerm') as FormControl;
   }
 
-  get familyMemberSlider() {
-    return this.calculateForm.get('familyMemberSlider') as FormControl;
+  get familyMembers() {
+    return this.calculateForm.get('familyMembers') as FormControl;
   }
 
-  get childrenToggle() {
-    return this.calculateForm.get('childrenToggle') as FormControl;
+  get haveChildren() {
+    return this.calculateForm.get('haveChildren') as FormControl;
   }
 
   public citySelect(city: string) {
-    // return this.calculateForm.get('citySelect')?.value;
+    // return this.calculateForm.get('city')?.value;
     return city;
   }
 
@@ -203,6 +222,23 @@ export class CalculatorFormComponent {
 
 
     if (this.calculateForm.valid) {
+     this.calculateFormDto = this.calculateForm.value;
+    this.calculatorService
+      .sendData(this.calculateFormDto)
+      .subscribe((data: CalculateFormDto) => {
+        this.calculateFormDto = data;
+      });
+
+    this.calculatorService
+
+      .getCalculationResults(
+        this.calculateFormDto.homePrice,
+        this.calculateFormDto.loanTerm
+      )
+      .subscribe((data: CalculateFormDto) => {
+        this.calculateFormDto = data;
+      });
+
       this.actionText = 'Submitted form';
       const calculateFormData = this.calculateForm.value;
       this.actionText = 'Calculated';
