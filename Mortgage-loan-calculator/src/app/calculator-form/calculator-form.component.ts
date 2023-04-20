@@ -5,7 +5,7 @@ import { HttpClient } from '@angular/common/http';
 import { animate, style, transition, trigger } from '@angular/animations';
 import { PieChartComponent } from '../pie-chart/pie-chart.component';
 import { CalculatorService } from './service/calculator.service';
-import { CalculateFormDto } from './calculate-form-dto';
+import { CalculateFormDto, CalculateResultsDto } from './calculate-form-dto';
 
 const fb = new FormBuilder().nonNullable;
 interface City {
@@ -37,6 +37,7 @@ export class CalculatorFormComponent implements OnInit {
   title = 'json-read-example';
   citiesInfo: City[] = [];
   calculateFormDto: CalculateFormDto = {} as CalculateFormDto;
+  calculateResultsDto: CalculateResultsDto = {} as CalculateResultsDto;
 
   constructor(private calculatorService: CalculatorService) {}
 
@@ -76,6 +77,7 @@ export class CalculatorFormComponent implements OnInit {
   calculateForm = fb.group(
     {
       partnerToggle: [false],
+      id: [''],
       homePrice: [
         '',
         [
@@ -172,6 +174,8 @@ export class CalculatorFormComponent implements OnInit {
 
   onCalculate() {
     this.calculateFormDto = this.calculateForm.value;
+    this.calculateResultsDto = this.submitForm.value;
+
     this.calculatorService
       .sendData(this.calculateFormDto)
       .subscribe((data: CalculateFormDto) => {
@@ -184,9 +188,11 @@ export class CalculatorFormComponent implements OnInit {
         this.calculateFormDto.homePrice,
         this.calculateFormDto.loanTerm
       )
-      .subscribe((data: CalculateFormDto) => {
-        this.calculateFormDto = data;
+      .subscribe((data: CalculateResultsDto) => {
+        this.calculateResultsDto = data;
       });
+
+      this.calculatorService.saveResultData(this.calculateResultsDto)
 
     this.actionText = 'Calculated';
     this.showColumn2 = true;

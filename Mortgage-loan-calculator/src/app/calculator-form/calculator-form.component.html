@@ -140,9 +140,9 @@
                   <!-- {{calculateForm.value | json}} -->
                   <div class="chart-container-div">
                     <app-pie-chart
-                      [loanAmount]="calculateFormDto.maxLoan"
-                      [intrestPaid]="calculateFormDto.totalInterestPaid"
-                      [agreementFee]="calculateFormDto.agreementFee"
+                      [loanAmount]="calculateResultsDto.maxLoan"
+                      [intrestPaid]="calculateResultsDto.totalInterestPaid"
+                      [agreementFee]="calculateResultsDto.agreementFee"
                     ></app-pie-chart>
                     <mat-divider [vertical]="true"></mat-divider>
                   </div>
@@ -158,7 +158,7 @@
                         <mat-form-field
                           class="mat-form-field"
                           appearance="outline"
-                          >{{ calculateFormDto.maxLoan }}
+                          >{{ calculateResultsDto.maxLoan }}
                           <input
                             matInput
                             formControlName="maxLoan"
@@ -175,7 +175,7 @@
                         <mat-form-field
                           class="mat-form-field"
                           appearance="outline"
-                          >{{ calculateFormDto.totalInterestPaid }}
+                          >{{ calculateResultsDto.totalInterestPaid }}
                           <input
                             matInput
                             formControlName="totalInterestPaid"
@@ -193,7 +193,7 @@
                         <mat-form-field
                           class="mat-form-field"
                           appearance="outline"
-                          >{{ calculateFormDto.agreementFee }}
+                          >{{ calculateResultsDto.agreementFee }}
                           <input matInput formControlName="agreementFee" readonly />
                         </mat-form-field>
                       </div>
@@ -202,7 +202,7 @@
                         <mat-form-field
                           class="mat-form-field"
                           appearance="outline"
-                          >{{ calculateFormDto.totalPaymentSum }}
+                          >{{ calculateResultsDto.totalPaymentSum }}
                           <input
                             matInput
                             formControlName="totalPaymentSum"
