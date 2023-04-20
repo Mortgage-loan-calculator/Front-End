@@ -133,6 +133,7 @@
                         formControlName="citySelect"
                         [matAutocomplete]="auto"
                         name="citySelect"
+                        required
                       />
                       <mat-autocomplete #auto="matAutocomplete">
                         <mat-option
@@ -146,9 +147,9 @@
 
                     <mat-error
                       *ngIf="
-                        calculateForm.get('citySelect')?.invalid &&
-                        (calculateForm.get('citySelect')?.dirty ||
-                          calculateForm.get('citySelect')?.touched)
+                        (calculateForm.get('citySelect')?.invalid &&
+                          calculateForm.get('citySelect')?.dirty) ||
+                        calculateForm.get('citySelect')?.touched
                       "
                       class="error-message"
                     >
