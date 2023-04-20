@@ -70,7 +70,16 @@ export class CalculatorFormComponent implements OnInit {
       name.toLowerCase().includes(filterValue)
     );
   }
-
+  
+  ngOnInit() {
+    this.http.get('./assets/Cities.json').subscribe((res: any) => {
+      this.cityNames = res.map((city: any) => city.name);
+      this.filteredOptions = this.myControl.valueChanges.pipe(
+        startWith(''),
+        map((value) => this._filter(value || ''))
+      );
+    });
+  }
   @ViewChild(PieChartComponent) PieChartComponent!: PieChartComponent;
   title = 'json-read-example';
   citiesInfo: City[] = [];
@@ -81,16 +90,6 @@ export class CalculatorFormComponent implements OnInit {
     private http: HttpClient,
     private calculatorService: CalculatorService
   ) {}
-
-  ngOnInit() {
-    this.http.get('./assets/Cities.json').subscribe((res: any) => {
-      this.cityNames = res.map((city: any) => city.name);
-      this.filteredOptions = this.myControl.valueChanges.pipe(
-        startWith(''),
-        map((value) => this._filter(value || ''))
-      );
-    });
-  }
 
   loanOptions: Options = {
     floor: 1,
