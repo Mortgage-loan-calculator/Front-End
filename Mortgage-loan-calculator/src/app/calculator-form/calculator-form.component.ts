@@ -38,8 +38,7 @@ export class CalculatorFormComponent implements OnInit {
   citiesInfo: City[] = [];
   calculateFormDto: CalculateFormDto = {} as CalculateFormDto;
 
-  constructor(private calculatorService: CalculatorService) {
-  }
+  constructor(private calculatorService: CalculatorService) {}
 
   ngOnInit() {
     this.calculatorService.getCities().subscribe((res) => {
@@ -76,7 +75,7 @@ export class CalculatorFormComponent implements OnInit {
 
   calculateForm = fb.group(
     {
-      partnerToggle:[false],
+      partnerToggle: [false],
       homePrice: [
         '',
         [
@@ -132,7 +131,10 @@ export class CalculatorFormComponent implements OnInit {
     const column2 = document.querySelector('.column2');
 
     calculateBtn?.addEventListener('click', () => {
-      column2?.classList.add('show');
+      if (this.calculateFormDto.maxLoan > 0) {
+        console.log('hi');
+        column2?.classList.add('show');
+      }
     });
   }
 
@@ -172,23 +174,26 @@ export class CalculatorFormComponent implements OnInit {
   actionText: string = '';
 
   onCalculate() {
-
     this.calculateFormDto = this.calculateForm.value;
-    this.calculatorService.sendData(this.calculateFormDto).subscribe((data: CalculateFormDto) => {
-      this.calculateFormDto = data;
-    });
+    this.calculatorService
+      .sendData(this.calculateFormDto)
+      .subscribe((data: CalculateFormDto) => {
+        this.calculateFormDto = data;
+      });
 
     this.calculatorService
-        .getCalculationResults(this.calculateFormDto.homePrice,
-                              this.calculateFormDto.familyIncome,
-                              this.calculateFormDto.loanSlider).subscribe((data: CalculateFormDto) => {
-                                this.calculateFormDto = data;
-                              });
-
+      .getCalculationResults(
+        this.calculateFormDto.homePrice,
+        this.calculateFormDto.familyIncome,
+        this.calculateFormDto.loanSlider
+      )
+      .subscribe((data: CalculateFormDto) => {
+        this.calculateFormDto = data;
+      });
 
     this.actionText = 'Calculated';
     this.showColumn2 = true;
-    this.pieChart.animateChart();
+    // this.pieChart.animateChart();
   }
   onSubmit() {
     if (this.calculateForm.valid) {
@@ -207,5 +212,4 @@ export class CalculatorFormComponent implements OnInit {
   showPopupForm() {
     this.showPopup = true;
   }
-  
 }

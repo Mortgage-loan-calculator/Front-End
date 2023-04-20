@@ -52,6 +52,12 @@ h2 {
   align-items: center;
   gap: 10px;
 }
+.grid-item-2 {
+  display: flex;
+  height: 55px;
+  align-items: center;
+  grid-column: 1 / span 2;
+}
 
 .brightness-1-icon {
   grid-column: 1 / 2;
@@ -197,7 +203,7 @@ mat-divider[vertical="true"] {
   }
   .form2 {
     margin-left: 40px;
-    scale: 90%;
+    /* scale: 90%; */
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -206,6 +212,16 @@ mat-divider[vertical="true"] {
   .submit-button {
     margin-top: 40px;
     width: 200px;
+  }
+  .amountDisplay {
+    margin-right: 0px;
+    justify-content: space-between;
+  }
+  .grid-item-2 {
+    width: 120%;
+  }
+  .down {
+    margin-top: 0px;
   }
 }
 
@@ -266,4 +282,20 @@ mat-divider[vertical="true"] {
 }
 mat-error {
   white-space: nowrap;
+}
+
+.amountDisplay {
+  width: 100%;
+  display: flex;
+  margin-right: 50px;
+  justify-content: space-between;
+}
+.align-image {
+  display: flex;
+  align-items: center;
+  height: 50px;
+}
+.amount-positioning {
+  margin-top: 15px;
+  font-weight: bold;
 }
