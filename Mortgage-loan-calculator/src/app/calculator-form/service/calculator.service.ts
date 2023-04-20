@@ -1,7 +1,7 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, map } from 'rxjs';
-import { CalculateFormDto } from '../calculate-form-dto';
+import { CalculateFormDto, CalculateResultsDto } from '../calculate-form-dto';
 
 @Injectable({
   providedIn: 'root',
@@ -25,10 +25,11 @@ export class CalculatorService {
   getCalculationResults(
     homePrice: number,
     loanTerm: number
-  ): Observable<CalculateFormDto> {
+  ): Observable<CalculateResultsDto> {
     const params = new HttpParams()
       .set('homePrice', homePrice.toString())
       .set('loanTerm', loanTerm.toString());
+
 
     return this.http.get<CalculateFormDto>(
       'https://mortgage-loan-calculator-back-end.onrender.com/calculate',

@@ -9,7 +9,7 @@ import { PieChartComponent } from '../pie-chart/pie-chart.component';
 import { Observable, map, startWith } from 'rxjs';
 
 import { CalculatorService } from './service/calculator.service';
-import { CalculateFormDto } from './calculate-form-dto';
+import { CalculateFormDto, CalculateResultsDto } from './calculate-form-dto';
 
 const fb = new FormBuilder().nonNullable;
 interface City {
@@ -75,6 +75,7 @@ export class CalculatorFormComponent implements OnInit {
   title = 'json-read-example';
   citiesInfo: City[] = [];
   calculateFormDto: CalculateFormDto = {} as CalculateFormDto;
+  calculateResultsDto: CalculateResultsDto = {} as CalculateResultsDto;
 
   constructor(
     private http: HttpClient,
@@ -213,6 +214,8 @@ export class CalculatorFormComponent implements OnInit {
   actionText: string = '';
 
   onSubmit() {
+    this.calculateResultsDto = this.submitForm.value;
+
     if (this.calculateForm.valid) {
       this.calculateFormDto = this.calculateForm.value;
       this.calculatorService
@@ -225,10 +228,10 @@ export class CalculatorFormComponent implements OnInit {
 
         .getCalculationResults(
           this.calculateFormDto.homePrice,
-          this.calculateFormDto.loanSlider
+          this.calculateFormDto.loanTerm
         )
-        .subscribe((data: CalculateFormDto) => {
-          this.calculateFormDto = data;
+        .subscribe((data: CalculateResultsDto) => {
+          this.calculateResultsDto = data;
         });
 
       this.actionText = 'Submitted form';
