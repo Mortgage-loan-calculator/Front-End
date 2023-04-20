@@ -19,6 +19,7 @@ import {MatListModule} from '@angular/material/list';
 import { MonthlyPaymentComponent } from './monthly-payment/monthly-payment.component';
 import { PieChartComponent } from './pie-chart/pie-chart.component';
 import { AutocompleteComponent } from './autocomplete/autocomplete.component';
+import {httpInterceptorProviders} from "./admin-login/helpers/http.interceptor";
 
 
 @NgModule({
@@ -49,7 +50,7 @@ import { AutocompleteComponent } from './autocomplete/autocomplete.component';
     MatListModule,
     FormsModule
   ],
-  providers: [],
+  providers: [httpInterceptorProviders],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
