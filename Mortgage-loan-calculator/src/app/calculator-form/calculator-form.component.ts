@@ -1,11 +1,15 @@
-import { Options } from '@angular-slider/ngx-slider';
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { LabelType, Options } from '@angular-slider/ngx-slider';
+import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
+
 import { FormBuilder, FormControl, Validators } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { animate, style, transition, trigger } from '@angular/animations';
 import { PieChartComponent } from '../pie-chart/pie-chart.component';
+
+import { Observable, map, startWith } from 'rxjs';
+
 import { CalculatorService } from './service/calculator.service';
-import { CalculateFormDto } from './calculate-form-dto';
+import { CalculateFormDto, CalculateResultsDto } from './calculate-form-dto';
 
 const fb = new FormBuilder().nonNullable;
 interface City {
@@ -32,29 +36,73 @@ interface City {
 export class CalculatorFormComponent implements OnInit {
   private pieChart!: any;
 
+  adultOptions: Options = {
+    floor: 1,
+    ceil: 5,
+    translate: (value: number, label: LabelType): string => {
+      if (label === LabelType.Floor) {
+        return value.toString();
+      } else if (value >= 5) {
+        return '5+';
+      } else {
+        return value.toString();
+      }
+    },
+  };
+
   @ViewChild(PieChartComponent) PieChartComponent!: PieChartComponent;
 
   title = 'json-read-example';
   citiesInfo: City[] = [];
   calculateFormDto: CalculateFormDto = {} as CalculateFormDto;
+  calculateResultsDto: CalculateResultsDto = {} as CalculateResultsDto;
 
-  constructor(private calculatorService: CalculatorService) {
+  myControl = new FormControl('');
+  cityNames: string[] = [];
+  filteredOptions!: Observable<string[]>;
+
+  ngOnChanges() {
+    if (this.citiesInfo != null) {
+      this.cityNames = this.citiesInfo.map((city: any) => city.name);
+      this.filteredOptions = this.myControl.valueChanges.pipe(
+        startWith(''),
+        map((value) => this._filter(value || ''))
+      );
+    }
   }
 
+  private _filter(value: string): string[] {
+    const filterValue = value.toLowerCase();
+    return this.cityNames.filter((name) =>
+      name.toLowerCase().includes(filterValue)
+    );
+  }
+  
   ngOnInit() {
-    this.calculatorService.getCities().subscribe((res) => {
-      this.citiesInfo = res;
+    this.http.get('./assets/Cities.json').subscribe((res: any) => {
+      this.cityNames = res.map((city: any) => city.name);
+      this.filteredOptions = this.myControl.valueChanges.pipe(
+        startWith(''),
+        map((value) => this._filter(value || ''))
+      );
     });
   }
+  @ViewChild(PieChartComponent) PieChartComponent!: PieChartComponent;
+  title = 'json-read-example';
+  citiesInfo: City[] = [];
+  calculateFormDto: CalculateFormDto = {} as CalculateFormDto;
+  calculateResultsDto: CalculateResultsDto = {} as CalculateResultsDto;
+
+  constructor(
+    private http: HttpClient,
+    private calculatorService: CalculatorService
+  ) {}
 
   loanOptions: Options = {
     floor: 1,
     ceil: 30,
   };
-  adultOptions: Options = {
-    floor: 1,
-    ceil: 5,
-  };
+
   numbersOnly(control: FormControl): { [key: string]: any } | null {
     const value = control.value;
     const isValid = /^[0-9]*$/.test(value) && value >= 0;
@@ -76,7 +124,9 @@ export class CalculatorFormComponent implements OnInit {
 
   calculateForm = fb.group(
     {
-      partnerToggle:[false],
+      partnerToggle: [false],
+
+      id: [''],
       homePrice: [
         '',
         [
@@ -87,7 +137,7 @@ export class CalculatorFormComponent implements OnInit {
           this.validateMaxNumbers.bind(this),
         ],
       ],
-      familyIncome: [
+      monthlyFamilyIncome: [
         '',
         [
           Validators.required,
@@ -97,20 +147,20 @@ export class CalculatorFormComponent implements OnInit {
           this.validateMaxNumbers.bind(this),
         ],
       ],
-      loanSlider: [1],
-      familyMemberSlider: [1],
-      childrenToggle: [false],
-      // citySelect: ['', Validators.required],
+      loanTerm: [''],
+      familyMembers: [''],
+      haveChildren: [''],
+      citySelect: ['', [Validators.required]],
     },
     { updateOn: 'blur' }
   );
 
   submitForm = fb.group(
     {
-      loanAmount: [''],
-      totalPaid: [''],
-      fee: [''],
-      paymentSum: [''],
+      maxLoan: [''],
+      totalInterestPaid: [''],
+      agreementFee: [''],
+      totalPaymentSum: [''],
     },
     { updateOn: 'blur' }
   );
@@ -130,7 +180,6 @@ export class CalculatorFormComponent implements OnInit {
   ngAfterViewInit() {
     const calculateBtn = document.getElementById('calculate-btn');
     const column2 = document.querySelector('.column2');
-
     calculateBtn?.addEventListener('click', () => {
       column2?.classList.add('show');
     });
@@ -146,66 +195,67 @@ export class CalculatorFormComponent implements OnInit {
     ) as unknown as FormControl<string>;
   }
 
-  get familyIncome() {
+  get monthlyFamilyIncome() {
     return this.calculateForm.get(
-      'familyIncome'
+      'monthlyFamilyIncome'
     ) as unknown as FormControl<string>;
   }
 
-  get loanSlider() {
-    return this.calculateForm.get('loanSlider') as FormControl;
+  get loanTerm() {
+    return this.calculateForm.get('loanTerm') as FormControl;
   }
 
-  get familyMemberSlider() {
-    return this.calculateForm.get('familyMemberSlider') as FormControl;
+  get familyMembers() {
+    return this.calculateForm.get('familyMembers') as FormControl;
   }
 
-  get childrenToggle() {
-    return this.calculateForm.get('childrenToggle') as FormControl;
+  get haveChildren() {
+    return this.calculateForm.get('haveChildren') as FormControl;
   }
 
   public citySelect(city: string) {
-    // return this.calculateForm.get('citySelect')?.value;
+    // return this.calculateForm.get('city')?.value;
     return city;
   }
 
   actionText: string = '';
 
-  onCalculate() {
-
-    this.calculateFormDto = this.calculateForm.value;
-    this.calculatorService.sendData(this.calculateFormDto).subscribe((data: CalculateFormDto) => {
-      this.calculateFormDto = data;
-    });
-
-    this.calculatorService
-        .getCalculationResults(this.calculateFormDto.homePrice,
-                              this.calculateFormDto.familyIncome,
-                              this.calculateFormDto.loanSlider).subscribe((data: CalculateFormDto) => {
-                                this.calculateFormDto = data;
-                              });
-
-
-    this.actionText = 'Calculated';
-    this.showColumn2 = true;
-    this.pieChart.animateChart();
-  }
   onSubmit() {
     if (this.calculateForm.valid) {
+      this.calculateFormDto = this.calculateForm.value;
+      this.calculateResultsDto = this.submitForm.value;
+
+      this.calculatorService
+        .sendData(this.calculateFormDto)
+        .subscribe((data: CalculateFormDto) => {
+          this.calculateFormDto = data;
+        });
+
+      this.calculatorService
+
+        .getCalculationResults(
+          this.calculateFormDto.homePrice,
+          this.calculateFormDto.loanTerm
+        )
+        .subscribe((data: CalculateResultsDto) => {
+          this.calculateResultsDto = data;
+        });
+
+      this.calculatorService.saveResultData(this.calculateResultsDto);
+
+      this.actionText = 'Calculated';
+      this.showColumn2 = true;
+      this.pieChart.animateChart();
       this.actionText = 'Submitted form';
       const calculateFormData = this.calculateForm.value;
-    } else {
-      alert('Please fill out all required fields correctly.');
     }
   }
 
   onChange() {}
   showAdvancedOptions = false;
-
   showPopup = false;
 
   showPopupForm() {
     this.showPopup = true;
   }
-  
 }
