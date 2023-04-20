@@ -1,10 +1,10 @@
 import { LabelType, Options } from '@angular-slider/ngx-slider';
-import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 
 import {
-  AbstractControl,
   FormBuilder,
   FormControl,
+  FormGroup,
   Validators,
 } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
@@ -74,6 +74,7 @@ export class CalculatorFormComponent implements OnInit {
       name.toLowerCase().includes(filterValue)
     );
   }
+
   ngOnInit() {
     this.http.get('./assets/Cities.json').subscribe((res: any) => {
       this.cityNames = res.map((city: any) => city.name);
@@ -82,6 +83,11 @@ export class CalculatorFormComponent implements OnInit {
         map((value) => this._filter(value || ''))
       );
     });
+    this.calculateForm.valueChanges.subscribe((value) => {
+      const { homePrice, loanTerm } = value;
+      this.calculatorService.getCalculationResults(homePrice, loanTerm).subscribe(
+        (results) => { });
+        });
   }
 
   @ViewChild(PieChartComponent) PieChartComponent!: PieChartComponent;
@@ -113,7 +119,6 @@ export class CalculatorFormComponent implements OnInit {
     } else if (value && value.toString().length === 12) {
       return { ['maxNumbersReached']: 'Maximum number of digits reached.' };
     }
-
     return null;
   }
 
@@ -123,6 +128,7 @@ export class CalculatorFormComponent implements OnInit {
     {
       partnerToggle: [false],
 
+      id: [''],
       homePrice: [
         '',
         [
@@ -210,7 +216,6 @@ export class CalculatorFormComponent implements OnInit {
   }
 
   public citySelect(city: string) {
-    // return this.calculateForm.get('city')?.value;
     return city;
   }
 

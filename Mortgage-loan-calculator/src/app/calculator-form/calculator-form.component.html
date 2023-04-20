@@ -15,7 +15,7 @@
                   class="column"
                   [formGroup]="calculateForm"
                   (ngSubmit)="onSubmit()"
-                  (change)="onSubmit()"
+
                 >
                   <div class="toggle-container">
                     <div class="toggle-label">Alone/With partner</div>
@@ -145,16 +145,7 @@
                         </mat-option>
                       </mat-autocomplete>
                     </mat-form-field>
-                    <mat-error
-                      *ngIf="
-                        (calculateForm.get('citySelect')?.invalid &&
-                          calculateForm.get('citySelect')?.dirty) ||
-                        calculateForm.get('citySelect')?.touched
-                      "
-                      class="error-message"
-                    >
-                      Please select a city.
-                    </mat-error>
+                    <mat-error> Please select a city. </mat-error>
                   </div>
 
                   <div class="button-container">
@@ -194,14 +185,12 @@
                               >brightness_1</mat-icon
                             >
 
-
                             <span matPrefix>Loan amount</span>
                           </div>
                           <div class="amount-positioning">
                             {{ calculateResultsDto.maxLoan }}
                           </div>
                         </div>
-
                       </div>
                       <div class="grid-item-2">
                         <div class="amountDisplay">
@@ -210,14 +199,12 @@
                               >brightness_1</mat-icon
                             >
 
-
                             <span matPrefix>Total interest paid</span>
                           </div>
                           <div class="amount-positioning">
                             {{ calculateResultsDto.totalInterestPaid }}
                           </div>
                         </div>
-
                       </div>
 
                       <div class="grid-item-2">
@@ -226,7 +213,6 @@
                             <mat-icon class="brightness-3-icon"
                               >brightness_1</mat-icon
                             >
-
 
                             <span matPrefix>Agreement fee</span>
                           </div>
@@ -243,7 +229,6 @@
                             {{ calculateResultsDto.totalPaymentSum }}</strong
                           >
                         </div>
-
                       </div>
                     </div>
                     <div class="button-container">
@@ -298,7 +283,12 @@
                 </div>
               </div>
               <div class="button-container">
-                <button mat-button type="apply" class="my-button apply-button">
+                <button
+                  mat-button
+                  type="apply"
+                  class="my-button apply-button"
+                  (click)="showPopupForm()"
+                >
                   Apply
                 </button>
                 <button mat-button type="apply" class="my-button apply-button">
