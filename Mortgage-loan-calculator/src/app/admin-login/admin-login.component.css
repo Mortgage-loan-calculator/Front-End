@@ -47,3 +47,6 @@ form {
   background-color: #ffd700;
   border: 2px solid #ffd700;
 }
+.hide-user-role {
+  display: none;
+}
