@@ -21,19 +21,14 @@ export class CalculatorService {
       calculateFormDto
     );
   }
- 
 
   saveResultData(
     calculateResultsDto: CalculateResultsDto
   ): Observable<CalculateResultsDto> {
-    return this.http.post<CalculateResultsDto>('https://mortgage-loan-calculator-back-end.onrender.com/calculate', calculateResultsDto);
-  }
-
-
-  saveResultData(
-    calculateResultsDto: CalculateResultsDto
-  ): Observable<CalculateResultsDto> {
-    return this.http.post<CalculateResultsDto>('https://mortgage-loan-calculator-back-end.onrender.com/calculate', calculateResultsDto);
+    return this.http.post<CalculateResultsDto>(
+      'https://mortgage-loan-calculator-back-end.onrender.com/calculate',
+      calculateResultsDto
+    );
   }
 
   getCalculationResults(
