@@ -42,6 +42,7 @@ export class AdminLoginComponent {
     console.log(this.username.value + this.password.value)
     this.authService.login(this.username.value, this.password.value).subscribe({
       next: data => {
+        this.storageService.saveToken(data.accessToken)
         this.storageService.saveUser(data);
 
         this.isLoginFailed = false;
