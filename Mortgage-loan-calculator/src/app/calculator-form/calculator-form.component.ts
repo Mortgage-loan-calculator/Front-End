@@ -1,7 +1,12 @@
 import { LabelType, Options } from '@angular-slider/ngx-slider';
 import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
 
-import { FormBuilder, FormControl, Validators } from '@angular/forms';
+import {
+  AbstractControl,
+  FormBuilder,
+  FormControl,
+  Validators,
+} from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { animate, style, transition, trigger } from '@angular/animations';
 import { PieChartComponent } from '../pie-chart/pie-chart.component';
@@ -70,7 +75,6 @@ export class CalculatorFormComponent implements OnInit {
       );
     }
   }
-
   private _filter(value: string): string[] {
     const filterValue = value.toLowerCase();
     return this.cityNames.filter((name) =>
@@ -87,6 +91,14 @@ export class CalculatorFormComponent implements OnInit {
       );
     });
   }
+
+
+  @ViewChild(PieChartComponent) PieChartComponent!: PieChartComponent;
+  title = 'json-read-example';
+  citiesInfo: City[] = [];
+  calculateFormDto: CalculateFormDto = {} as CalculateFormDto;
+  calculateResultsDto: CalculateResultsDto = {} as CalculateResultsDto;
+
 
   constructor(
     private http: HttpClient,

@@ -15,6 +15,7 @@
                   class="column"
                   [formGroup]="calculateForm"
                   (ngSubmit)="onSubmit()"
+                  (change)="onSubmit()"
                 >
                   <div class="toggle-container">
                     <div class="toggle-label">Alone/With partner</div>
@@ -144,7 +145,6 @@
                         </mat-option>
                       </mat-autocomplete>
                     </mat-form-field>
-
                     <mat-error
                       *ngIf="
                         (calculateForm.get('citySelect')?.invalid &&
@@ -189,72 +189,66 @@
 
                   <div class="form2">
                     <div class="grid-container">
-                      <div class="grid-item">
-                        <mat-icon class="brightness-1-icon"
-                          >brightness_1</mat-icon
-                        >
+                      <div class="grid-item-2">
+                        <div class="amountDisplay">
+                          <div class="align-image">
+                            <mat-icon class="brightness-1-icon"
+                              >brightness_1</mat-icon
+                            >
 
-                        <span matPrefix>Loan amount</span>
-                        <mat-form-field
-                          class="mat-form-field"
-                          appearance="outline"
 
-                          >{{ calculateResultsDto.maxLoan }}
-                          <input
-                            matInput
-                            formControlName="maxLoan"
-                            readonly
-                          />
+                            <span matPrefix>Loan amount</span>
+                          </div>
+                          <div class="amount-positioning">
+                            {{ calculateResultsDto.maxLoan }}
+                          </div>
+                        </div>
 
-                        </mat-form-field>
+
                       </div>
-                      <div class="grid-item">
-                        <mat-icon class="brightness-2-icon"
-                          >brightness_1</mat-icon
-                        >
+                      <div class="grid-item-2">
+                        <div class="amountDisplay">
+                          <div class="align-image">
+                            <mat-icon class="brightness-2-icon"
+                              >brightness_1</mat-icon
+                            >
 
-                        <span matPrefix>Total interest paid</span>
-                        <mat-form-field
-                          class="mat-form-field"
-                          appearance="outline"
-                          >{{ calculateResultsDto.totalInterestPaid }}
 
-                          <input
-                            matInput
-                            formControlName="totalInterestPaid"
-                            readonly
-                          />
-                        </mat-form-field>
+                            <span matPrefix>Total interest paid</span>
+                          </div>
+                          <div class="amount-positioning">
+                            {{ calculateResultsDto.totalInterestPaid }}
+                          </div>
+                        </div>
+
+
                       </div>
 
-                      <div class="grid-item">
-                        <mat-icon class="brightness-3-icon"
-                          >brightness_1</mat-icon
-                        >
+                      <div class="grid-item-2">
+                        <div class="amountDisplay">
+                          <div class="align-image">
+                            <mat-icon class="brightness-3-icon"
+                              >brightness_1</mat-icon
+                            >
 
-                        <span matPrefix>Agreement fee</span>
-                        <mat-form-field
-                          class="mat-form-field"
-                          appearance="outline"
-                          >{{ calculateResultsDto.agreementFee }}
 
-                          <input matInput formControlName="agreementFee" readonly />
-
-                        </mat-form-field>
+                            <span matPrefix>Agreement fee</span>
+                          </div>
+                          <div class="amount-positioning">
+                            {{ calculateResultsDto.agreementFee }}
+                          </div>
+                        </div>
                       </div>
-                      <div class="grid-item">
-                        <span matPrefix>Total payment sum</span>
-                        <mat-form-field
-                          class="mat-form-field"
-                          appearance="outline"
-                          >{{ calculateResultsDto.totalPaymentSum }}
+                      <div class="grid-item-2">
+                        <div class="amountDisplay">
+                          <span matPrefix>Total payment sum</span>
 
-                          <input
-                            matInput
-                            formControlName="totalPaymentSum"
-                            readonly
-                          />
-                        </mat-form-field>
+                          <strong>
+                            {{ calculateResultsDto.totalPaymentSum }}</strong
+                          >
+                        </div>
+
+
                       </div>
                     </div>
                     <div class="button-container">
