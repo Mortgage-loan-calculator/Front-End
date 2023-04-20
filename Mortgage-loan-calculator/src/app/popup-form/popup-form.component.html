@@ -22,8 +22,10 @@
             type="button"
             class="btnClose"
             aria-label="Close"
-           (click)="onClose.emit()">
-
+            (click)="onClose.emit()"
+            onclick="document.getElementById('popUpForm').style.display='none'"
+            onclick="document.getElementById('modalContainer').style.display='none'"
+          >
             cancel</mat-icon
           >
 
@@ -33,12 +35,7 @@
 
           <mat-form-field class="example-form-field" appearance="outline">
             <mat-label>Name:</mat-label>
-            <input
-              matInput
-              type="text"
-              formControlName="name"
-              id="name"
-            />
+            <input matInput type="text" formControlName="name" id="name" />
             <mat-error *ngIf="postForm.controls.name.errors?.['required']">
               Name is required.
             </mat-error>
