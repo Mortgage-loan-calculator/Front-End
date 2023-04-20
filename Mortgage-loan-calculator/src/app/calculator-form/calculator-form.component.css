@@ -45,7 +45,12 @@ h2 {
 .mat-form-field {
   scale: 70%;
 }
-
+.grid-item-2 {
+  display: flex;
+  height: 55px;
+  align-items: center;
+  grid-column: 1 / span 2;
+}
 .grid-item {
   display: flex;
   height: 55px;
@@ -207,6 +212,17 @@ mat-divider[vertical="true"] {
     margin-top: 40px;
     width: 200px;
   }
+  .amountDisplay {
+    margin-right: 0px;
+    justify-content: space-between;
+  }
+  .grid-item-2 {
+    width: 120%;
+  }
+  .down {
+    margin-top: 0px;
+  }
+
 }
 
 .my-button {
@@ -266,4 +282,20 @@ mat-divider[vertical="true"] {
 }
 mat-error {
   white-space: nowrap;
+}
+
+.amountDisplay {
+  width: 100%;
+  display: flex;
+  margin-right: 50px;
+  justify-content: space-between;
+}
+.align-image {
+  display: flex;
+  align-items: center;
+  height: 50px;
+}
+.amount-positioning {
+  margin-top: 15px;
+  font-weight: bold;
 }
