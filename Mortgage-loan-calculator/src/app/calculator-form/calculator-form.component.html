@@ -18,6 +18,7 @@
                 >
                   <div class="toggle-container">
                     <div class="toggle-label">Alone/With partner</div>
+
                     <mat-slide-toggle
                       class="toggle"
                       (change)="onChange()"
@@ -62,22 +63,24 @@
                       maxlength="12"
                       matInput
                       placeholder="Monthly family income"
-                      formControlName="familyIncome"
+                      formControlName="monthlyFamilyIncome"
                     />
                     <mat-hint> Enter monthly family income</mat-hint>
-                    <mat-error *ngIf="familyIncome.hasError('required')">
+                    <mat-error *ngIf="monthlyFamilyIncome.hasError('required')">
                       This field is required.
                     </mat-error>
-                    <mat-error *ngIf="familyIncome.hasError('numbersOnly')">
+                    <mat-error
+                      *ngIf="monthlyFamilyIncome.hasError('numbersOnly')"
+                    >
                       Input should accept only numbers.
                     </mat-error>
                     <mat-error
-                      *ngIf="calculateForm.controls.familyIncome.errors?.['min']"
+                      *ngIf="calculateForm.controls.monthlyFamilyIncome.errors?.['min']"
                     >
                       Home price should be at least 1.
                     </mat-error>
                     <mat-error
-                      *ngIf="calculateForm.controls.familyIncome.errors?.['maxNumbersReached']"
+                      *ngIf="calculateForm.controls.monthlyFamilyIncome.errors?.['maxNumbersReached']"
                     >
                       Maximum input of 12 numbers reached.
                     </mat-error>
@@ -86,8 +89,9 @@
                   <div class="slider-container">
                     <div class="slider-label">Loan term:</div>
                     <ngx-slider
+                      required
                       class="loan-slider"
-                      formControlName="loanSlider"
+                      formControlName="loanTerm"
                       [options]="loanOptions"
                     ></ngx-slider>
                   </div>
@@ -97,7 +101,7 @@
                     </div>
                     <ngx-slider
                       class="family-member-slider"
-                      formControlName="familyMemberSlider"
+                      formControlName="familyMembers"
                       [options]="adultOptions"
                     ></ngx-slider>
                   </div>
@@ -108,7 +112,7 @@
                     </div>
                     <mat-slide-toggle
                       class="toggle"
-                      formControlName="childrenToggle"
+                      formControlName="haveChildren"
                     ></mat-slide-toggle>
                   </div>
 
@@ -116,14 +120,48 @@
                     <div class="dropdown-label">
                       City of the family's residence:
                     </div>
-                    <app-autocomplete [options]="citiesInfo"></app-autocomplete>
+                    <mat-form-field
+                      class="example-full-width"
+                      appearance="outline"
+                    >
+                      <mat-label>City</mat-label>
+                      <input
+                        type="text"
+                        placeholder="City name"
+                        aria-label="City"
+                        matInput
+                        formControlName="citySelect"
+                        [matAutocomplete]="auto"
+                        name="citySelect"
+                        required
+                      />
+                      <mat-autocomplete #auto="matAutocomplete">
+                        <mat-option
+                          *ngFor="let option of filteredOptions | async"
+                          [value]="option"
+                        >
+                          {{ option }}
+                        </mat-option>
+                      </mat-autocomplete>
+                    </mat-form-field>
+
+                    <mat-error
+                      *ngIf="
+                        (calculateForm.get('citySelect')?.invalid &&
+                          calculateForm.get('citySelect')?.dirty) ||
+                        calculateForm.get('citySelect')?.touched
+                      "
+                      class="error-message"
+                    >
+                      Please select a city.
+                    </mat-error>
                   </div>
+
                   <div class="button-container">
                     <button
                       mat-button
-                      type="calculate"
+                      type="submit"
                       class="my-button calculate-button"
-                      (click)="showColumn2 = true; onCalculate()"
                     >
                       Calculate
                     </button>
@@ -140,11 +178,13 @@
                   <!-- {{calculateForm.value | json}} -->
                   <div class="chart-container-div">
                     <app-pie-chart
-                      [loanAmount]="calculateFormDto.maxLoan"
-                      [intrestPaid]="calculateFormDto.totalInterestPaid"
-                      [agreementFee]="calculateFormDto.agreementFee"
-                    ></app-pie-chart>
-                    <mat-divider [vertical]="true"></mat-divider>
+                      [loanAmount]="calculateResultsDto.maxLoan"
+                      [intrestPaid]="calculateResultsDto.totalInterestPaid"
+                      [agreementFee]="calculateResultsDto.agreementFee"
+
+                    ></app-pie-chart
+                    ><mat-divider [vertical]="true"></mat-divider>
+
                   </div>
 
                   <div class="form2">
@@ -158,12 +198,14 @@
                         <mat-form-field
                           class="mat-form-field"
                           appearance="outline"
-                          >{{ calculateFormDto.maxLoan }}
+
+                          >{{ calculateResultsDto.maxLoan }}
                           <input
                             matInput
-                            formControlName="loanAmount"
+                            formControlName="maxLoan"
                             readonly
                           />
+
                         </mat-form-field>
                       </div>
                       <div class="grid-item">
@@ -175,10 +217,11 @@
                         <mat-form-field
                           class="mat-form-field"
                           appearance="outline"
-                          >{{ calculateFormDto.totalInterestPaid }}
+                          >{{ calculateResultsDto.totalInterestPaid }}
+
                           <input
                             matInput
-                            formControlName="totalPaid"
+                            formControlName="totalInterestPaid"
                             readonly
                           />
                         </mat-form-field>
@@ -193,8 +236,10 @@
                         <mat-form-field
                           class="mat-form-field"
                           appearance="outline"
-                          >{{ calculateFormDto.agreementFee }}
-                          <input matInput formControlName="fee" readonly />
+                          >{{ calculateResultsDto.agreementFee }}
+
+                          <input matInput formControlName="agreementFee" readonly />
+
                         </mat-form-field>
                       </div>
                       <div class="grid-item">
@@ -202,10 +247,11 @@
                         <mat-form-field
                           class="mat-form-field"
                           appearance="outline"
-                          >{{ calculateFormDto.totalPaymentSum }}
+                          >{{ calculateResultsDto.totalPaymentSum }}
+
                           <input
                             matInput
-                            formControlName="paymentSum"
+                            formControlName="totalPaymentSum"
                             readonly
                           />
                         </mat-form-field>
@@ -217,6 +263,7 @@
                         type="submit"
                         class="my-button submit-button"
                         (click)="onSubmit()"
+                        (click)="showPopupForm()"
                       >
                         Submit application
                       </button>
@@ -249,13 +296,13 @@
                   </mat-form-field>
                 </div>
                 <div class="grid-item">
-                  <span matPrefix>Your estimated montly payment</span>
+                  <span matPrefix>Your estimated monthly payment</span>
                   <mat-form-field class="mat-form-field" appearance="outline">
                     <input matInput formControlName="estimatedPayment" />
                   </mat-form-field>
                 </div>
                 <div class="grid-item">
-                  <span matPrefix>Maximum montly loan payment</span>
+                  <span matPrefix>Maximum monthly loan payment</span>
                   <mat-form-field class="mat-form-field" appearance="outline">
                     <input matInput formControlName="maxPayment" />
                   </mat-form-field>
@@ -265,13 +312,7 @@
                 <button mat-button type="apply" class="my-button apply-button">
                   Apply
                 </button>
-
-                <button
-                  mat-button
-                  type="apply"
-                  class="my-button apply-button"
-                  (click)="showPopupForm()"
-                >
+                <button mat-button type="apply" class="my-button apply-button">
                   Offers
                 </button>
               </div>
@@ -282,7 +323,4 @@
     </div>
   </div>
 </div>
-<app-popup-form
-  *ngIf="showPopup"
-  (onClose)="showPopup = false"
-></app-popup-form>
+<app-popup-form *ngIf="showPopup"></app-popup-form>

@@ -1,6 +1,13 @@
 import { getLocaleDateTimeFormat } from '@angular/common';
 import { Component, EventEmitter, Output } from '@angular/core';
-import { FormBuilder, FormControl, Validators } from '@angular/forms';
+import {
+  AbstractControl,
+  FormBuilder,
+  FormControl,
+  ValidationErrors,
+  ValidatorFn,
+  Validators,
+} from '@angular/forms';
 import { tap, timestamp } from 'rxjs';
 import { CustomerService } from '../admin-panel/services/customer.service';
 import { Customer } from '../types';
@@ -18,12 +25,31 @@ export class PopupFormComponent {
   constructor(private customerservice: CustomerService) {}
 
   postForm = fb.group({
-    name: ['', [Validators.required, Validators.maxLength(15)]],
-    phoneNumber: ['', [Validators.required, Validators.maxLength(15)]],
-    email: ['', [Validators.required, Validators.email]],
+    name: [
+      '',
+      [
+        Validators.required,
+        Validators.pattern(/^[a-zA-Z\s]{1,30}$/),
+        Validators.maxLength(30),
+      ],
+    ],
+    phoneNumber: ['', [Validators.maxLength(20)]],
+    email: ['', [Validators.required, Validators.maxLength(30)]],
     ipAddress: [''],
     time: [new Date()],
   });
+
+  emailValidator(control: FormControl): ValidationErrors | null {
+    const value = control.value;
+    const validRegex =
+      /^[a-zA-Z0-9!#$%&'*+/=?^_`{|}~-]{1,30}@[a-zA-Z0-9-]{1,}\.[a-zA-Z]{1,}$/;
+
+    if (!value || value.match(validRegex)) {
+      return null;
+    } else {
+      return { invalidEmail: true };
+    }
+  }
 
   get name() {
     return this.postForm.get('name') as FormControl<string>;
