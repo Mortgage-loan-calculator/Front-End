@@ -15,7 +15,6 @@
                   class="column"
                   [formGroup]="calculateForm"
                   (ngSubmit)="onSubmit()"
-
                 >
                   <div class="toggle-container">
                     <div class="toggle-label">Alone/With partner</div>
@@ -145,7 +144,14 @@
                         </mat-option>
                       </mat-autocomplete>
                     </mat-form-field>
-                    <mat-error> Please select a city. </mat-error>
+                    <mat-error
+                      *ngIf="
+                        calculateForm.get('citySelect')?.invalid &&
+                        calculateForm.get('citySelect')?.touched
+                      "
+                    >
+                      Please select a city.
+                    </mat-error>
                   </div>
 
                   <div class="button-container">
@@ -252,6 +258,17 @@
             <form class="column3" [formGroup]="applyForm">
               <div class="grid-container">
                 <div class="grid-item">
+                  <div class="toggle-container">
+                    <div class="toggle-label">Alone/With partner</div>
+
+                    <mat-slide-toggle
+                      class="toggle"
+                      (change)="onChange()"
+                      formControlName="partnerToggle"
+                    ></mat-slide-toggle>
+                  </div>
+                </div>
+                <div class="grid-item">
                   <span matPrefix>Deal amount</span>
                   <mat-form-field class="mat-form-field" appearance="outline">
                     <input matInput formControlName="dealAmount" />
@@ -285,13 +302,13 @@
               <div class="button-container">
                 <button
                   mat-button
-                  type="apply"
+                  type="submit"
                   class="my-button apply-button"
                   (click)="showPopupForm()"
                 >
                   Apply
                 </button>
-                <button mat-button type="apply" class="my-button apply-button">
+                <button mat-button type="submit" class="my-button apply-button">
                   Offers
                 </button>
               </div>

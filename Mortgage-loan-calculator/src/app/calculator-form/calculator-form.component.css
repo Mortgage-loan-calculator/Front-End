@@ -50,6 +50,7 @@ h2 {
   height: 55px;
   align-items: center;
   grid-column: 1 / span 2;
+
 }
 .grid-item {
   display: flex;
@@ -66,7 +67,7 @@ h2 {
 .grid-container {
   display: grid;
   grid-template-columns: 1fr;
-  grid-template-rows: repeat(4, 1fr);
+  grid-template-rows: repeat(6, auto);
   grid-row-gap: 10px;
 }
 
@@ -83,12 +84,13 @@ h2 {
 }
 
 .grid-item:nth-child(4) {
-  font-weight: bold;
+  grid-row: 4;
   font-size: 1.2em;
 }
-.grid-item:nth-child(5) {
-  font-weight: bold;
+.grid-item:nth-child(5),
+.grid-item:nth-child(6) {
   font-size: 1.2em;
+  font-weight: bold;
 }
 
 mat-icon.brightness-1-icon {
@@ -108,12 +110,11 @@ mat-icon.brightness-3-icon {
   white-space: nowrap;
 }
 
-.grid-item:nth-child(4) {
-  grid-row: 4;
-}
-
 .grid-item:nth-child(5) {
   grid-row: 5;
+}
+.grid-item:nth-child(6) {
+  grid-row: 6;
 }
 
 .column.show {
@@ -222,7 +223,6 @@ mat-divider[vertical="true"] {
   .down {
     margin-top: 0px;
   }
-
 }
 
 .my-button {
@@ -257,7 +257,7 @@ mat-divider[vertical="true"] {
 }
 
 .column3 {
-  height: 500px;
+  height: 600px;
   margin-left: 20px;
 }
 .apply-button {

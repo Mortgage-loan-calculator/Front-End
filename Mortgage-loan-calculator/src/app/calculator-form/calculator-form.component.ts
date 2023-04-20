@@ -1,5 +1,6 @@
 import { LabelType, Options } from '@angular-slider/ngx-slider';
 import { Component, OnInit, ViewChild } from '@angular/core';
+import { tap } from 'rxjs/operators';
 
 import {
   FormBuilder,
@@ -11,7 +12,7 @@ import { HttpClient } from '@angular/common/http';
 import { animate, style, transition, trigger } from '@angular/animations';
 import { PieChartComponent } from '../pie-chart/pie-chart.component';
 
-import { Observable, map, startWith } from 'rxjs';
+import { Observable, map, pipe, startWith, switchMap } from 'rxjs';
 
 import { CalculatorService } from './service/calculator.service';
 import { CalculateFormDto, CalculateResultsDto } from './calculate-form-dto';
@@ -83,11 +84,13 @@ export class CalculatorFormComponent implements OnInit {
         map((value) => this._filter(value || ''))
       );
     });
-    this.calculateForm.valueChanges.subscribe((value) => {
-      const { homePrice, loanTerm } = value;
-      this.calculatorService.getCalculationResults(homePrice, loanTerm).subscribe(
-        (results) => { });
-        });
+    this.calculateForm.valueChanges
+      .pipe(
+        tap((value) => {
+          this.onUpdate(value);
+        })
+      )
+      .subscribe();
   }
 
   @ViewChild(PieChartComponent) PieChartComponent!: PieChartComponent;
@@ -221,6 +224,23 @@ export class CalculatorFormComponent implements OnInit {
 
   actionText: string = '';
 
+  updateResults(value: any) {
+    const homePrice = parseInt(value.homePrice || '');
+    const loanTerm = parseInt(value.loanTerm || '');
+
+    this.calculatorService.getCalculationResults(homePrice, loanTerm).subscribe(
+      (data: CalculateResultsDto) => {
+        this.calculateResultsDto = data;
+        this.calculatorService.saveResultData(this.calculateResultsDto);
+        this.pieChart.animateChart();
+      }
+    );
+  }
+
+  onUpdate(value: any) {
+    this.updateResults(value);
+  }
+
   onSubmit() {
     if (this.calculateForm.valid) {
       this.calculateFormDto = this.calculateForm.value;
@@ -232,21 +252,12 @@ export class CalculatorFormComponent implements OnInit {
           this.calculateFormDto = data;
         });
 
-      this.calculatorService
-
-        .getCalculationResults(
-          this.calculateFormDto.homePrice,
-          this.calculateFormDto.loanTerm
-        )
-        .subscribe((data: CalculateResultsDto) => {
-          this.calculateResultsDto = data;
-        });
+      this.updateResults(this.calculateFormDto);
 
       this.calculatorService.saveResultData(this.calculateResultsDto);
 
       this.actionText = 'Calculated';
       this.showColumn2 = true;
-      this.pieChart.animateChart();
       this.actionText = 'Submitted form';
       const calculateFormData = this.calculateForm.value;
     }

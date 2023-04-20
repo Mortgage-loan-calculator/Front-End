@@ -7,6 +7,9 @@ import { CalculateFormDto, CalculateResultsDto } from '../calculate-form-dto';
   providedIn: 'root',
 })
 export class CalculatorService {
+  sendValue(value: any) {
+    throw new Error('Method not implemented.');
+  }
   url: string = './assets/Cities.json';
 
   constructor(private http: HttpClient) {}
