@@ -121,40 +121,34 @@
                     <div class="dropdown-label">
                       City of the family's residence:
                     </div>
+
                     <mat-form-field
                       class="example-full-width"
-                      appearance="outline"
+                      appearance="fill"
                     >
                       <mat-label>City</mat-label>
                       <input
                         type="text"
-                        placeholder="City name"
-                        aria-label="City"
                         matInput
-                        formControlName="citySelect"
+                        [formControl]="myControl"
                         [matAutocomplete]="auto"
-                        name="citySelect"
                         required
                       />
-                      <mat-autocomplete #auto="matAutocomplete">
+                      <mat-autocomplete
+                        #auto="matAutocomplete"
+                        [displayWith]="displayFn"
+                      >
                         <mat-option
                           *ngFor="let option of filteredOptions | async"
                           [value]="option"
                         >
-                          {{ option }}
-                        </mat-option>
+                          {{ option.name }}</mat-option
+                        >
                       </mat-autocomplete>
+                      <mat-error *ngIf="citySelect.hasError('required')">
+                        Please select a city.
+                      </mat-error>
                     </mat-form-field>
-                    <mat-error
-                      *ngIf="
-                        (calculateForm.get('citySelect')?.invalid &&
-                          calculateForm.get('citySelect')?.dirty) ||
-                        calculateForm.get('citySelect')?.touched
-                      "
-                      class="error-message"
-                    >
-                      Please select a city.
-                    </mat-error>
                   </div>
 
                   <div class="button-container">
@@ -181,10 +175,8 @@
                       [loanAmount]="calculateResultsDto.maxLoan"
                       [intrestPaid]="calculateResultsDto.totalInterestPaid"
                       [agreementFee]="calculateResultsDto.agreementFee"
-
                     ></app-pie-chart
                     ><mat-divider [vertical]="true"></mat-divider>
-
                   </div>
 
                   <div class="form2">
@@ -196,15 +188,12 @@
                               >brightness_1</mat-icon
                             >
 
-
                             <span matPrefix>Loan amount</span>
                           </div>
                           <div class="amount-positioning">
                             {{ calculateResultsDto.maxLoan }}
                           </div>
                         </div>
-
-
                       </div>
                       <div class="grid-item-2">
                         <div class="amountDisplay">
@@ -213,15 +202,12 @@
                               >brightness_1</mat-icon
                             >
 
-
                             <span matPrefix>Total interest paid</span>
                           </div>
                           <div class="amount-positioning">
                             {{ calculateResultsDto.totalInterestPaid }}
                           </div>
                         </div>
-
-
                       </div>
 
                       <div class="grid-item-2">
@@ -230,7 +216,6 @@
                             <mat-icon class="brightness-3-icon"
                               >brightness_1</mat-icon
                             >
-
 
                             <span matPrefix>Agreement fee</span>
                           </div>
@@ -247,8 +232,6 @@
                             {{ calculateResultsDto.totalPaymentSum }}</strong
                           >
                         </div>
-
-
                       </div>
                     </div>
                     <div class="button-container">

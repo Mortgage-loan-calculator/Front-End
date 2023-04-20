@@ -1,5 +1,12 @@
 import { LabelType, Options } from '@angular-slider/ngx-slider';
-import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
+import {
+  ChangeDetectorRef,
+  Component,
+  OnInit,
+  ViewChild,
+  OnChanges,
+  SimpleChanges,
+} from '@angular/core';
 
 import {
   AbstractControl,
@@ -62,34 +69,33 @@ export class CalculatorFormComponent implements OnInit {
   calculateFormDto: CalculateFormDto = {} as CalculateFormDto;
   calculateResultsDto: CalculateResultsDto = {} as CalculateResultsDto;
 
-  myControl = new FormControl('');
-  cityNames: string[] = [];
-  filteredOptions!: Observable<string[]>;
-
-  ngOnChanges() {
-    if (this.citiesInfo != null) {
-      this.cityNames = this.citiesInfo.map((city: any) => city.name);
-      this.filteredOptions = this.myControl.valueChanges.pipe(
-        startWith(''),
-        map((value) => this._filter(value || ''))
-      );
-    }
-  }
-  private _filter(value: string): string[] {
-    const filterValue = value.toLowerCase();
-    return this.cityNames.filter((name) =>
-      name.toLowerCase().includes(filterValue)
-    );
-  }
+  myControl = new FormControl<string | City>('');
+  options: City[] = [];
+  filteredOptions!: Observable<City[]>;
 
   ngOnInit() {
     this.http.get('./assets/Cities.json').subscribe((res: any) => {
-      this.cityNames = res.map((city: any) => city.name);
+      this.options = res.map((city: any) => ({ name: city.name }));
       this.filteredOptions = this.myControl.valueChanges.pipe(
         startWith(''),
-        map((value) => this._filter(value || ''))
+        map((value) => {
+          const name = typeof value === 'string' ? value : value?.name;
+          return name ? this._filter(name as string) : this.options.slice();
+        })
       );
     });
+  }
+
+  displayFn(city: City): string {
+    return city && city.name ? city.name : '';
+  }
+
+  private _filter(name: string): City[] {
+    const filterValue = name.toLowerCase();
+
+    return this.options.filter((option) =>
+      option.name.toLowerCase().includes(filterValue)
+    );
   }
 
   constructor(
@@ -212,14 +218,14 @@ export class CalculatorFormComponent implements OnInit {
     return this.calculateForm.get('haveChildren') as FormControl;
   }
 
-  public citySelect(city: string) {
-    // return this.calculateForm.get('city')?.value;
-    return city;
+  get citySelect() {
+    return this.myControl.value as unknown as FormControl;
   }
 
   actionText: string = '';
 
   onSubmit() {
+    console.log(this.calculateForm.value);
     if (this.calculateForm.valid) {
       this.calculateFormDto = this.calculateForm.value;
       this.calculateResultsDto = this.submitForm.value;
