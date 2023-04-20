@@ -69,7 +69,9 @@
                     <mat-error *ngIf="monthlyFamilyIncome.hasError('required')">
                       This field is required.
                     </mat-error>
-                    <mat-error *ngIf="monthlyFamilyIncome.hasError('numbersOnly')">
+                    <mat-error
+                      *ngIf="monthlyFamilyIncome.hasError('numbersOnly')"
+                    >
                       Input should accept only numbers.
                     </mat-error>
                     <mat-error
@@ -118,32 +120,29 @@
                     <div class="dropdown-label">
                       City of the family's residence:
                     </div>
-                      <mat-form-field
-
-                        class="example-full-width"
-                        appearance="outline"
-
-                      >
-                        <mat-label>City</mat-label>
-                        <input
-                          type="text"
-                          placeholder="City name"
-                          aria-label="City"
-                          matInput
-                          formControlName="citySelect"
-
-                          [matAutocomplete]="auto"
-                          name="citySelect"
-                        />
-                        <mat-autocomplete #auto="matAutocomplete">
-                          <mat-option
-                            *ngFor="let option of filteredOptions | async"
-                            [value]="option"
-                          >
-                            {{ option }}
-                          </mat-option>
-                        </mat-autocomplete>
-                      </mat-form-field>
+                    <mat-form-field
+                      class="example-full-width"
+                      appearance="outline"
+                    >
+                      <mat-label>City</mat-label>
+                      <input
+                        type="text"
+                        placeholder="City name"
+                        aria-label="City"
+                        matInput
+                        formControlName="citySelect"
+                        [matAutocomplete]="auto"
+                        name="citySelect"
+                      />
+                      <mat-autocomplete #auto="matAutocomplete">
+                        <mat-option
+                          *ngFor="let option of filteredOptions | async"
+                          [value]="option"
+                        >
+                          {{ option }}
+                        </mat-option>
+                      </mat-autocomplete>
+                    </mat-form-field>
 
                     <mat-error
                       *ngIf="
@@ -178,10 +177,10 @@
                   <!-- {{calculateForm.value | json}} -->
                   <div class="chart-container-div">
                     <app-pie-chart
-
-                    [loanAmount]="calculateResultsDto.maxLoan"
-                    [intrestPaid]="calculateResultsDto.totalInterestPaid"
-                    [agreementFee]="calculateResultsDto.agreementFee"></app-pie-chart
+                      [loanAmount]="calculateResultsDto.maxLoan"
+                      [intrestPaid]="calculateResultsDto.totalInterestPaid"
+                      [agreementFee]="calculateResultsDto.agreementFee"
+                    ></app-pie-chart
                     ><mat-divider [vertical]="true"></mat-divider>
                   </div>
 
@@ -197,6 +196,8 @@
                           class="mat-form-field"
                           appearance="outline"
                         >
+                          {{ calculateResultsDto.maxLoan }}
+
                           <input matInput formControlName="maxLoan" />
                         </mat-form-field>
                       </div>
@@ -209,7 +210,7 @@
                         <mat-form-field
                           class="mat-form-field"
                           appearance="outline"
-                        >
+                          >{{ calculateResultsDto.totalInterestPaid }}
                           <input matInput formControlName="totalInterestPaid" />
                         </mat-form-field>
                       </div>
@@ -223,7 +224,7 @@
                         <mat-form-field
                           class="mat-form-field"
                           appearance="outline"
-                        >
+                          >{{ calculateResultsDto.agreementFee }}
                           <input matInput formControlName="agreementFee" />
                         </mat-form-field>
                       </div>
@@ -232,7 +233,7 @@
                         <mat-form-field
                           class="mat-form-field"
                           appearance="outline"
-                        >
+                          >{{ calculateResultsDto.totalPaymentSum }}
                           <input matInput formControlName="totalPaymentSum" />
                         </mat-form-field>
                       </div>
