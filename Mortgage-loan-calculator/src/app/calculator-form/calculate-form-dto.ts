@@ -1,27 +1,32 @@
 export interface CalculateFormDto {
 
-    homePrice?: any;
-    monthlyFamilyIncome?: any;
-    loanSlider?: any;
-    familyMembersSlider?: any;
-    childrenToggle?: any;
-    citySelect?: any
+  id?: any;
+  homePrice?: any;
+  monthlyFamilyIncome?: any;
+  loanTerm?: any;
+  familyMembers?: any;
+  haveChildren?: any;
+  city?: any;
 
-    maxLoan?: any;
-    totalInterestPaid?: any;
-    agreementFee?: any;
-    totalPaymentSum?: any;
-
-    // partnerToggle?: boolean;
-    // homePrice?: any;
-    // familyIncome?: any;
-    // loanSlider?: any;
-    // familyMemberSlider?: any;
-    // childrenToggle?: any;
-    // city?: any
-
-    // maxLoan?: any;
-    // totalInterestPaid?: any;
-    // agreementFee?: any;
-    // totalPaymentSum?: any;
 }
+export interface CalculateResultsDto {
+  id?: any;
+  maxLoan?: any;
+  totalInterestPaid?: any;
+  agreementFee?: any;
+  totalPaymentSum?: any;
+  calculateForm?: any;
+}
+
+  // partnerToggle?: boolean;
+  // homePrice?: any;
+  // familyIncome?: any;
+  // loanSlider?: any;
+  // familyMemberSlider?: any;
+  // childrenToggle?: any;
+  // city?: any
+
+  // maxLoan?: any;
+  // totalInterestPaid?: any;
+  // agreementFee?: any;
+  // totalPaymentSum?: any;
