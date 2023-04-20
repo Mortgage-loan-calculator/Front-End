@@ -53,4 +53,4 @@ import {httpInterceptorProviders} from "./admin-login/helpers/http.interceptor";
   providers: [httpInterceptorProviders],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {}

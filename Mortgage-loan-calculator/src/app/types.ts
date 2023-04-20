@@ -5,4 +5,5 @@ export interface Customer {
   email: string;
   ipAddress: string;
   time: Date;
+  action: string;
 }

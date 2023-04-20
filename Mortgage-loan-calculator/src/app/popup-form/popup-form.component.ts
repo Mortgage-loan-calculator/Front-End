@@ -37,6 +37,7 @@ export class PopupFormComponent {
     email: ['', [Validators.required, Validators.maxLength(30)]],
     ipAddress: [''],
     time: [new Date()],
+    action: ['Submitted']
   });
 
   emailValidator(control: FormControl): ValidationErrors | null {
