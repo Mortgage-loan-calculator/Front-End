@@ -29,6 +29,13 @@ export class CalculatorService {
     return this.http.post<CalculateResultsDto>('https://mortgage-loan-calculator-back-end.onrender.com/calculate', calculateResultsDto);
   }
 
+
+  saveResultData(
+    calculateResultsDto: CalculateResultsDto
+  ): Observable<CalculateResultsDto> {
+    return this.http.post<CalculateResultsDto>('https://mortgage-loan-calculator-back-end.onrender.com/calculate', calculateResultsDto);
+  }
+
   getCalculationResults(
     homePrice: number,
     loanTerm: number
@@ -37,7 +44,6 @@ export class CalculatorService {
       .set('homePrice', homePrice.toString())
       .set('loanTerm', loanTerm.toString());
 
-    
     return this.http.get<CalculateFormDto>(
       'https://mortgage-loan-calculator-back-end.onrender.com/calculate',
       { params }
