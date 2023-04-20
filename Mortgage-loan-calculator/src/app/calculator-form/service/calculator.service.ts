@@ -21,6 +21,13 @@ export class CalculatorService {
       calculateFormDto
     );
   }
+ 
+
+  saveResultData(
+    calculateResultsDto: CalculateResultsDto
+  ): Observable<CalculateResultsDto> {
+    return this.http.post<CalculateResultsDto>('https://mortgage-loan-calculator-back-end.onrender.com/calculate', calculateResultsDto);
+  }
 
 
   saveResultData(
@@ -36,7 +43,6 @@ export class CalculatorService {
     const params = new HttpParams()
       .set('homePrice', homePrice.toString())
       .set('loanTerm', loanTerm.toString());
-
 
     return this.http.get<CalculateFormDto>(
       'https://mortgage-loan-calculator-back-end.onrender.com/calculate',

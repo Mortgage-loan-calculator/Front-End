@@ -50,6 +50,13 @@ export class CalculatorFormComponent implements OnInit {
     },
   };
 
+  @ViewChild(PieChartComponent) PieChartComponent!: PieChartComponent;
+
+  title = 'json-read-example';
+  citiesInfo: City[] = [];
+  calculateFormDto: CalculateFormDto = {} as CalculateFormDto;
+  calculateResultsDto: CalculateResultsDto = {} as CalculateResultsDto;
+
   myControl = new FormControl('');
   cityNames: string[] = [];
   filteredOptions!: Observable<string[]>;
@@ -119,6 +126,7 @@ export class CalculatorFormComponent implements OnInit {
     {
       partnerToggle: [false],
 
+      id: [''],
       homePrice: [
         '',
         [
