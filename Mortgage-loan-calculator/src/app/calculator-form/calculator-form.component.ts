@@ -77,7 +77,7 @@ export class CalculatorFormComponent implements OnInit {
       name.toLowerCase().includes(filterValue)
     );
   }
-  
+
   ngOnInit() {
     this.http.get('./assets/Cities.json').subscribe((res: any) => {
       this.cityNames = res.map((city: any) => city.name);
@@ -87,11 +87,6 @@ export class CalculatorFormComponent implements OnInit {
       );
     });
   }
-  @ViewChild(PieChartComponent) PieChartComponent!: PieChartComponent;
-  title = 'json-read-example';
-  citiesInfo: City[] = [];
-  calculateFormDto: CalculateFormDto = {} as CalculateFormDto;
-  calculateResultsDto: CalculateResultsDto = {} as CalculateResultsDto;
 
   constructor(
     private http: HttpClient,
