@@ -140,9 +140,9 @@ export class CalculatorFormComponent implements OnInit {
           this.validateMaxNumbers.bind(this),
         ],
       ],
-      loanSlider: [''],
-      familyMemberSlider: [''],
-      childrenToggle: [''],
+      loanTerm: [''],
+      familyMembers: [''],
+      haveChildren: [''],
       citySelect: ['', [Validators.required]],
     },
     { updateOn: 'blur' }
@@ -194,16 +194,16 @@ export class CalculatorFormComponent implements OnInit {
     ) as unknown as FormControl<string>;
   }
 
-  get loanSlider() {
-    return this.calculateForm.get('loanSlider') as FormControl;
+  get loanTerm() {
+    return this.calculateForm.get('loanTerm') as FormControl;
   }
 
   get familyMembers() {
-    return this.calculateForm.get('familyMemberSlider') as FormControl;
+    return this.calculateForm.get('familyMembers') as FormControl;
   }
 
   get haveChildren() {
-    return this.calculateForm.get('childrenToggle') as FormControl;
+    return this.calculateForm.get('haveChildren') as FormControl;
   }
 
   public citySelect(city: string) {
@@ -214,10 +214,10 @@ export class CalculatorFormComponent implements OnInit {
   actionText: string = '';
 
   onSubmit() {
-    this.calculateResultsDto = this.submitForm.value;
-
     if (this.calculateForm.valid) {
       this.calculateFormDto = this.calculateForm.value;
+      this.calculateResultsDto = this.submitForm.value;
+
       this.calculatorService
         .sendData(this.calculateFormDto)
         .subscribe((data: CalculateFormDto) => {
@@ -234,11 +234,13 @@ export class CalculatorFormComponent implements OnInit {
           this.calculateResultsDto = data;
         });
 
-      this.actionText = 'Submitted form';
-      const calculateFormData = this.calculateForm.value;
+      this.calculatorService.saveResultData(this.calculateResultsDto);
+
       this.actionText = 'Calculated';
       this.showColumn2 = true;
       this.pieChart.animateChart();
+      this.actionText = 'Submitted form';
+      const calculateFormData = this.calculateForm.value;
     }
   }
 
