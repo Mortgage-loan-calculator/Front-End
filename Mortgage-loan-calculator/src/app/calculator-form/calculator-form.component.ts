@@ -92,14 +92,6 @@ export class CalculatorFormComponent implements OnInit {
     });
   }
 
-
-  @ViewChild(PieChartComponent) PieChartComponent!: PieChartComponent;
-  title = 'json-read-example';
-  citiesInfo: City[] = [];
-  calculateFormDto: CalculateFormDto = {} as CalculateFormDto;
-  calculateResultsDto: CalculateResultsDto = {} as CalculateResultsDto;
-
-
   constructor(
     private http: HttpClient,
     private calculatorService: CalculatorService
