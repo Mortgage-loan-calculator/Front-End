@@ -3,7 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import {FormControl} from "@angular/forms";
 
-const AUTH_API = 'http://localhost:8080/auth/';
+const AUTH_API = 'https://mortgage-loan-calculator-front-end2.onrender.com/auth/';
 
 
 const httpOptions = {
