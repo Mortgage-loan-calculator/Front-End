@@ -145,7 +145,7 @@
                           {{ option.name }}</mat-option
                         >
                       </mat-autocomplete>
-                      <mat-error *ngIf="citySelect.hasError('required')">
+                      <mat-error *ngIf="myControl.hasError('required')">
                         Please select a city.
                       </mat-error>
                     </mat-form-field>

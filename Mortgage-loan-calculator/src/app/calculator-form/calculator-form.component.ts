@@ -219,7 +219,8 @@ export class CalculatorFormComponent implements OnInit {
   }
 
   get citySelect() {
-    return this.myControl.value as unknown as FormControl;
+    console.log(this.myControl.value);
+    return this.myControl.value;
   }
 
   actionText: string = '';
