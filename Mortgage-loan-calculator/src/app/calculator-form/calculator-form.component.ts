@@ -87,24 +87,6 @@ export class CalculatorFormComponent implements OnInit {
         map((value) => this._filter(value || ''))
       );
     });
-    // this.calculateForm.valueChanges.pipe(
-    //   startWith(null),
-    //   debounceTime(500),
-    //   distinctUntilChanged(),
-    //   takeUntil(this.destroy$),
-    //   switchMap(() => {
-    //     if (this.calculateForm.valid) {
-    //       const homePrice = this.homePrice.get('homePrice')?.value;
-    //       const loanTerm = this.homePrice.get('loanTerm')?.value;
-    //       return this.calculatorService
-    //         .getCalculationResults(homePrice, loanTerm)
-    //         .pipe(catchError(() => of(0)));
-    //     } else {
-    //       return of(0);
-    //     }
-    //   }),
-    //   startWith(0)
-    // );
 
     this.calculateForm.valueChanges
       .pipe(
