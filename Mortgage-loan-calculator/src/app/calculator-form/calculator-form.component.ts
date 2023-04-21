@@ -1,7 +1,12 @@
 import { LabelType, Options } from '@angular-slider/ngx-slider';
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { tap } from 'rxjs/operators';
-
+import {
+  catchError,
+  distinctUntilChanged,
+  takeUntil,
+  tap,
+} from 'rxjs/operators';
+import { fromEvent, debounceTime } from 'rxjs';
 import {
   FormBuilder,
   FormControl,
@@ -12,7 +17,7 @@ import { HttpClient } from '@angular/common/http';
 import { animate, style, transition, trigger } from '@angular/animations';
 import { PieChartComponent } from '../pie-chart/pie-chart.component';
 
-import { Observable, map, pipe, startWith, switchMap } from 'rxjs';
+import { Observable, Subject, map, of, pipe, startWith, switchMap } from 'rxjs';
 
 import { CalculatorService } from './service/calculator.service';
 import { CalculateFormDto, CalculateResultsDto } from './calculate-form-dto';
@@ -84,15 +89,42 @@ export class CalculatorFormComponent implements OnInit {
         map((value) => this._filter(value || ''))
       );
     });
+    // this.calculateForm.valueChanges.pipe(
+    //   startWith(null),
+    //   debounceTime(500),
+    //   distinctUntilChanged(),
+    //   takeUntil(this.destroy$),
+    //   switchMap(() => {
+    //     if (this.calculateForm.valid) {
+    //       const homePrice = this.homePrice.get('homePrice')?.value;
+    //       const loanTerm = this.homePrice.get('loanTerm')?.value;
+    //       return this.calculatorService
+    //         .getCalculationResults(homePrice, loanTerm)
+    //         .pipe(catchError(() => of(0)));
+    //     } else {
+    //       return of(0);
+    //     }
+    //   }),
+    //   startWith(0)
+    // );
+
     this.calculateForm.valueChanges
       .pipe(
+        distinctUntilChanged(),
+
         tap((value) => {
           this.onUpdate(value);
-        })
-      )
+        }),
+        takeUntil(this.destroy$)
+        )
       .subscribe();
   }
+  private readonly destroy$ = new Subject<void>();
 
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
+  }
   @ViewChild(PieChartComponent) PieChartComponent!: PieChartComponent;
   title = 'json-read-example';
   citiesInfo: City[] = [];
@@ -129,7 +161,7 @@ export class CalculatorFormComponent implements OnInit {
 
   calculateForm = fb.group(
     {
-      partnerToggle: [false],
+      partnerToggle: [''],
 
       id: [''],
       homePrice: [
@@ -228,13 +260,13 @@ export class CalculatorFormComponent implements OnInit {
     const homePrice = parseInt(value.homePrice || '');
     const loanTerm = parseInt(value.loanTerm || '');
 
-    this.calculatorService.getCalculationResults(homePrice, loanTerm).subscribe(
-      (data: CalculateResultsDto) => {
+    this.calculatorService
+      .getCalculationResults(homePrice, loanTerm)
+      .subscribe((data: CalculateResultsDto) => {
         this.calculateResultsDto = data;
         this.calculatorService.saveResultData(this.calculateResultsDto);
         this.pieChart.animateChart();
-      }
-    );
+      });
   }
 
   onUpdate(value: any) {

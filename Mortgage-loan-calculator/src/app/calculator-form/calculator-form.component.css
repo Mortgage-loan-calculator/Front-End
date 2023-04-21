@@ -30,7 +30,7 @@ h2 {
 }
 
 .column2 {
-  margin-top: 30px;
+  margin-top: 138px;
   flex-basis: 50%;
   box-sizing: border-box;
   opacity: 0;
@@ -50,7 +50,6 @@ h2 {
   height: 55px;
   align-items: center;
   grid-column: 1 / span 2;
-
 }
 .grid-item {
   display: flex;
@@ -127,7 +126,7 @@ mat-icon.brightness-3-icon {
 
 .form2 {
   margin-top: 20px;
-  /* margin-left: 100px; */
+  margin-left: 20px;
 }
 
 .grid-container {
@@ -202,7 +201,6 @@ mat-divider[vertical="true"] {
     order: 2;
   }
   .form2 {
-    margin-left: 40px;
     scale: 90%;
     display: flex;
     flex-direction: column;
