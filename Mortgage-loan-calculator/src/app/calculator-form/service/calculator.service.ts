@@ -20,25 +20,25 @@ export class CalculatorService {
 
   sendData(calculateFormDto: CalculateFormDto): Observable<CalculateFormDto> {
     return this.http.post<CalculateFormDto>(
-      'https://mortgage-loan-calculator-back-end.onrender.com/calculate/form',
+      'https://mortgage-loan-calculator-back-end.onrender.com/calculate',
       calculateFormDto
     );
   }
 
-  saveResultData(
-    calculateResultsDto: CalculateResultsDto
-  ): Observable<CalculateResultsDto> {
-    return this.http.post<CalculateResultsDto>(
-      'https://mortgage-loan-calculator-back-end.onrender.com/calculate',
-      calculateResultsDto
-    );
-  }
+  // saveResultData(
+  //   calculateResultsDto: CalculateResultsDto
+  // ): Observable<CalculateResultsDto> {
+  //   return this.http.post<CalculateResultsDto>(
+  //     'https://mortgage-loan-calculator-back-end.onrender.com/calculate',
+  //     calculateResultsDto
+  //   );
+  // }
 
   getCalculationResults(object: {
     [key: string]: string;
   }): Observable<CalculateResultsDto> {
     return this.http.post<CalculateFormDto>(
-      'https://mortgage-loan-calculator-back-end.onrender.com/calculate',
+      'https://mortgage-loan-calculator-back-end.onrender.com/calculate/results',
       object
     );
   }

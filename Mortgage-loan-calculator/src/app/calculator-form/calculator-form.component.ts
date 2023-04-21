@@ -242,13 +242,10 @@ export class CalculatorFormComponent implements OnInit {
   }
 
   updateResults(value: any) {
-    const homePrice = parseInt(value.homePrice || '');
-    const loanTerm = parseInt(value.loanTerm || '');
     this.calculatorService
       .getCalculationResults(value)
       .subscribe((data: CalculateResultsDto) => {
         this.calculateResultsDto = data;
-        this.calculatorService.saveResultData(this.calculateResultsDto);
       });
   }
 
@@ -268,8 +265,6 @@ export class CalculatorFormComponent implements OnInit {
         });
 
       this.updateResults(this.calculateFormDto);
-
-      this.calculatorService.saveResultData(this.calculateResultsDto);
 
       this.actionText = 'Calculated';
       this.showColumn2 = true;
