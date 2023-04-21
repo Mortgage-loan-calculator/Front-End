@@ -45,8 +45,6 @@ interface City {
   ],
 })
 export class CalculatorFormComponent implements OnInit {
-  private pieChart!: any;
-
   adultOptions: Options = {
     floor: 1,
     ceil: 5,
@@ -116,7 +114,7 @@ export class CalculatorFormComponent implements OnInit {
           this.onUpdate(value);
         }),
         takeUntil(this.destroy$)
-        )
+      )
       .subscribe();
   }
   private readonly destroy$ = new Subject<void>();
@@ -255,17 +253,20 @@ export class CalculatorFormComponent implements OnInit {
   }
 
   actionText: string = '';
+  show() {
+    const calculateButton = document.querySelector('.calculate-button');
+    const column2 = document.querySelector('.column2');
+    const calculateBtn = document.getElementById('calculate-btn');
+  }
 
   updateResults(value: any) {
     const homePrice = parseInt(value.homePrice || '');
     const loanTerm = parseInt(value.loanTerm || '');
-
     this.calculatorService
-      .getCalculationResults(homePrice, loanTerm)
+      .getCalculationResults(value)
       .subscribe((data: CalculateResultsDto) => {
         this.calculateResultsDto = data;
         this.calculatorService.saveResultData(this.calculateResultsDto);
-        this.pieChart.animateChart();
       });
   }
 
