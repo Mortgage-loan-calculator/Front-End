@@ -27,8 +27,8 @@ export class CalculatorService {
     calculateResultsDto: CalculateResultsDto
   ): Observable<CalculateResultsDto> {
     return this.http.post<CalculateResultsDto>(
-      // 'https://mortgage-loan-calculator-back-end.onrender.com/calculate',
-      'http://localhost:8080/calculate',
+       'https://mortgage-loan-calculator-back-end.onrender.com/calculate',
+      //'http://localhost:8080/calculate',
       calculateResultsDto
     );
   }
@@ -39,8 +39,8 @@ export class CalculatorService {
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
 
     return this.http.post<CalculateFormDto>(
-      // 'https://mortgage-loan-calculator-back-end.onrender.com/calculate',
-      'http://localhost:8080/calculate',
+      'https://mortgage-loan-calculator-back-end.onrender.com/calculate',
+      //'http://localhost:8080/calculate',
       requestData,
       { headers }
     );
