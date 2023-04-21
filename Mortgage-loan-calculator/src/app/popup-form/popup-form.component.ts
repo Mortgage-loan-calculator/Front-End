@@ -29,7 +29,7 @@ export class PopupFormComponent {
       '',
       [
         Validators.required,
-        Validators.pattern(/^[a-zA-Z\s]{1,30}$/),
+        Validators.pattern(/^[a-zA-Z\u0104-\u017E\s]{1,30}$/),
         Validators.maxLength(30),
       ],
     ],
