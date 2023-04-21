@@ -1,4 +1,4 @@
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, map } from 'rxjs';
 import { CalculateFormDto, CalculateResultsDto } from '../calculate-form-dto';
@@ -17,7 +17,8 @@ export class CalculatorService {
 
   sendData(calculateFormDto: CalculateFormDto): Observable<CalculateFormDto> {
     return this.http.post<CalculateFormDto>(
-      'https://mortgage-loan-calculator-back-end.onrender.com/calculate/form',
+      // 'https://mortgage-loan-calculator-back-end.onrender.com/calculate/form',
+      'http://localhost:8080/calculate/form',
       calculateFormDto
     );
   }
@@ -26,22 +27,22 @@ export class CalculatorService {
     calculateResultsDto: CalculateResultsDto
   ): Observable<CalculateResultsDto> {
     return this.http.post<CalculateResultsDto>(
-      'https://mortgage-loan-calculator-back-end.onrender.com/calculate',
+      // 'https://mortgage-loan-calculator-back-end.onrender.com/calculate',
+      'http://localhost:8080/calculate',
       calculateResultsDto
     );
   }
 
   getCalculationResults(
-    homePrice: number,
-    loanTerm: number
+    requestData: CalculateFormDto
   ): Observable<CalculateResultsDto> {
-    const params = new HttpParams()
-      .set('homePrice', homePrice.toString())
-      .set('loanTerm', loanTerm.toString());
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
 
-    return this.http.get<CalculateFormDto>(
-      'https://mortgage-loan-calculator-back-end.onrender.com/calculate',
-      { params }
+    return this.http.post<CalculateFormDto>(
+      // 'https://mortgage-loan-calculator-back-end.onrender.com/calculate',
+      'http://localhost:8080/calculate',
+      requestData,
+      { headers }
     );
   }
 }

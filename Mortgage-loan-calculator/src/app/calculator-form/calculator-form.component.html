@@ -280,7 +280,7 @@
                 <div class="grid-item">
                   <span matPrefix>Down payment</span>
                   <mat-form-field class="mat-form-field" appearance="outline">
-                    <input matInput formControlName="downpayment" />
+                    <input matInput formControlName="downPayment" />
                   </mat-form-field>
                 </div>
                 <div class="grid-item">
@@ -290,27 +290,36 @@
                   </mat-form-field>
                 </div>
                 <div class="grid-item">
-                  <span matPrefix>Your estimated monthly payment</span>
+                  <span matPrefix>Monthly family income</span>
                   <mat-form-field class="mat-form-field" appearance="outline">
-                    <input matInput formControlName="estimatedPayment" />
-                  </mat-form-field>
-                </div>
-                <div class="grid-item">
-                  <span matPrefix>Maximum monthly loan payment</span>
-                  <mat-form-field class="mat-form-field" appearance="outline">
-                    <input matInput formControlName="maxPayment" />
+                    <input matInput formControlName="monthlyIncome" />
                   </mat-form-field>
                 </div>
               </div>
               <div class="button-container">
-                <button mat-button type="apply" class="my-button apply-button">
+                <button mat-button type="submit" (click)="calculateMonthly()" class="my-button apply-button">
                   Apply
                 </button>
                 <button mat-button type="apply" class="my-button apply-button">
                   Offers
                 </button>
               </div>
+              <div class="grid-item">
+                <span matPrefix>Your estimated monthly payment</span>
+                <mat-form-field class="mat-form-field" appearance="outline">
+                  <input matInput formControlName="estimatedMonthlyPayment" readonly/>
+                  {{ monthlyPaymentResultsDto.estimatedMonthlyPayment }}
+                </mat-form-field>
+              </div>
+              <div class="grid-item">
+                <span matPrefix>Maximum monthly loan payment</span>
+                <mat-form-field class="mat-form-field" appearance="outline">
+                  <input matInput formControlName="maxMonthlyPayment" readonly />
+                  {{ monthlyPaymentResultsDto.maxMonthlyPayment }}
+                </mat-form-field>
+              </div>
             </form>
+            <app-monthly-payment [monthlyPaymentResultsDto]="monthlyPaymentResultsDto" (onResultsCalculated)="handleResultsCalculated($event)"></app-monthly-payment>
           </mat-tab>
         </mat-tab-group>
       </div>

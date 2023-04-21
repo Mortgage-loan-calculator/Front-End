@@ -1,5 +1,5 @@
 import { LabelType, Options } from '@angular-slider/ngx-slider';
-import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, Input, OnInit, ViewChild } from '@angular/core';
 
 import {
   AbstractControl,
@@ -15,6 +15,8 @@ import { Observable, map, startWith } from 'rxjs';
 
 import { CalculatorService } from './service/calculator.service';
 import { CalculateFormDto, CalculateResultsDto } from './calculate-form-dto';
+import { MonthlyPaymentDto, MonthlyPaymentResultsDto } from '../monthly-payment/monthly-payment-dto';
+import { MonthlyPaymentComponent } from '../monthly-payment/monthly-payment.component';
 
 const fb = new FormBuilder().nonNullable;
 interface City {
@@ -65,6 +67,9 @@ export class CalculatorFormComponent implements OnInit {
   myControl = new FormControl('');
   cityNames: string[] = [];
   filteredOptions!: Observable<string[]>;
+  
+  monthlyPaymentResultsDto: MonthlyPaymentResultsDto = {} as MonthlyPaymentResultsDto;
+  @ViewChild(MonthlyPaymentComponent) monthlyPaymentComponent!: MonthlyPaymentComponent;
 
   ngOnChanges() {
     if (this.citiesInfo != null) {
@@ -167,10 +172,11 @@ export class CalculatorFormComponent implements OnInit {
   applyForm = fb.group(
     {
       dealAmount: [''],
-      downpayment: [''],
+      downPayment: [''],
       loanPeriod: [''],
-      estimatedPayment: [''],
-      maxPayment: [''],
+      monthlyIncome: [''],
+      estimatedMonthlyPayment: [''],
+      maxMonthlyPayment: [''],
     },
     { updateOn: 'blur' }
   );
@@ -231,10 +237,8 @@ export class CalculatorFormComponent implements OnInit {
         });
 
       this.calculatorService
-
         .getCalculationResults(
-          this.calculateFormDto.homePrice,
-          this.calculateFormDto.loanTerm
+          this.calculateFormDto
         )
         .subscribe((data: CalculateResultsDto) => {
           this.calculateResultsDto = data;
@@ -248,6 +252,20 @@ export class CalculatorFormComponent implements OnInit {
       this.actionText = 'Submitted form';
       const calculateFormData = this.calculateForm.value;
     }
+  }
+
+  calculateMonthly() {
+    if (this.applyForm.valid) {
+      const formData: MonthlyPaymentDto = this.applyForm.value;
+      this.monthlyPaymentComponent.calculateResults(formData);
+    }
+  }
+
+  handleResultsCalculated(results: MonthlyPaymentResultsDto): void {
+    this.applyForm.patchValue({
+      estimatedMonthlyPayment: results.estimatedMonthlyPayment,
+      maxMonthlyPayment: results.maxMonthlyPayment,
+    });
   }
 
   onChange() {}
