@@ -12,14 +12,7 @@ import {StorageService} from "../admin-login/services/storage.service";
   styleUrls: ['./admin-panel.component.css'],
 })
 export class AdminPanelComponent implements AfterViewInit, OnInit {
-  isLoggedIn = false;
-
-
-  constructor (private service: CustomerService, private storageService: StorageService) {
-    this.isLoggedIn = this.storageService.isLoggedIn();
-    if(!this.isLoggedIn || !this.storageService.getUser().roles.includes('ROLE_ADMIN')){
-      window.location.href = '/adminlogin';
-    }
+  constructor (private service: CustomerService) {
   }
   ngOnInit(){
 
