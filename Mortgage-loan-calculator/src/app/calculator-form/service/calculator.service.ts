@@ -17,8 +17,8 @@ export class CalculatorService {
 
   sendData(calculateFormDto: CalculateFormDto): Observable<CalculateFormDto> {
     return this.http.post<CalculateFormDto>(
-      // 'https://mortgage-loan-calculator-back-end.onrender.com/calculate/form',
-      'http://localhost:8080/calculate/form',
+       'https://mortgage-loan-calculator-back-end.onrender.com/calculate/form',
+      //'http://localhost:8080/calculate/form',
       calculateFormDto
     );
   }
