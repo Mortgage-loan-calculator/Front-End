@@ -12,8 +12,8 @@ export class MonthlyPaymentService {
 
   sendData(monthlyPaymentDto: MonthlyPaymentDto): Observable<MonthlyPaymentDto> {
     return this.http.post<MonthlyPaymentDto>(
-      // 'https://mortgage-loan-calculator-back-end.onrender.com/monthly-payment/form',
-      'http://localhost:8080/monthly-payment/form',
+      'https://mortgage-loan-calculator-back-end.onrender.com/monthly-payment/form',
+      //'http://localhost:8080/monthly-payment/form',
       monthlyPaymentDto
     );
   }
@@ -34,8 +34,8 @@ export class MonthlyPaymentService {
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
 
     return this.http.post<MonthlyPaymentResultsDto>(
-      // 'https://mortgage-loan-calculator-back-end.onrender.com/monthly-payment',
-      'http://localhost:8080/monthly-payment',
+      'https://mortgage-loan-calculator-back-end.onrender.com/monthly-payment',
+      //'http://localhost:8080/monthly-payment',
       requestData,
       { headers }
     );
