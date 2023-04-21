@@ -9,7 +9,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { tap, timestamp } from 'rxjs';
-import { CustomerService } from '../services/customer.service';
+import { CustomerService } from '../admin-panel/services/customer.service';
 import { Customer } from '../types';
 
 const fb = new FormBuilder().nonNullable;
@@ -37,6 +37,7 @@ export class PopupFormComponent {
     email: ['', [Validators.required, Validators.maxLength(30)]],
     ipAddress: [''],
     time: [new Date()],
+    action: ['Submitted']
   });
 
   emailValidator(control: FormControl): ValidationErrors | null {

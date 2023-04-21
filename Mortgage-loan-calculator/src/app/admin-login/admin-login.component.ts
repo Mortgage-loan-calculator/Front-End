@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormControl, Validators } from '@angular/forms';
+import {AuthService} from "./services/auth.service";
+import {StorageService} from "./services/storage.service";
 const fb = new FormBuilder().nonNullable;
 @Component({
   selector: 'app-admin-login',
@@ -7,6 +9,12 @@ const fb = new FormBuilder().nonNullable;
   styleUrls: ['./admin-login.component.css'],
 })
 export class AdminLoginComponent {
+  showMyClass = true;
+  isLoggedIn = false;
+  isLoginFailed = false;
+  errorMessage = '';
+  roles: string[] = [];
+  constructor(private authService: AuthService, private storageService: StorageService) { }
   loginForm = fb.group(
     {
       username: [''],
@@ -14,14 +22,14 @@ export class AdminLoginComponent {
         '',
         [
           Validators.required,
-          Validators.minLength(9),
+          Validators.minLength(8),
           Validators.pattern(
-            '^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)[a-zA-Z\\d]{9,}$'
+            '^(?=.*[a-z])(?=.*\\d)[a-zA-Z\\d]{8,}$'
           ),
         ],
       ],
     },
-    { updateOn: 'blur' }
+    { updateOn: 'change' }
   );
 
   get username() {
@@ -30,7 +38,33 @@ export class AdminLoginComponent {
   get password() {
     return this.loginForm.get('password') as unknown as FormControl<string>;
   }
-  onLoginFormSubmit() {
-    const loginFormData = this.loginForm.value;
+  onLoginFormSubmit(): void {
+    console.log(this.username.value + this.password.value)
+    this.authService.login(this.username.value, this.password.value).subscribe({
+      next: data => {
+        this.storageService.saveToken(data.accessToken)
+        this.storageService.saveUser(data);
+
+        this.isLoginFailed = false;
+        this.isLoggedIn = true;
+        this.roles = this.storageService.getUser().roles;
+        if(this.roles.includes('ROLE_ADMIN'))
+        {
+          window.location.href = '/admin';
+        }
+        else {
+          this.showMyClass = false;
+        }
+
+      },
+      error: err => {
+        this.errorMessage = err.error.message;
+        this.isLoginFailed = true;
+      }
+    });
+  }
+
+  reloadPage(): void {
+    window.location.reload();
   }
 }

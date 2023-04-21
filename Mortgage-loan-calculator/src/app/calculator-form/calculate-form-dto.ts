@@ -18,15 +18,3 @@ export interface CalculateResultsDto {
   calculateForm?: any;
 }
 
-  // partnerToggle?: boolean;
-  // homePrice?: any;
-  // familyIncome?: any;
-  // loanSlider?: any;
-  // familyMemberSlider?: any;
-  // childrenToggle?: any;
-  // city?: any
-
-  // maxLoan?: any;
-  // totalInterestPaid?: any;
-  // agreementFee?: any;
-  // totalPaymentSum?: any;

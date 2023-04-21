@@ -1,4 +1,5 @@
 import { LabelType, Options } from '@angular-slider/ngx-slider';
+
 import { Component, OnInit, ViewChild } from '@angular/core';
 import {
   catchError,
@@ -7,6 +8,9 @@ import {
   tap,
 } from 'rxjs/operators';
 import { fromEvent, debounceTime } from 'rxjs';
+
+import { ChangeDetectorRef, Component, Input, OnInit, ViewChild } from '@angular/core';
+
 import {
   FormBuilder,
   FormControl,
@@ -21,6 +25,8 @@ import { Observable, Subject, map, of, pipe, startWith, switchMap } from 'rxjs';
 
 import { CalculatorService } from './service/calculator.service';
 import { CalculateFormDto, CalculateResultsDto } from './calculate-form-dto';
+import { MonthlyPaymentDto, MonthlyPaymentResultsDto } from '../monthly-payment/monthly-payment-dto';
+import { MonthlyPaymentComponent } from '../monthly-payment/monthly-payment.component';
 
 const fb = new FormBuilder().nonNullable;
 interface City {
@@ -59,9 +65,19 @@ export class CalculatorFormComponent implements OnInit {
     },
   };
 
+  @ViewChild(PieChartComponent) PieChartComponent!: PieChartComponent;
+
+  title = 'json-read-example';
+  citiesInfo: City[] = [];
+  calculateFormDto: CalculateFormDto = {} as CalculateFormDto;
+  calculateResultsDto: CalculateResultsDto = {} as CalculateResultsDto;
+
   myControl = new FormControl('');
   cityNames: string[] = [];
   filteredOptions!: Observable<string[]>;
+  
+  monthlyPaymentResultsDto: MonthlyPaymentResultsDto = {} as MonthlyPaymentResultsDto;
+  @ViewChild(MonthlyPaymentComponent) monthlyPaymentComponent!: MonthlyPaymentComponent;
 
   ngOnChanges() {
     if (this.citiesInfo != null) {
@@ -101,6 +117,7 @@ export class CalculatorFormComponent implements OnInit {
   }
   private readonly destroy$ = new Subject<void>();
 
+
   ngOnDestroy(): void {
     this.destroy$.next();
     this.destroy$.complete();
@@ -110,6 +127,7 @@ export class CalculatorFormComponent implements OnInit {
   citiesInfo: City[] = [];
   calculateFormDto: CalculateFormDto = {} as CalculateFormDto;
   calculateResultsDto: CalculateResultsDto = {} as CalculateResultsDto;
+
 
   constructor(
     private http: HttpClient,
@@ -185,10 +203,11 @@ export class CalculatorFormComponent implements OnInit {
   applyForm = fb.group(
     {
       dealAmount: [''],
-      downpayment: [''],
+      downPayment: [''],
       loanPeriod: [''],
-      estimatedPayment: [''],
-      maxPayment: [''],
+      monthlyIncome: [''],
+      estimatedMonthlyPayment: [''],
+      maxMonthlyPayment: [''],
     },
     { updateOn: 'blur' }
   );
@@ -243,7 +262,7 @@ export class CalculatorFormComponent implements OnInit {
 
   updateResults(value: any) {
     this.calculatorService
-      .getCalculationResults(value)
+      .getFormCalculationResults(value)
       .subscribe((data: CalculateResultsDto) => {
         this.calculateResultsDto = data;
       });
@@ -266,11 +285,26 @@ export class CalculatorFormComponent implements OnInit {
 
       this.updateResults(this.calculateFormDto);
 
+
       this.actionText = 'Calculated';
       this.showColumn2 = true;
       this.actionText = 'Submitted form';
       const calculateFormData = this.calculateForm.value;
     }
+  }
+
+  calculateMonthly() {
+    if (this.applyForm.valid) {
+      const formData: MonthlyPaymentDto = this.applyForm.value;
+      this.monthlyPaymentComponent.calculateResults(formData);
+    }
+  }
+
+  handleResultsCalculated(results: MonthlyPaymentResultsDto): void {
+    this.applyForm.patchValue({
+      estimatedMonthlyPayment: results.estimatedMonthlyPayment,
+      maxMonthlyPayment: results.maxMonthlyPayment,
+    });
   }
 
   onChange() {}

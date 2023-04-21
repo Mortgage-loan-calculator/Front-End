@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Customer } from '../types';
+import { Customer } from '../../types';
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -9,7 +9,7 @@ import { Observable } from 'rxjs';
 export class CustomerService {
   constructor(private http: HttpClient) {}
   customerUrl =
-    'https://mortgage-loan-calculator-back-end.onrender.com/customers';
+    'http://localhost:8080/customers';
 
   public getCustomer(): Observable<Customer[]> {
     return this.http.get<Customer[]>(this.customerUrl);

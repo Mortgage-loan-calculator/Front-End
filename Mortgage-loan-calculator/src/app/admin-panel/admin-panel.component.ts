@@ -1,9 +1,10 @@
 import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
-import { CustomerService } from '../services/customer.service';
+import { CustomerService } from './services/customer.service';
 import { Customer } from '../types';
 import { CalculatorFormComponent } from '../calculator-form/calculator-form.component';
+import {StorageService} from "../admin-login/services/storage.service";
 
 @Component({
   selector: 'app-admin-panel',
@@ -11,6 +12,12 @@ import { CalculatorFormComponent } from '../calculator-form/calculator-form.comp
   styleUrls: ['./admin-panel.component.css'],
 })
 export class AdminPanelComponent implements AfterViewInit, OnInit {
+  constructor (private service: CustomerService) {
+  }
+  ngOnInit(){
+
+  }
+
   customers: MatTableDataSource<Customer> = new MatTableDataSource<Customer>();
 
   displayedColumns: string[] = [
@@ -25,10 +32,6 @@ export class AdminPanelComponent implements AfterViewInit, OnInit {
   @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator;
   @ViewChild(CalculatorFormComponent)
   calculatorFormComponent?: CalculatorFormComponent;
-
-  constructor(private service: CustomerService) {}
-  ngOnInit(): void {}
-
   ngAfterViewInit() {
     this.service.getCustomer().subscribe((data) => {
       this.customers.data = data;
