@@ -30,7 +30,7 @@ h2 {
 }
 
 .column2 {
-  margin-top: 30px;
+  margin-top: 138px;
   flex-basis: 50%;
   box-sizing: border-box;
   opacity: 0;
@@ -66,7 +66,7 @@ h2 {
 .grid-container {
   display: grid;
   grid-template-columns: 1fr;
-  grid-template-rows: repeat(4, 1fr);
+  grid-template-rows: repeat(6, auto);
   grid-row-gap: 10px;
 }
 
@@ -83,15 +83,14 @@ h2 {
 }
 .grid-item:nth-child(4) {
   grid-row: 4;
-}
 
-.grid-item:nth-child(5) {
-  font-weight: bold;
   font-size: 1.2em;
 }
+.grid-item:nth-child(5),
 .grid-item:nth-child(6) {
-  font-weight: bold;
+
   font-size: 1.2em;
+  font-weight: bold;
 }
 
 mat-icon.brightness-1-icon {
@@ -111,12 +110,11 @@ mat-icon.brightness-3-icon {
   white-space: nowrap;
 }
 
-.grid-item:nth-child(4) {
-  grid-row: 4;
-}
-
 .grid-item:nth-child(5) {
   grid-row: 5;
+}
+.grid-item:nth-child(6) {
+  grid-row: 6;
 }
 
 .column.show {
@@ -129,7 +127,7 @@ mat-icon.brightness-3-icon {
 
 .form2 {
   margin-top: 20px;
-  /* margin-left: 100px; */
+  margin-left: 20px;
 }
 
 .grid-container {
@@ -204,7 +202,6 @@ mat-divider[vertical="true"] {
     order: 2;
   }
   .form2 {
-    margin-left: 40px;
     scale: 90%;
     display: flex;
     flex-direction: column;
@@ -225,7 +222,6 @@ mat-divider[vertical="true"] {
   .down {
     margin-top: 0px;
   }
-
 }
 
 .my-button {
@@ -260,7 +256,7 @@ mat-divider[vertical="true"] {
 }
 
 .column3 {
-  height: 500px;
+  height: 600px;
   margin-left: 20px;
 }
 .apply-button {

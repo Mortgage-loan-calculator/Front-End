@@ -15,7 +15,6 @@
                   class="column"
                   [formGroup]="calculateForm"
                   (ngSubmit)="onSubmit()"
-                  (change)="onSubmit()"
                 >
                   <div class="toggle-container">
                     <div class="toggle-label">Alone/With partner</div>
@@ -78,7 +77,7 @@
                     <mat-error
                       *ngIf="calculateForm.controls.monthlyFamilyIncome.errors?.['min']"
                     >
-                      Home price should be at least 1.
+                      Monthly family income should be at least 1.
                     </mat-error>
                     <mat-error
                       *ngIf="calculateForm.controls.monthlyFamilyIncome.errors?.['maxNumbersReached']"
@@ -147,11 +146,9 @@
                     </mat-form-field>
                     <mat-error
                       *ngIf="
-                        (calculateForm.get('citySelect')?.invalid &&
-                          calculateForm.get('citySelect')?.dirty) ||
+                        calculateForm.get('citySelect')?.invalid &&
                         calculateForm.get('citySelect')?.touched
                       "
-                      class="error-message"
                     >
                       Please select a city.
                     </mat-error>
@@ -162,6 +159,7 @@
                       mat-button
                       type="submit"
                       class="my-button calculate-button"
+                      (change)="show()"
                     >
                       Calculate
                     </button>
@@ -196,14 +194,12 @@
                               >brightness_1</mat-icon
                             >
 
-
                             <span matPrefix>Loan amount</span>
                           </div>
                           <div class="amount-positioning">
                             {{ calculateResultsDto.maxLoan }}
                           </div>
                         </div>
-
 
                       </div>
                       <div class="grid-item-2">
@@ -213,14 +209,12 @@
                               >brightness_1</mat-icon
                             >
 
-
                             <span matPrefix>Total interest paid</span>
                           </div>
                           <div class="amount-positioning">
                             {{ calculateResultsDto.totalInterestPaid }}
                           </div>
                         </div>
-
 
                       </div>
 
@@ -230,7 +224,6 @@
                             <mat-icon class="brightness-3-icon"
                               >brightness_1</mat-icon
                             >
-
 
                             <span matPrefix>Agreement fee</span>
                           </div>
@@ -247,7 +240,6 @@
                             {{ calculateResultsDto.totalPaymentSum }}</strong
                           >
                         </div>
-
 
                       </div>
                     </div>
@@ -271,6 +263,17 @@
           <mat-tab routerLink="/calculate" label="Calculate monthly payment">
             <form class="column3" [formGroup]="applyForm">
               <div class="grid-container">
+                <div class="grid-item">
+                  <div class="toggle-container">
+                    <div class="toggle-label">Alone/With partner</div>
+
+                    <mat-slide-toggle
+                      class="toggle"
+                      formControlName="partnerToggle"
+                      (change)="onChange()"
+                    ></mat-slide-toggle>
+                  </div>
+                </div>
                 <div class="grid-item">
                   <span matPrefix>Deal amount</span>
                   <mat-form-field class="mat-form-field" appearance="outline">
@@ -297,10 +300,13 @@
                 </div>
               </div>
               <div class="button-container">
+
+
                 <button mat-button type="submit" (click)="calculateMonthly()" class="my-button apply-button">
+
                   Apply
                 </button>
-                <button mat-button type="apply" class="my-button apply-button">
+                <button mat-button type="submit" class="my-button apply-button (click)="showPopupForm()">
                   Offers
                 </button>
               </div>

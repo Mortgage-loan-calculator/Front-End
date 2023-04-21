@@ -7,6 +7,9 @@ import { CalculateFormDto, CalculateResultsDto } from '../calculate-form-dto';
   providedIn: 'root',
 })
 export class CalculatorService {
+  sendValue(value: any) {
+    throw new Error('Method not implemented.');
+  }
   url: string = './assets/Cities.json';
 
   constructor(private http: HttpClient) {}
@@ -17,21 +20,31 @@ export class CalculatorService {
 
   sendData(calculateFormDto: CalculateFormDto): Observable<CalculateFormDto> {
     return this.http.post<CalculateFormDto>(
-       'https://mortgage-loan-calculator-back-end.onrender.com/calculate/form',
-      //'http://localhost:8080/calculate/form',
+      'https://mortgage-loan-calculator-back-end.onrender.com/calculate',
+
       calculateFormDto
     );
   }
 
-  saveResultData(
-    calculateResultsDto: CalculateResultsDto
-  ): Observable<CalculateResultsDto> {
-    return this.http.post<CalculateResultsDto>(
-       'https://mortgage-loan-calculator-back-end.onrender.com/calculate',
-      //'http://localhost:8080/calculate',
-      calculateResultsDto
-    );
-  }
+  // saveResultData(
+  //   calculateResultsDto: CalculateResultsDto
+  // ): Observable<CalculateResultsDto> {
+  //   return this.http.post<CalculateResultsDto>(
+  //     'https://mortgage-loan-calculator-back-end.onrender.com/calculate',
+  //     calculateResultsDto
+  //   );
+  // }
+
+  getFormCalculationResults(object: {
+    [key: string]: string;
+  }): Observable<CalculateResultsDto> {
+    return this.http.post<CalculateFormDto>(
+      'https://mortgage-loan-calculator-back-end.onrender.com/calculate/results',
+      object
+      );
+}
+}
+
 
   getCalculationResults(
     requestData: CalculateFormDto

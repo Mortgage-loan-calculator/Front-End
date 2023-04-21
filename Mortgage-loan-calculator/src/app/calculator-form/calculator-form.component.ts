@@ -1,17 +1,27 @@
 import { LabelType, Options } from '@angular-slider/ngx-slider';
+
+import { Component, OnInit, ViewChild } from '@angular/core';
+import {
+  catchError,
+  distinctUntilChanged,
+  takeUntil,
+  tap,
+} from 'rxjs/operators';
+import { fromEvent, debounceTime } from 'rxjs';
+
 import { ChangeDetectorRef, Component, Input, OnInit, ViewChild } from '@angular/core';
 
 import {
-  AbstractControl,
   FormBuilder,
   FormControl,
+  FormGroup,
   Validators,
 } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { animate, style, transition, trigger } from '@angular/animations';
 import { PieChartComponent } from '../pie-chart/pie-chart.component';
 
-import { Observable, map, startWith } from 'rxjs';
+import { Observable, Subject, map, of, pipe, startWith, switchMap } from 'rxjs';
 
 import { CalculatorService } from './service/calculator.service';
 import { CalculateFormDto, CalculateResultsDto } from './calculate-form-dto';
@@ -41,8 +51,6 @@ interface City {
   ],
 })
 export class CalculatorFormComponent implements OnInit {
-  private pieChart!: any;
-
   adultOptions: Options = {
     floor: 1,
     ceil: 5,
@@ -95,7 +103,31 @@ export class CalculatorFormComponent implements OnInit {
         map((value) => this._filter(value || ''))
       );
     });
+
+    this.calculateForm.valueChanges
+      .pipe(
+        distinctUntilChanged(),
+
+        tap((value) => {
+          this.onUpdate(value);
+        }),
+        takeUntil(this.destroy$)
+      )
+      .subscribe();
   }
+  private readonly destroy$ = new Subject<void>();
+
+
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
+  }
+  @ViewChild(PieChartComponent) PieChartComponent!: PieChartComponent;
+  title = 'json-read-example';
+  citiesInfo: City[] = [];
+  calculateFormDto: CalculateFormDto = {} as CalculateFormDto;
+  calculateResultsDto: CalculateResultsDto = {} as CalculateResultsDto;
+
 
   constructor(
     private http: HttpClient,
@@ -120,7 +152,6 @@ export class CalculatorFormComponent implements OnInit {
     } else if (value && value.toString().length === 12) {
       return { ['maxNumbersReached']: 'Maximum number of digits reached.' };
     }
-
     return null;
   }
 
@@ -128,7 +159,7 @@ export class CalculatorFormComponent implements OnInit {
 
   calculateForm = fb.group(
     {
-      partnerToggle: [false],
+      partnerToggle: [''],
 
       id: [''],
       homePrice: [
@@ -219,11 +250,27 @@ export class CalculatorFormComponent implements OnInit {
   }
 
   public citySelect(city: string) {
-    // return this.calculateForm.get('city')?.value;
     return city;
   }
 
   actionText: string = '';
+  show() {
+    const calculateButton = document.querySelector('.calculate-button');
+    const column2 = document.querySelector('.column2');
+    const calculateBtn = document.getElementById('calculate-btn');
+  }
+
+  updateResults(value: any) {
+    this.calculatorService
+      .getFormCalculationResults(value)
+      .subscribe((data: CalculateResultsDto) => {
+        this.calculateResultsDto = data;
+      });
+  }
+
+  onUpdate(value: any) {
+    this.updateResults(value);
+  }
 
   onSubmit() {
     if (this.calculateForm.valid) {
@@ -236,19 +283,11 @@ export class CalculatorFormComponent implements OnInit {
           this.calculateFormDto = data;
         });
 
-      this.calculatorService
-        .getCalculationResults(
-          this.calculateFormDto
-        )
-        .subscribe((data: CalculateResultsDto) => {
-          this.calculateResultsDto = data;
-        });
+      this.updateResults(this.calculateFormDto);
 
-      this.calculatorService.saveResultData(this.calculateResultsDto);
 
       this.actionText = 'Calculated';
       this.showColumn2 = true;
-      this.pieChart.animateChart();
       this.actionText = 'Submitted form';
       const calculateFormData = this.calculateForm.value;
     }
