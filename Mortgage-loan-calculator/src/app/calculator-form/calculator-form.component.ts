@@ -292,11 +292,13 @@ export class CalculatorFormComponent implements OnInit {
   }
 
   updateResults(value: any) {
-    this.calculatorService
-      .getFormCalculationResults(value)
-      .subscribe((data: CalculateResultsDto) => {
-        this.calculateResultsDto = data;
-      });
+    if (value !== null) {
+      this.calculatorService
+        .getFormCalculationResults(value)
+        .subscribe((data: CalculateResultsDto) => {
+          this.calculateResultsDto = data;
+        });
+    }
   }
 
   onUpdate(value: any) {
