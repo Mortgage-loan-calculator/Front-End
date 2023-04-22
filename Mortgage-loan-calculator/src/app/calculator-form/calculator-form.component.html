@@ -87,23 +87,40 @@
                   </mat-form-field>
 
                   <div class="slider-container">
-                    <div class="slider-label">Loan term:</div>
-                    <ngx-slider
-                      required
-                      class="loan-slider"
-                      formControlName="loanTerm"
-                      [options]="loanOptions"
-                    ></ngx-slider>
+                    <div class="slider-name">Loan term:</div>
+                    <mat-slider
+                      min="0"
+                      max="30"
+                      step="1"
+                      showTickMarks
+                      discrete
+                      [displayWith]="formatLabelLoan"
+                    >
+                      <input matSliderThumb formControlName="loanTerm" />
+                    </mat-slider>
+                    <div class="slider-labels">
+                      <div class="slider-label-left">0</div>
+                      <div class="slider-label-right">30</div>
+                    </div>
                   </div>
                   <div class="slider-container">
-                    <div class="slider-label">
+                    <div class="slider-name">
                       Number of adult family members:
                     </div>
-                    <ngx-slider
-                      class="family-member-slider"
-                      formControlName="familyMembers"
-                      [options]="adultOptions"
-                    ></ngx-slider>
+                    <mat-slider
+                      min="0"
+                      max="5"
+                      step="1"
+                      showTickMarks
+                      discrete
+                      [displayWith]="formatLabelAdult"
+                    >
+                      <input matSliderThumb formControlName="familyMembers" />
+                    </mat-slider>
+                    <div class="slider-labels">
+                      <div class="slider-label-left">0</div>
+                      <div class="slider-label-right">5+</div>
+                    </div>
                   </div>
 
                   <div class="toggle-container">
@@ -166,23 +183,19 @@
                   </div>
                 </form>
 
-                <!-- <mat-divider [vertical]="true" style="height: 100px;"></mat-divider> -->
                 <form
                   class="column2 show"
                   [formGroup]="submitForm"
                   *ngIf="showColumn2"
                   [@form2Animation]
                 >
-                  <!-- {{calculateForm.value | json}} -->
                   <div class="chart-container-div">
                     <app-pie-chart
                       [loanAmount]="calculateResultsDto.maxLoan"
                       [intrestPaid]="calculateResultsDto.totalInterestPaid"
                       [agreementFee]="calculateResultsDto.agreementFee"
-
                     ></app-pie-chart
                     ><mat-divider [vertical]="true"></mat-divider>
-
                   </div>
 
                   <div class="form2">
@@ -200,7 +213,6 @@
                             {{ calculateResultsDto.maxLoan }}
                           </div>
                         </div>
-
                       </div>
                       <div class="grid-item-2">
                         <div class="amountDisplay">
@@ -215,7 +227,6 @@
                             {{ calculateResultsDto.totalInterestPaid }}
                           </div>
                         </div>
-
                       </div>
 
                       <div class="grid-item-2">
@@ -240,7 +251,6 @@
                             {{ calculateResultsDto.totalPaymentSum }}</strong
                           >
                         </div>
-
                       </div>
                     </div>
                     <div class="button-container">
@@ -262,9 +272,9 @@
 
           <mat-tab routerLink="/calculate" label="Calculate monthly payment">
             <form class="column3" [formGroup]="applyForm">
-              <div class="grid-container">
+              <div class="grid-container2">
                 <div class="grid-item">
-                  <div class="toggle-container">
+                  <div class="toggle-container2">
                     <div class="toggle-label">Alone/With partner</div>
 
                     <mat-slide-toggle
@@ -275,57 +285,140 @@
                   </div>
                 </div>
                 <div class="grid-item">
-                  <span matPrefix>Deal amount</span>
-                  <mat-form-field class="mat-form-field" appearance="outline">
-                    <input matInput formControlName="dealAmount" />
+                  <mat-form-field class="dealAmount" appearance="outline">
+                    <mat-label>Deal amount</mat-label>
+                    <input
+                      maxlength="12"
+                      matInput
+                      placeholder="Enter deal amount"
+                      formControlName="dealAmount"
+                    />
+                    <mat-hint>Enter monthly family income</mat-hint>
+                    <mat-error *ngIf="dealAmount.hasError('required')"
+                      >This field is required.</mat-error
+                    >
+                    <mat-error *ngIf="dealAmount.hasError('numbersOnly')"
+                      >Input should accept only numbers.</mat-error
+                    >
+                    <mat-error *ngIf="dealAmount.hasError('min')"
+                      >Monthly family income should be at least 1.</mat-error
+                    >
+                    <mat-error *ngIf="dealAmount.hasError('maxNumbersReached')"
+                      >Maximum input of 12 numbers reached.</mat-error
+                    >
                   </mat-form-field>
                 </div>
                 <div class="grid-item">
-                  <span matPrefix>Down payment</span>
-                  <mat-form-field class="mat-form-field" appearance="outline">
-                    <input matInput formControlName="downPayment" />
+                  <mat-form-field class="downPayment" appearance="outline">
+                    <mat-label>Down payment</mat-label>
+                    <input
+                      maxlength="12"
+                      matInput
+                      placeholder="Enter down payment"
+                      formControlName="downPayment"
+                    />
+                    <mat-hint>Enter monthly family income</mat-hint>
+                    <mat-error *ngIf="downPayment.hasError('required')"
+                      >This field is required.</mat-error
+                    >
+                    <mat-error *ngIf="downPayment.hasError('numbersOnly')"
+                      >Input should accept only numbers.</mat-error
+                    >
+                    <mat-error *ngIf="downPayment.hasError('min')"
+                      >Monthly family income should be at least 1.</mat-error
+                    >
+                    <mat-error *ngIf="downPayment.hasError('maxNumbersReached')"
+                      >Maximum input of 12 numbers reached.</mat-error
+                    >
                   </mat-form-field>
                 </div>
                 <div class="grid-item">
-                  <span matPrefix>Loan period</span>
-                  <mat-form-field class="mat-form-field" appearance="outline">
-                    <input matInput formControlName="loanPeriod" />
+                  <mat-form-field class="loanPeiod" appearance="outline">
+                    <mat-label>Loan period</mat-label>
+                    <input
+                      maxlength="12"
+                      matInput
+                      placeholder="Enter loan period"
+                      formControlName="loanPeriod"
+                    />
+                    <mat-hint>Enter monthly family income</mat-hint>
+                    <mat-error *ngIf="loanPeriod.hasError('required')"
+                      >This field is required.</mat-error
+                    >
+                    <mat-error *ngIf="loanPeriod.hasError('numbersOnly')"
+                      >Input should accept only numbers.</mat-error
+                    >
+                    <mat-error *ngIf="loanPeriod.hasError('min')"
+                      >Monthly family income should be at least 1.</mat-error
+                    >
+                    <mat-error *ngIf="loanPeriod.hasError('maxNumbersReached')"
+                      >Maximum input of 12 numbers reached.</mat-error
+                    >
                   </mat-form-field>
                 </div>
                 <div class="grid-item">
-                  <span matPrefix>Monthly family income</span>
-                  <mat-form-field class="mat-form-field" appearance="outline">
-                    <input matInput formControlName="monthlyIncome" />
+                  <mat-form-field class="monthlyIncome" appearance="outline">
+                    <mat-label>Monthly family income</mat-label>
+                    <input
+                      maxlength="12"
+                      matInput
+                      placeholder="Monthly family income"
+                      formControlName="monthlyIncome"
+                    />
+                    <mat-hint>Enter monthly family income</mat-hint>
+                    <mat-error *ngIf="monthlyIncome.hasError('required')"
+                      >This field is required.</mat-error
+                    >
+                    <mat-error *ngIf="monthlyIncome.hasError('numbersOnly')"
+                      >Input should accept only numbers.</mat-error
+                    >
+                    <mat-error *ngIf="monthlyIncome.hasError('min')"
+                      >Monthly family income should be at least 1.</mat-error
+                    >
+                    <mat-error
+                      *ngIf="monthlyIncome.hasError('maxNumbersReached')"
+                      >Maximum input of 12 numbers reached.</mat-error
+                    >
                   </mat-form-field>
+                </div>
+                <div class="grid-item">
+                  <span matPrefix>Your estimated monthly payment</span>
+                  <strong>
+                    {{
+                      monthlyPaymentResultsDto.estimatedMonthlyPayment
+                    }}</strong
+                  >
+                </div>
+                <div class="grid-item">
+                  <span matPrefix>Maximum monthly loan payment</span>
+                  <strong>
+                    {{ monthlyPaymentResultsDto.maxMonthlyPayment }}</strong
+                  >
                 </div>
               </div>
               <div class="button-container">
-
-
-                <button mat-button type="submit" (click)="calculateMonthly()" class="my-button apply-button">
-
+                <button
+                  mat-button
+                  type="submit"
+                  (click)="calculateMonthly()"
+                  class="my-button apply-button"
+                >
                   Apply
                 </button>
-                <button mat-button type="submit" class="my-button apply-button (click)="showPopupForm()">
+                <button
+                  mat-button
+                  type="submit"
+                  class="my-button apply-button"
+                  (click)="showPopupForm()"
+                >
                   Offers
                 </button>
               </div>
-              <div class="grid-item">
-                <span matPrefix>Your estimated monthly payment</span>
-                <mat-form-field class="mat-form-field" appearance="outline">
-                  <input matInput formControlName="estimatedMonthlyPayment" readonly/>
-                  {{ monthlyPaymentResultsDto.estimatedMonthlyPayment }}
-                </mat-form-field>
-              </div>
-              <div class="grid-item">
-                <span matPrefix>Maximum monthly loan payment</span>
-                <mat-form-field class="mat-form-field" appearance="outline">
-                  <input matInput formControlName="maxMonthlyPayment" readonly />
-                  {{ monthlyPaymentResultsDto.maxMonthlyPayment }}
-                </mat-form-field>
-              </div>
             </form>
-            <app-monthly-payment [monthlyPaymentResultsDto]="monthlyPaymentResultsDto" (onResultsCalculated)="handleResultsCalculated($event)"></app-monthly-payment>
+            <app-monthly-payment
+              [monthlyPaymentResultsDto]="monthlyPaymentResultsDto"
+              (onResultsCalculated)="handleResultsCalculated($event)"
+            ></app-monthly-payment>
           </mat-tab>
         </mat-tab-group>
       </div>

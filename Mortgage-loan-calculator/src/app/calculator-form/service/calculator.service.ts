@@ -41,10 +41,8 @@ export class CalculatorService {
     return this.http.post<CalculateFormDto>(
       'https://mortgage-loan-calculator-back-end.onrender.com/calculate/results',
       object
-      );
-}
-}
-
+    );
+  }
 
   getCalculationResults(
     requestData: CalculateFormDto
