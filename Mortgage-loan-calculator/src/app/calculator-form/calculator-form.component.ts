@@ -1,15 +1,6 @@
 import { LabelType, Options } from '@angular-slider/ngx-slider';
-
 import { Component, OnInit, ViewChild } from '@angular/core';
-import {
-  catchError,
-  distinctUntilChanged,
-  takeUntil,
-  tap,
-} from 'rxjs/operators';
-import { fromEvent, debounceTime } from 'rxjs';
-
-import { ChangeDetectorRef, Component, Input, OnInit, ViewChild } from '@angular/core';
+import { distinctUntilChanged, takeUntil, tap } from 'rxjs/operators';
 
 import {
   FormBuilder,
@@ -25,7 +16,10 @@ import { Observable, Subject, map, of, pipe, startWith, switchMap } from 'rxjs';
 
 import { CalculatorService } from './service/calculator.service';
 import { CalculateFormDto, CalculateResultsDto } from './calculate-form-dto';
-import { MonthlyPaymentDto, MonthlyPaymentResultsDto } from '../monthly-payment/monthly-payment-dto';
+import {
+  MonthlyPaymentDto,
+  MonthlyPaymentResultsDto,
+} from '../monthly-payment/monthly-payment-dto';
 import { MonthlyPaymentComponent } from '../monthly-payment/monthly-payment.component';
 
 const fb = new FormBuilder().nonNullable;
@@ -51,20 +45,6 @@ interface City {
   ],
 })
 export class CalculatorFormComponent implements OnInit {
-  adultOptions: Options = {
-    floor: 1,
-    ceil: 5,
-    translate: (value: number, label: LabelType): string => {
-      if (label === LabelType.Floor) {
-        return value.toString();
-      } else if (value >= 5) {
-        return '5+';
-      } else {
-        return value.toString();
-      }
-    },
-  };
-
   @ViewChild(PieChartComponent) PieChartComponent!: PieChartComponent;
 
   title = 'json-read-example';
@@ -75,10 +55,15 @@ export class CalculatorFormComponent implements OnInit {
   myControl = new FormControl('');
   cityNames: string[] = [];
   filteredOptions!: Observable<string[]>;
-  
-  monthlyPaymentResultsDto: MonthlyPaymentResultsDto = {} as MonthlyPaymentResultsDto;
-  @ViewChild(MonthlyPaymentComponent) monthlyPaymentComponent!: MonthlyPaymentComponent;
 
+  monthlyPaymentResultsDto: MonthlyPaymentResultsDto =
+    {} as MonthlyPaymentResultsDto;
+  @ViewChild(MonthlyPaymentComponent)
+  monthlyPaymentComponent!: MonthlyPaymentComponent;
+  constructor(
+    private http: HttpClient,
+    private calculatorService: CalculatorService
+  ) {}
   ngOnChanges() {
     if (this.citiesInfo != null) {
       this.cityNames = this.citiesInfo.map((city: any) => city.name);
@@ -117,27 +102,25 @@ export class CalculatorFormComponent implements OnInit {
   }
   private readonly destroy$ = new Subject<void>();
 
-
   ngOnDestroy(): void {
     this.destroy$.next();
     this.destroy$.complete();
   }
-  @ViewChild(PieChartComponent) PieChartComponent!: PieChartComponent;
-  title = 'json-read-example';
-  citiesInfo: City[] = [];
-  calculateFormDto: CalculateFormDto = {} as CalculateFormDto;
-  calculateResultsDto: CalculateResultsDto = {} as CalculateResultsDto;
 
+  formatLabelLoan(value: number): string {
+    if (value >= 30) {
+      Math.round(value / 30);
+    }
 
-  constructor(
-    private http: HttpClient,
-    private calculatorService: CalculatorService
-  ) {}
-
-  loanOptions: Options = {
-    floor: 1,
-    ceil: 30,
-  };
+    return `${value}`;
+  }
+  formatLabelAdult(value: number) {
+    if (value === 5) {
+      return '5+';
+    } else {
+      return value.toString();
+    }
+  }
 
   numbersOnly(control: FormControl): { [key: string]: any } | null {
     const value = control.value;
@@ -156,7 +139,6 @@ export class CalculatorFormComponent implements OnInit {
   }
 
   errorMessage: string = 'Input should accept only numbers.';
-
   calculateForm = fb.group(
     {
       partnerToggle: [''],
@@ -202,10 +184,47 @@ export class CalculatorFormComponent implements OnInit {
 
   applyForm = fb.group(
     {
-      dealAmount: [''],
-      downPayment: [''],
-      loanPeriod: [''],
-      monthlyIncome: [''],
+      partnerToggle: [''],
+      dealAmount: [
+        '',
+        [
+          Validators.required,
+          this.numbersOnly,
+          Validators.min(1),
+          Validators.max(999999999999),
+          this.validateMaxNumbers.bind(this),
+        ],
+      ],
+      downPayment: [
+        '',
+        [
+          Validators.required,
+          this.numbersOnly,
+          Validators.min(1),
+          Validators.max(999999999999),
+          this.validateMaxNumbers.bind(this),
+        ],
+      ],
+      loanPeriod: [
+        '',
+        [
+          Validators.required,
+          this.numbersOnly,
+          Validators.min(1),
+          Validators.max(999999999999),
+          this.validateMaxNumbers.bind(this),
+        ],
+      ],
+      monthlyIncome: [
+        '',
+        [
+          Validators.required,
+          this.numbersOnly,
+          Validators.min(1),
+          Validators.max(999999999999),
+          this.validateMaxNumbers.bind(this),
+        ],
+      ],
       estimatedMonthlyPayment: [''],
       maxMonthlyPayment: [''],
     },
@@ -248,6 +267,18 @@ export class CalculatorFormComponent implements OnInit {
   get haveChildren() {
     return this.calculateForm.get('haveChildren') as FormControl;
   }
+  get dealAmount() {
+    return this.applyForm.get('dealAmount') as FormControl;
+  }
+  get downPayment() {
+    return this.applyForm.get('downPayment') as FormControl;
+  }
+  get loanPeriod() {
+    return this.applyForm.get('loanPeriod') as FormControl;
+  }
+  get monthlyIncome() {
+    return this.applyForm.get('monthlyIncome') as FormControl;
+  }
 
   public citySelect(city: string) {
     return city;
@@ -284,7 +315,6 @@ export class CalculatorFormComponent implements OnInit {
         });
 
       this.updateResults(this.calculateFormDto);
-
 
       this.actionText = 'Calculated';
       this.showColumn2 = true;
