@@ -63,15 +63,12 @@ h2 {
   margin-right: 10px;
 }
 
-
 .grid-container2 {
   display: grid;
   grid-template-columns: repeat(1, 1fr);
   grid-template-rows: repeat(7, auto);
   row-gap: 40px;
 }
-
-
 
 .grid-container {
   display: grid;
@@ -99,7 +96,8 @@ h2 {
 
 .grid-item:nth-child(6),
 .grid-item:nth-child(7) {
-
+  margin-top: 20px;
+  margin-left: -100px;
   font-size: 1.2em;
   font-weight: bold;
 }
@@ -158,12 +156,17 @@ mat-icon.brightness-3-icon {
 
   width: 100%;
 }
+.toggle-container2,
 .toggle-container {
   display: flex;
   flex-direction: row;
   align-items: center;
   margin-bottom: 20px;
   margin-top: 20px;
+  text-align: center;
+}
+.toggle-container2 {
+  margin-left: 15px;
 }
 
 .toggle-label {
@@ -205,7 +208,6 @@ mat-slider {
 .slider-label {
   display: inline-block;
 }
-
 
 .icon-button-container {
   display: flex;
@@ -286,8 +288,11 @@ mat-slider {
 }
 
 .column3 {
+  margin-top: 50px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   height: 800px;
-  margin-left: 20px;
 }
 .apply-button {
   margin-top: 50px;
