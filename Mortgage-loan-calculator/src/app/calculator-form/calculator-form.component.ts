@@ -342,10 +342,8 @@ export class CalculatorFormComponent implements OnInit {
   }
 
   handleResultsCalculated(results: MonthlyPaymentResultsDto): void {
-    this.applyForm.patchValue({
-      estimatedMonthlyPayment: results.estimatedMonthlyPayment,
-      maxMonthlyPayment: results.maxMonthlyPayment,
-    });
+    this.monthlyPaymentResultsDto.estimatedMonthlyPayment = results.estimatedMonthlyPayment;
+    this.monthlyPaymentResultsDto.maxMonthlyPayment = results.maxMonthlyPayment;
   }
 
   onChange() {}
