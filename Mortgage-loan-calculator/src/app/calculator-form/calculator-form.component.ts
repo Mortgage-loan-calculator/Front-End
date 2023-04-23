@@ -301,7 +301,7 @@ export class CalculatorFormComponent implements OnInit {
   }
 
   updateResults(value: any) {
-    if (value !== null) {
+    if (this.calculateForm.valid) {
       this.calculatorService
         .getFormCalculationResults(value)
         .subscribe((data: CalculateResultsDto) => {
