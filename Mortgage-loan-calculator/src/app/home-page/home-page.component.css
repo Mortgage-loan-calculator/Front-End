@@ -31,7 +31,7 @@
 
 .my-button {
   width: 200px;
-  font-size: 16px;
+  font-size: 18px;
   border: none;
   border-radius: 5px;
   color: white;
@@ -65,7 +65,7 @@ span {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  margin-left: 6rem;
+  margin-left: 10px;
 }
 
 .hero h1 {
@@ -81,6 +81,7 @@ span {
 
 .hero button {
   margin-top: 70px;
+  height: 70px;
 }
 
 .txt-effect {
@@ -94,6 +95,9 @@ span {
 }
 
 @media screen and (max-width: 480px) {
+  span {
+    font-size: 18px;
+  }
   .hero .container {
     grid-template-columns: 1fr;
     margin-left: -60px;
@@ -104,10 +108,13 @@ span {
   }
   .hero h1 {
     width: 100%;
-    font-size: 24px;
+    font-size: 18px;
     text-align: left;
   }
   .hero button {
+    height: 40px;
+    font-size: 15px;
+    margin-left: 40px;
     margin-top: 40px;
   }
 }

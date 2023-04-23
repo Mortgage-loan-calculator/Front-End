@@ -178,7 +178,7 @@ export class CalculatorFormComponent implements OnInit {
           this.validateMaxNumbers.bind(this),
         ],
       ],
-      loanTerm: [''],
+      loanTerm: ['1', Validators.required],
 
       familyMembers: [''],
       haveChildren: [''],
@@ -220,7 +220,7 @@ export class CalculatorFormComponent implements OnInit {
           this.validateMaxNumbers.bind(this),
         ],
       ],
-      loanPeriod: [''],
+      loanPeriod: ['1', Validators.required],
       monthlyIncome: [
         '',
         [
