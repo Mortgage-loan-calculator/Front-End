@@ -269,6 +269,7 @@
           <mat-tab routerLink="/calculate" label="Calculate monthly payment">
             <form class="column3" [formGroup]="applyForm">
               <div class="grid-container2">
+
                   <div class="toggle-container2">
                     <div class="toggle-label">Alone/With partner</div>
 
@@ -322,6 +323,7 @@
                     >
                   </mat-form-field>
                 <div class="grid-item">
+
                   <div class="slider-container">
                     <div class="slider-name">Loan period:</div>
                     <mat-slider
@@ -333,6 +335,7 @@
                       discrete
                       [displayWith]="formatLabelLoan"
                       required
+
                     >
                       <input matSliderThumb formControlName="loanPeriod" />
                     </mat-slider>
