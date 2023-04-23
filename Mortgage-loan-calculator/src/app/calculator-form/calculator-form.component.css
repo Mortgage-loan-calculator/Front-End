@@ -1,9 +1,9 @@
 h2 {
   text-align: center;
-  font-size: 36px;
+  font-size: 24px;
   line-height: 1.25;
-  margin-bottom: 25px;
-  margin-top: 1em;
+  margin-bottom: 15px;
+  margin-top: 15px;
 }
 
 .box {
@@ -12,15 +12,16 @@ h2 {
   box-shadow: 0 0 10px rgba(0, 0, 0, 3);
   border: 2px solid #ddd;
   border-radius: 10px;
-  /* background-color: #fbb126; */
 }
 .columns {
+  height: 600px;
+
   display: flex;
   justify-content: center;
 }
 
 .column {
-  margin-top: 50px;
+  margin-top: 10px;
   margin-left: 20px;
   margin-bottom: 20px;
   display: flex;
@@ -30,7 +31,7 @@ h2 {
 }
 
 .column2 {
-  margin-top: 30px;
+  /* margin-top: 138px; */
   flex-basis: 50%;
   box-sizing: border-box;
   opacity: 0;
@@ -42,20 +43,14 @@ h2 {
   transform: translateY(0);
 }
 
-.mat-form-field {
-  scale: 70%;
-}
 .grid-item-2 {
   display: flex;
-  height: 55px;
   align-items: center;
   grid-column: 1 / span 2;
 }
 .grid-item {
   display: flex;
-  height: 55px;
   align-items: center;
-  gap: 10px;
 }
 
 .brightness-1-icon {
@@ -63,10 +58,20 @@ h2 {
   margin-right: 10px;
 }
 
+.total{
+  font-weight:bold;
+}
+
+.grid-container2 {
+  display: grid;
+  grid-template-columns: repeat(1, 1fr);
+  grid-template-rows: repeat(7, auto);
+}
+
 .grid-container {
   display: grid;
   grid-template-columns: 1fr;
-  grid-template-rows: repeat(4, 1fr);
+  grid-template-rows: repeat(6, auto);
   grid-row-gap: 10px;
 }
 
@@ -81,52 +86,52 @@ h2 {
 .grid-item:nth-child(3) {
   grid-row: 3;
 }
-
 .grid-item:nth-child(4) {
-  font-weight: bold;
+  grid-row: 4;
+
   font-size: 1.2em;
 }
-.grid-item:nth-child(5) {
+
+.grid-item:nth-child(6),
+.grid-item:nth-child(7) {
+  margin-top: 20px;
+  margin-left: -100px;
+
+  font-size: 1em;
+
   font-weight: bold;
-  font-size: 1.2em;
 }
 
 mat-icon.brightness-1-icon {
   color: blue;
-  width: 50px;
+  width: 40px;
 }
 
 mat-icon.brightness-2-icon {
   color: red;
-  width: 50px;
+  width: 40px;
 }
 mat-icon.brightness-3-icon {
   color: green;
-  width: 50px;
+  width: 40px;
 }
 .grid-item span {
   white-space: nowrap;
 }
 
-.grid-item:nth-child(4) {
-  grid-row: 4;
-}
-
 .grid-item:nth-child(5) {
   grid-row: 5;
+}
+.grid-item:nth-child(6) {
+  grid-row: 6;
 }
 
 .column.show {
   transform: scale(1);
 }
 
-.calculate-button {
-  margin-top: 20px;
-}
-
 .form2 {
-  margin-top: 20px;
-  /* margin-left: 100px; */
+  margin-left: 20px;
 }
 
 .grid-container {
@@ -141,38 +146,74 @@ mat-icon.brightness-3-icon {
   align-items: center;
 }
 
-.mat-form-field {
-  margin-top: 20px;
-
-  width: 100%;
-}
+.toggle-container2,
 .toggle-container {
   display: flex;
   flex-direction: row;
   align-items: center;
-  margin-bottom: 20px;
-  margin-top: 20px;
+
+  margin-bottom: 10px;
+  margin-top: 10px;
+
+  text-align: center;
+}
+.toggle-container2 {
+  margin-left: 15px;
 }
 
 .toggle-label {
-  font-size: 14px;
+  font-size: 13px;
   margin-right: 20px;
 }
 
 .submit-button {
-  margin-top: 20px;
+  margin-top: 24px;
 }
 
-mat-divider[vertical="true"] {
-  height: 100px;
-  border-right: 1px solid #ccc;
-}
-.loan-slider,
-.family-member-slider {
-  margin-top: 40px;
-  width: 200px;
+mat-form-field {
+  width: 220px;
 }
 .slider-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.slider-name {
+  font-size: 13px;
+  margin-bottom: 2px;
+}
+
+mat-slider {
+  width: 180px;
+}
+.mat-slider2 {
+  margin-left: 25px;
+}
+.slider-labels2{
+  margin-left: 15px;
+
+  display: flex;
+  justify-content: space-between;
+  width: 90%;
+  margin-top: -10px;
+  font-size: 13px;
+}
+
+.slider-labels {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  margin-top: -10px;
+}
+.slider-label-right {
+  margin-top: -5px;
+}
+.slider-label {
+  display: inline-block;
+}
+
+.monthlyIncome1 {
   margin-top: 20px;
 }
 
@@ -180,12 +221,19 @@ mat-divider[vertical="true"] {
   display: flex;
   align-items: center;
 }
-.dropdown-label {
-  margin-top: 20px;
-  margin-bottom: 20px;
+.dropdown-container {
+  margin-right: 20px;
+  width: 200px;
 }
-.submit-button {
+.dropdown-label {
+  margin-left: 15px;
+
+  font-size: 13px;
   margin-top: 15px;
+  margin-bottom: 10px;
+}
+mat-form-field {
+  scale: 90%;
 }
 
 @media screen and (max-width: 800px) {
@@ -201,7 +249,6 @@ mat-divider[vertical="true"] {
     order: 2;
   }
   .form2 {
-    margin-left: 40px;
     scale: 90%;
     display: flex;
     flex-direction: column;
@@ -222,7 +269,6 @@ mat-divider[vertical="true"] {
   .down {
     margin-top: 0px;
   }
-
 }
 
 .my-button {
@@ -257,8 +303,12 @@ mat-divider[vertical="true"] {
 }
 
 .column3 {
-  height: 500px;
-  margin-left: 20px;
+  height: 590px;
+  margin-top: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
 }
 .apply-button {
   margin-top: 50px;
@@ -269,16 +319,22 @@ mat-divider[vertical="true"] {
   border: 1px solid red;
 }
 .montlyIncome {
-  margin-top: 30px;
+  margin-top: 5px;
 }
 
 .my-button {
   display: inline-block;
-  margin-right: 10px;
 }
 .button-container {
   display: flex;
   justify-content: space-between;
+}
+.button-container > *:first-child {
+  margin-right: 20px;
+}
+
+.button-container > *:last-child {
+  margin-left: 20px;
 }
 mat-error {
   white-space: nowrap;

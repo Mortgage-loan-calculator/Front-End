@@ -4,7 +4,11 @@
       <mat-card-title style="margin-bottom: 20px">Admin Login</mat-card-title>
     </mat-card-header>
     <mat-card-content>
-      <mat-card-title style="margin-bottom: 20px" [ngClass]="{'hide-user-role': showMyClass}">Your role is: {{this.roles[0]}}</mat-card-title>
+      <mat-card-title
+        style="margin-bottom: 20px"
+        [ngClass]="{ 'hide-user-role': showMyClass }"
+        >Your role is: {{ this.roles[0] }}</mat-card-title
+      >
       <form [formGroup]="loginForm" (ngSubmit)="onLoginFormSubmit()">
         <mat-form-field class="mat-form-field" appearance="outline">
           <input
@@ -12,8 +16,8 @@
             matInput
             placeholder="Username"
             formControlName="username"
-          /> </mat-form-field
-        ><br />
+          />
+        </mat-form-field>
         <mat-form-field class="mat-form-field" appearance="outline">
           <input
             type="password"

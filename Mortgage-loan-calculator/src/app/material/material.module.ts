@@ -13,6 +13,8 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import {  MatCardModule} from '@angular/material/card'
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
 import { MatDividerModule } from '@angular/material/divider';
+import {MatSliderModule} from '@angular/material/slider';
+
 const MaterialComponents=[
 MatButtonModule,
 MatDividerModule,
@@ -26,7 +28,8 @@ MatIconModule,
 MatInputModule,
 MatFormFieldModule,
 MatCardModule,
-MatAutocompleteModule
+MatAutocompleteModule,
+MatSliderModule
 ];
 
 @NgModule({
