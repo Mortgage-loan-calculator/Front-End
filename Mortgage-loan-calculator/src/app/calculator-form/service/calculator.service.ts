@@ -36,18 +36,7 @@ export class CalculatorService {
       'https://mortgage-loan-calculator-back-end.onrender.com/calculate',
       calculateFormDto
     );
-    // .pipe(
-    //   catchError((error: any) => {
-    //     const httpError = new HttpErrorResponse({
-    //       error: error,
-    //       status: error.status,
-    //       statusText: error.statusText,
-    //       url: error.url,
-    //     });
-    //     this.errorHandler.handleError(error);
-    //     return throwError(httpError);
-    //   })
-    // );
+    
   }
 
 
@@ -59,18 +48,7 @@ export class CalculatorService {
       object
 
     );
-    // .pipe(
-    //   catchError((error: any) => {
-    //     const httpError = new HttpErrorResponse({
-    //       error: error,
-    //       status: error.status,
-    //       statusText: error.statusText,
-    //       url: error.url,
-    //     });
-    //     this.errorHandler.handleError(error);
-    //     return throwError(httpError);
-    //   })
-    // );
+   
   }
 
   getCalculationResults(
@@ -84,18 +62,7 @@ export class CalculatorService {
       requestData,
       { headers }
     );
-    // .pipe(
-    //   catchError((error: any) => {
-    //     const httpError = new HttpErrorResponse({
-    //       error: error,
-    //       status: error.status,
-    //       statusText: error.statusText,
-    //       url: error.url,
-    //     });
-    //     this.errorHandler.handleError(error);
-    //     return throwError(httpError);
-    //   })
-    // );
+   
 
   }
 }
