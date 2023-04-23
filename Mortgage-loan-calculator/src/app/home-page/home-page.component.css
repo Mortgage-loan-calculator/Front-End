@@ -42,7 +42,7 @@
   box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
 }
 .calculate-mortgage-button {
-  background-color: #baa48b;
+  background-color: #e3dcd2;
 }
 .calculate-mortgage-button:hover {
   background-color: #a29587;
@@ -54,6 +54,8 @@ mat-toolbar {
   height: 100px;
   position: absolute;
   z-index: 10;
+  color: #e3dcd2;
+
   background-color: rgba(0, 0, 0, 0.5);
 }
 span {
@@ -68,15 +70,17 @@ span {
   margin-left: 10px;
 }
 
-.hero h1 {
-  font-family: "Quicksand", serif;
-  width: 50%;
-  color: #f8f8f8;
-  font-size: 2rem;
-}
+h1 {
+  margin-right: 20px;
 
+  color: #e3dcd2;
+  font-size: 35px;
+}
+h2 {
+  font-size: 20px;
+}
 .hero .title {
-  color: #baa48b;
+  color: #e3dcd2;
 }
 
 .hero button {
@@ -95,10 +99,9 @@ span {
 }
 
 @media screen and (max-width: 480px) {
-  span {
-    font-size: 18px;
-  }
   .hero .container {
+    font-size: 8px;
+
     grid-template-columns: 1fr;
     margin-left: -60px;
     padding: 0 20px;
@@ -106,9 +109,13 @@ span {
   .hero .content {
     margin-top: 70px;
   }
-  .hero h1 {
-    width: 100%;
-    font-size: 18px;
+  h1 {
+    font-size: 20px;
+  }
+  h2 {
+    font-size: 16px;
+
+    width: 80%;
     text-align: left;
   }
   .hero button {
