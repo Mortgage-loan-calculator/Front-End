@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ElementRef, ViewChild } from '@angular/core';
 import Chart from 'chart.js/auto';
 @Component({
   selector: 'app-pie-chart',
@@ -6,16 +6,30 @@ import Chart from 'chart.js/auto';
   styleUrls: ['./pie-chart.component.css'],
 })
 export class PieChartComponent {
+  @ViewChild('chartCanvas') chartCanvas?: ElementRef;
+
   public chart: any;
   ngOnInit(): void {
     this.createChart();
   }
+
+  constructor() {}
+
+  animateChart() {
+    if (this.chart) {
+      this.chart.options.animation = {
+        onComplete: () => {
+          this.chart.options.animation = false;
+        },
+      };
+      this.chart.update();
+    }
+  }
   createChart() {
     this.chart = new Chart('MyChart', {
-      type: 'pie', //this denotes tha type of chart
+      type: 'pie',
 
       data: {
-        // values on X-Axis
         labels: ['Loan Amount', 'Total interest paid', 'Agreement fee'],
         datasets: [
           {
@@ -27,11 +41,16 @@ export class PieChartComponent {
         ],
       },
       options: {
+        // responsive: false,
         aspectRatio: 2,
         plugins: {
           legend: {
             display: false,
           },
+        },
+        animation: {
+          animateRotate: true,
+          animateScale: true,
         },
       },
     });

@@ -9,7 +9,7 @@ import { AdminLoginComponent } from './admin-login/admin-login.component';
 const routes: Routes = [
 
   { path: '', component: HomePageComponent},
-   { path: 'calculate', component: CalculatorFormComponent },
+   { path: 'calculate', component: CalculatorFormComponent , data: {animation:'togglePage'}},
    { path: 'admin', component: AdminPanelComponent },
    { path: 'popup', component: PopupFormComponent },
    { path: 'adminlogin', component: AdminLoginComponent },
@@ -19,7 +19,7 @@ const routes: Routes = [
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
-  
+
   exports: [RouterModule,
   ]
 })
