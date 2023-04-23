@@ -1,11 +1,15 @@
 import { LabelType, Options } from '@angular-slider/ngx-slider';
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { distinctUntilChanged, takeUntil, tap } from 'rxjs/operators';
+import { delay, distinctUntilChanged, takeUntil, tap } from 'rxjs/operators';
 
 import {
+  AbstractControl,
+  AsyncValidatorFn,
   FormBuilder,
   FormControl,
   FormGroup,
+  ValidationErrors,
+  ValidatorFn,
   Validators,
 } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
@@ -99,6 +103,16 @@ export class CalculatorFormComponent implements OnInit {
         takeUntil(this.destroy$)
       )
       .subscribe();
+    this.applyForm.valueChanges
+      .pipe(
+        distinctUntilChanged(),
+
+        tap((value) => {
+          this.onUpdate(value);
+        }),
+        takeUntil(this.destroy$)
+      )
+      .subscribe();
   }
   private readonly destroy$ = new Subject<void>();
 
@@ -141,7 +155,7 @@ export class CalculatorFormComponent implements OnInit {
   errorMessage: string = 'Input should accept only numbers.';
   calculateForm = fb.group(
     {
-      partnerToggle: [''],
+      partnerToggle: [false],
 
       id: [''],
       homePrice: [
@@ -165,6 +179,7 @@ export class CalculatorFormComponent implements OnInit {
         ],
       ],
       loanTerm: [''],
+
       familyMembers: [''],
       haveChildren: [''],
       citySelect: ['', [Validators.required]],
@@ -184,7 +199,7 @@ export class CalculatorFormComponent implements OnInit {
 
   applyForm = fb.group(
     {
-      partnerToggle: [''],
+      partnerToggle: [false],
       dealAmount: [
         '',
         [
@@ -205,16 +220,7 @@ export class CalculatorFormComponent implements OnInit {
           this.validateMaxNumbers.bind(this),
         ],
       ],
-      loanPeriod: [
-        '',
-        [
-          Validators.required,
-          this.numbersOnly,
-          Validators.min(1),
-          Validators.max(999999999999),
-          this.validateMaxNumbers.bind(this),
-        ],
-      ],
+      loanPeriod: [''],
       monthlyIncome: [
         '',
         [
@@ -230,6 +236,8 @@ export class CalculatorFormComponent implements OnInit {
     },
     { updateOn: 'blur' }
   );
+
+
 
   showColumn2 = false;
   ngAfterViewInit() {
@@ -259,6 +267,9 @@ export class CalculatorFormComponent implements OnInit {
   get loanTerm() {
     return this.calculateForm.get('loanTerm') as FormControl;
   }
+  get loanPeriod() {
+    return this.applyForm.get('loanPeriod') as FormControl;
+  }
 
   get familyMembers() {
     return this.calculateForm.get('familyMembers') as FormControl;
@@ -273,9 +284,7 @@ export class CalculatorFormComponent implements OnInit {
   get downPayment() {
     return this.applyForm.get('downPayment') as FormControl;
   }
-  get loanPeriod() {
-    return this.applyForm.get('loanPeriod') as FormControl;
-  }
+
   get monthlyIncome() {
     return this.applyForm.get('monthlyIncome') as FormControl;
   }
@@ -292,11 +301,13 @@ export class CalculatorFormComponent implements OnInit {
   }
 
   updateResults(value: any) {
-    this.calculatorService
-      .getFormCalculationResults(value)
-      .subscribe((data: CalculateResultsDto) => {
-        this.calculateResultsDto = data;
-      });
+    if (value !== null) {
+      this.calculatorService
+        .getFormCalculationResults(value)
+        .subscribe((data: CalculateResultsDto) => {
+          this.calculateResultsDto = data;
+        });
+    }
   }
 
   onUpdate(value: any) {

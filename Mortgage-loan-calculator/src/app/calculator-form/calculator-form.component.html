@@ -30,11 +30,10 @@
                     <mat-label>Home Price</mat-label>
                     <input
                       matInput
-                      placeholder="Enter price"
+                      placeholder="Enter home price"
                       formControlName="homePrice"
                       maxlength="12"
                     />
-                    <mat-hint>Enter home price</mat-hint>
                     <mat-error
                       *ngIf="calculateForm.controls.homePrice.errors?.['required']"
                     >
@@ -65,9 +64,8 @@
                       placeholder="Monthly family income"
                       formControlName="monthlyFamilyIncome"
                     />
-                    <mat-hint> Enter monthly family income</mat-hint>
                     <mat-error *ngIf="monthlyFamilyIncome.hasError('required')">
-                      This field is required.
+                      Monthly family income field is required.
                     </mat-error>
                     <mat-error
                       *ngIf="monthlyFamilyIncome.hasError('numbersOnly')"
@@ -87,9 +85,9 @@
                   </mat-form-field>
 
                   <div class="slider-container">
-                    <div class="slider-name">Loan term:</div>
+                    <div class="slider-name">Loan period:</div>
                     <mat-slider
-                      min="0"
+                      min="1"
                       max="30"
                       step="1"
                       showTickMarks
@@ -99,7 +97,7 @@
                       <input matSliderThumb formControlName="loanTerm" />
                     </mat-slider>
                     <div class="slider-labels">
-                      <div class="slider-label-left">0</div>
+                      <div class="slider-label-left">1</div>
                       <div class="slider-label-right">30</div>
                     </div>
                   </div>
@@ -125,7 +123,7 @@
 
                   <div class="toggle-container">
                     <div class="toggle-label">
-                      Do you have children (dependents)?:
+                      Do you have children?
                     </div>
                     <mat-slide-toggle
                       class="toggle"
@@ -141,11 +139,9 @@
                       class="example-full-width"
                       appearance="outline"
                     >
-                      <mat-label>City</mat-label>
+                      <mat-label>Select city</mat-label>
                       <input
                         type="text"
-                        placeholder="City name"
-                        aria-label="City"
                         matInput
                         formControlName="citySelect"
                         [matAutocomplete]="auto"
@@ -161,7 +157,7 @@
                         </mat-option>
                       </mat-autocomplete>
                     </mat-form-field>
-                    <mat-error
+                    <mat-error class="selectCity"
                       *ngIf="
                         calculateForm.get('citySelect')?.invalid &&
                         calculateForm.get('citySelect')?.touched
@@ -245,7 +241,7 @@
                       </div>
                       <div class="grid-item-2">
                         <div class="amountDisplay">
-                          <span matPrefix>Total payment sum</span>
+                          <span class="total" matPrefix>Total payment sum</span>
 
                           <strong>
                             {{ calculateResultsDto.totalPaymentSum }}</strong
@@ -273,7 +269,6 @@
           <mat-tab routerLink="/calculate" label="Calculate monthly payment">
             <form class="column3" [formGroup]="applyForm">
               <div class="grid-container2">
-                <div class="grid-item">
                   <div class="toggle-container2">
                     <div class="toggle-label">Alone/With partner</div>
 
@@ -283,81 +278,72 @@
                       (change)="onChange()"
                     ></mat-slide-toggle>
                   </div>
-                </div>
-                <div class="grid-item">
                   <mat-form-field class="dealAmount" appearance="outline">
                     <mat-label>Deal amount</mat-label>
                     <input
                       maxlength="12"
                       matInput
-                      placeholder="Enter deal amount"
                       formControlName="dealAmount"
+                      placeholder="Enter deal amount"
                     />
-                    <mat-hint>Enter monthly family income</mat-hint>
                     <mat-error *ngIf="dealAmount.hasError('required')"
-                      >This field is required.</mat-error
+                      >Deal amount field is required.</mat-error
                     >
                     <mat-error *ngIf="dealAmount.hasError('numbersOnly')"
                       >Input should accept only numbers.</mat-error
                     >
                     <mat-error *ngIf="dealAmount.hasError('min')"
-                      >Monthly family income should be at least 1.</mat-error
+                      >Deal amount should be at least 1.</mat-error
                     >
                     <mat-error *ngIf="dealAmount.hasError('maxNumbersReached')"
                       >Maximum input of 12 numbers reached.</mat-error
                     >
                   </mat-form-field>
-                </div>
-                <div class="grid-item">
                   <mat-form-field class="downPayment" appearance="outline">
                     <mat-label>Down payment</mat-label>
                     <input
                       maxlength="12"
                       matInput
-                      placeholder="Enter down payment"
                       formControlName="downPayment"
+                      placeholder="Enter down payment"
+
                     />
-                    <mat-hint>Enter monthly family income</mat-hint>
                     <mat-error *ngIf="downPayment.hasError('required')"
-                      >This field is required.</mat-error
+                      >Down payment field is required.</mat-error
                     >
                     <mat-error *ngIf="downPayment.hasError('numbersOnly')"
                       >Input should accept only numbers.</mat-error
                     >
                     <mat-error *ngIf="downPayment.hasError('min')"
-                      >Monthly family income should be at least 1.</mat-error
+                      >Down payment should be at least 1.</mat-error
                     >
                     <mat-error *ngIf="downPayment.hasError('maxNumbersReached')"
                       >Maximum input of 12 numbers reached.</mat-error
                     >
                   </mat-form-field>
+                <div class="grid-item">
+                  <div class="slider-container">
+                    <div class="slider-name">Loan period:</div>
+                    <mat-slider
+                    class="mat-slider2"
+                      min="1"
+                      max="30"
+                      step="1"
+                      showTickMarks
+                      discrete
+                      [displayWith]="formatLabelLoan"
+                      required
+                    >
+                      <input matSliderThumb formControlName="loanPeriod" />
+                    </mat-slider>
+                    <div class="slider-labels2">
+                      <div class="slider-label-left">1</div>
+                      <div class="slider-label-right">30</div>
+                    </div>
+                  </div>
                 </div>
                 <div class="grid-item">
-                  <mat-form-field class="loanPeiod" appearance="outline">
-                    <mat-label>Loan period</mat-label>
-                    <input
-                      maxlength="12"
-                      matInput
-                      placeholder="Enter loan period"
-                      formControlName="loanPeriod"
-                    />
-                    <mat-hint>Enter monthly family income</mat-hint>
-                    <mat-error *ngIf="loanPeriod.hasError('required')"
-                      >This field is required.</mat-error
-                    >
-                    <mat-error *ngIf="loanPeriod.hasError('numbersOnly')"
-                      >Input should accept only numbers.</mat-error
-                    >
-                    <mat-error *ngIf="loanPeriod.hasError('min')"
-                      >Monthly family income should be at least 1.</mat-error
-                    >
-                    <mat-error *ngIf="loanPeriod.hasError('maxNumbersReached')"
-                      >Maximum input of 12 numbers reached.</mat-error
-                    >
-                  </mat-form-field>
-                </div>
-                <div class="grid-item">
-                  <mat-form-field class="monthlyIncome" appearance="outline">
+                  <mat-form-field class="monthlyIncome1" appearance="outline">
                     <mat-label>Monthly family income</mat-label>
                     <input
                       maxlength="12"
@@ -365,9 +351,8 @@
                       placeholder="Monthly family income"
                       formControlName="monthlyIncome"
                     />
-                    <mat-hint>Enter monthly family income</mat-hint>
                     <mat-error *ngIf="monthlyIncome.hasError('required')"
-                      >This field is required.</mat-error
+                      >Monthly family income field is required.</mat-error
                     >
                     <mat-error *ngIf="monthlyIncome.hasError('numbersOnly')"
                       >Input should accept only numbers.</mat-error
