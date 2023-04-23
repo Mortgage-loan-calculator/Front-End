@@ -76,7 +76,7 @@ export class CalculatorFormComponent implements OnInit {
   ngOnInit() {
     this.http.get('./assets/Cities.json').subscribe((res: any) => {
       this.options = res.map((city: any) => ({ name: city.name }));
-      this.filteredOptions = this.myControl.valueChanges.pipe(
+      this.filteredOptions = this.citySelect.valueChanges.pipe(
         startWith(''),
         map((value) => {
           const name = typeof value === 'string' ? value : value?.name;
@@ -155,9 +155,9 @@ export class CalculatorFormComponent implements OnInit {
       loanTerm: [''],
       familyMembers: [''],
       haveChildren: [''],
-      citySelect: ['', [Validators.required]],
+      citySelect: [<string | City>'', [Validators.required]],
     },
-    { updateOn: 'blur' }
+    { updateOn: 'change' }
   );
 
   submitForm = fb.group(
@@ -219,14 +219,12 @@ export class CalculatorFormComponent implements OnInit {
   }
 
   get citySelect() {
-    console.log(this.myControl.value);
-    return this.myControl.value;
+    return this.calculateForm.controls.citySelect;
   }
 
   actionText: string = '';
 
   onSubmit() {
-    console.log(this.calculateForm.value);
     if (this.calculateForm.valid) {
       this.calculateFormDto = this.calculateForm.value;
       this.calculateResultsDto = this.submitForm.value;
