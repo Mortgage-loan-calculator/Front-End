@@ -29,11 +29,13 @@ import { Observable, Subject, map, of, pipe, startWith, switchMap } from 'rxjs';
 
 import { CalculatorService } from './service/calculator.service';
 import { CalculateFormDto, CalculateResultsDto } from './calculate-form-dto';
+
 import {
   MonthlyPaymentDto,
   MonthlyPaymentResultsDto,
 } from '../monthly-payment/monthly-payment-dto';
 import { MonthlyPaymentComponent } from '../monthly-payment/monthly-payment.component';
+import { MonthlyPaymentService } from '../monthly-payment/service/monthly-payment.service';
 
 const fb = new FormBuilder().nonNullable;
 interface City {
@@ -84,7 +86,8 @@ export class CalculatorFormComponent implements OnInit {
 
   constructor(
     private http: HttpClient,
-    private calculatorService: CalculatorService
+    private calculatorService: CalculatorService,
+    private monthlyPaymentService: MonthlyPaymentService
   ) {}
   displayFn(city: City): string {
     return city && city.name ? city.name : '';
@@ -116,7 +119,7 @@ export class CalculatorFormComponent implements OnInit {
         distinctUntilChanged(),
 
         tap((value) => {
-          this.onUpdate(value);
+          this.updateResultsMontly(value);
         }),
         takeUntil(this.destroy$)
       )
@@ -316,6 +319,21 @@ export class CalculatorFormComponent implements OnInit {
     }
   }
 
+  updateResultsMontly(value: any) {
+    if (this.applyForm.valid) {
+      this.monthlyPaymentService
+        .getCalculationResults(value)
+        .subscribe((data: MonthlyPaymentResultsDto) => {
+          this.monthlyPaymentResultsDto = data;
+        });
+    }
+  }
+  calculateMonthly() {
+    if (this.applyForm.valid) {
+      const formData: MonthlyPaymentDto = this.applyForm.value;
+      this.monthlyPaymentComponent.calculateResults(formData);
+    }
+  }
   onUpdate(value: any) {
     this.updateResults(value);
   }
@@ -340,12 +358,7 @@ export class CalculatorFormComponent implements OnInit {
     }
   }
 
-  calculateMonthly() {
-    if (this.applyForm.valid) {
-      const formData: MonthlyPaymentDto = this.applyForm.value;
-      this.monthlyPaymentComponent.calculateResults(formData);
-    }
-  }
+
 
   handleResultsCalculated(results: MonthlyPaymentResultsDto): void {
     this.monthlyPaymentResultsDto.estimatedMonthlyPayment =

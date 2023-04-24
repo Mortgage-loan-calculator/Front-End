@@ -21,7 +21,6 @@ import { MatGridListModule } from '@angular/material/grid-list';
 import { MatListModule } from '@angular/material/list';
 import { MonthlyPaymentComponent } from './monthly-payment/monthly-payment.component';
 import { PieChartComponent } from './pie-chart/pie-chart.component';
-import { AutocompleteComponent } from './autocomplete/autocomplete.component';
 import { httpInterceptorProviders } from './admin-login/helpers/http.interceptor';
 import { ErrorHandlerService } from './errors/error-handler.service';
 
@@ -35,7 +34,6 @@ import { ErrorHandlerService } from './errors/error-handler.service';
     AdminLoginComponent,
     MonthlyPaymentComponent,
     PieChartComponent,
-    AutocompleteComponent,
   ],
   imports: [
     NoopAnimationsModule,
