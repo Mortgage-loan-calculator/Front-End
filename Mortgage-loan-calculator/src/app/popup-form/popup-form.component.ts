@@ -11,6 +11,7 @@ import {
 import { tap, timestamp } from 'rxjs';
 import { CustomerService } from '../admin-panel/services/customer.service';
 import { Customer } from '../types';
+import {CalculatorFormComponent} from "../calculator-form/calculator-form.component";
 
 const fb = new FormBuilder().nonNullable;
 
@@ -22,7 +23,7 @@ const fb = new FormBuilder().nonNullable;
 export class PopupFormComponent {
   @Output() onClose = new EventEmitter<void>();
 
-  constructor(private customerservice: CustomerService) {}
+  constructor(private customerservice: CustomerService, private calculatorFormComponent: CalculatorFormComponent) {}
 
   postForm = fb.group({
     name: [
@@ -37,7 +38,12 @@ export class PopupFormComponent {
     email: ['', [Validators.required, Validators.maxLength(30)]],
     ipAddress: [''],
     time: [new Date()],
-    action: ['Submitted']
+    action: ['Submitted'],
+    familyMembers: [this.calculatorFormComponent.calculateForm.value.familyMembers],
+    haveChildren: [this.calculatorFormComponent.calculateForm.value.haveChildren],
+    homePrice: [this.calculatorFormComponent.calculateForm.value.homePrice],
+    loanTerm: [this.calculatorFormComponent.calculateForm.value.loanTerm],
+    monthlyFamilyIncome: [this.calculatorFormComponent.calculateForm.value.monthlyFamilyIncome]
   });
 
   emailValidator(control: FormControl): ValidationErrors | null {

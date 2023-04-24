@@ -192,7 +192,7 @@ export class CalculatorFormComponent implements OnInit {
       loanTerm: ['1', Validators.required],
 
       familyMembers: [''],
-      haveChildren: [''],
+      haveChildren: [false],
       citySelect: [<string | City>'', [Validators.required]],
     },
     { updateOn: 'change' }
