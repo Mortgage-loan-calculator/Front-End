@@ -1,11 +1,10 @@
-
 import {
   HttpClient,
   HttpErrorResponse,
   HttpParams,
 } from '@angular/common/http';
 
-import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
+import { HttpHeaders } from '@angular/common/http';
 
 import { Injectable } from '@angular/core';
 import { Observable, map, throwError } from 'rxjs';
@@ -36,9 +35,7 @@ export class CalculatorService {
       'https://mortgage-loan-calculator-back-end.onrender.com/calculate',
       calculateFormDto
     );
-    
   }
-
 
   getFormCalculationResults(object: {
     [key: string]: string;
@@ -46,9 +43,7 @@ export class CalculatorService {
     return this.http.post<CalculateFormDto>(
       'https://mortgage-loan-calculator-back-end.onrender.com/calculate/results',
       object
-
     );
-   
   }
 
   getCalculationResults(
@@ -56,13 +51,10 @@ export class CalculatorService {
   ): Observable<CalculateResultsDto> {
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
 
-
     return this.http.post<CalculateFormDto>(
       'https://mortgage-loan-calculator-back-end.onrender.com/calculate',
       requestData,
       { headers }
     );
-   
-
   }
 }
