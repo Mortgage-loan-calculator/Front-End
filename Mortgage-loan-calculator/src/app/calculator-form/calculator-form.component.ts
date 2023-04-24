@@ -298,6 +298,10 @@ export class CalculatorFormComponent implements OnInit {
     return this.applyForm.get('monthlyIncome') as FormControl;
   }
 
+  get partnerStatus() {
+    return this.applyForm.get('partnerToggle') as FormControl;
+  }
+
   get citySelect() {
     return this.calculateForm.controls.citySelect;
   }
