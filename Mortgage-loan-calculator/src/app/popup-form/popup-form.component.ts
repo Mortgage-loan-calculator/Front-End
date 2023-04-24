@@ -33,11 +33,14 @@ export class PopupFormComponent {
         Validators.maxLength(30),
       ],
     ],
-    phoneNumber: ['', [Validators.maxLength(20)]],
+    phoneNumber: [
+      '',
+      [Validators.maxLength(20), Validators.pattern(/^[+0-9-]*$/)],
+    ],
     email: ['', [Validators.required, Validators.maxLength(30)]],
     ipAddress: [''],
     time: [new Date()],
-    action: ['Submitted']
+    action: ['Submitted'],
   });
 
   emailValidator(control: FormControl): ValidationErrors | null {

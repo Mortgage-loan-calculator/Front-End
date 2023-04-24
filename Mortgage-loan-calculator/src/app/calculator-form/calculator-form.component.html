@@ -33,6 +33,7 @@
                       placeholder="Enter home price"
                       formControlName="homePrice"
                       maxlength="12"
+                      pattern="^[0-9]+$"
                     />
                     <mat-error
                       *ngIf="calculateForm.controls.homePrice.errors?.['required']"
@@ -40,14 +41,9 @@
                       Home price is required.
                     </mat-error>
                     <mat-error
-                      *ngIf="calculateForm.controls.homePrice.errors?.['numbersOnly']"
+                      *ngIf="calculateForm.controls.homePrice.errors?.['invalidNumber']"
                     >
                       Input should accept only numbers.
-                    </mat-error>
-                    <mat-error
-                      *ngIf="calculateForm.controls.homePrice.errors?.['min']"
-                    >
-                      Home price should be at least 1.
                     </mat-error>
                     <mat-error
                       *ngIf="calculateForm.controls.homePrice.errors?.['maxNumbersReached']"
@@ -68,15 +64,11 @@
                       Monthly family income field is required.
                     </mat-error>
                     <mat-error
-                      *ngIf="monthlyFamilyIncome.hasError('numbersOnly')"
+                      *ngIf="calculateForm.controls.monthlyFamilyIncome.errors?.['invalidNumber']"
                     >
                       Input should accept only numbers.
                     </mat-error>
-                    <mat-error
-                      *ngIf="calculateForm.controls.monthlyFamilyIncome.errors?.['min']"
-                    >
-                      Monthly family income should be at least 1.
-                    </mat-error>
+
                     <mat-error
                       *ngIf="calculateForm.controls.monthlyFamilyIncome.errors?.['maxNumbersReached']"
                     >
@@ -161,7 +153,6 @@
                         Please select a city.
                       </mat-error>
                     </mat-form-field>
-
                   </div>
 
                   <div class="button-container">
@@ -266,6 +257,7 @@
           <mat-tab routerLink="/calculate" label="Calculate monthly payment">
             <form class="column3" [formGroup]="applyForm">
               <div class="grid-container2">
+                <div class="user">
                 <div class="toggle-container2">
                   <div class="toggle-label">Alone/With partner</div>
 
@@ -286,12 +278,9 @@
                   <mat-error *ngIf="dealAmount.hasError('required')"
                     >Deal amount field is required.</mat-error
                   >
-                  <mat-error *ngIf="dealAmount.hasError('numbersOnly')"
-                    >Input should accept only numbers.</mat-error
-                  >
-                  <mat-error *ngIf="dealAmount.hasError('min')"
-                    >Deal amount should be at least 1.</mat-error
-                  >
+                  <mat-error *ngIf="dealAmount.errors?.['invalidNumber']">
+                    Input should accept only numbers.
+                  </mat-error>
                   <mat-error *ngIf="dealAmount.hasError('maxNumbersReached')"
                     >Maximum input of 12 numbers reached.</mat-error
                   >
@@ -307,12 +296,9 @@
                   <mat-error *ngIf="downPayment.hasError('required')"
                     >Down payment field is required.</mat-error
                   >
-                  <mat-error *ngIf="downPayment.hasError('numbersOnly')"
-                    >Input should accept only numbers.</mat-error
-                  >
-                  <mat-error *ngIf="downPayment.hasError('min')"
-                    >Down payment should be at least 1.</mat-error
-                  >
+                  <mat-error *ngIf="downPayment.errors?.['invalidNumber']">
+                    Input should accept only numbers.
+                  </mat-error>
                   <mat-error *ngIf="downPayment.hasError('maxNumbersReached')"
                     >Maximum input of 12 numbers reached.</mat-error
                   >
@@ -350,42 +336,70 @@
                     <mat-error *ngIf="monthlyIncome.hasError('required')"
                       >Monthly family income field is required.</mat-error
                     >
-                    <mat-error *ngIf="monthlyIncome.hasError('numbersOnly')"
-                      >Input should accept only numbers.</mat-error
-                    >
-                    <mat-error *ngIf="monthlyIncome.hasError('min')"
-                      >Monthly family income should be at least 1.</mat-error
-                    >
+                    <mat-error *ngIf="monthlyIncome.errors?.['invalidNumber']">
+                      Input should accept only numbers.
+                    </mat-error>
                     <mat-error
                       *ngIf="monthlyIncome.hasError('maxNumbersReached')"
                       >Maximum input of 12 numbers reached.</mat-error
                     >
                   </mat-form-field>
                 </div>
+              </div>
+                <div class="results">
                   <div class="grid-item results">
-                  <span matPrefix>Your estimated monthly payment </span>
-                  <strong>
-                    {{
-                      monthlyPaymentResultsDto.estimatedMonthlyPayment
-                    }}</strong
-                  >
-                </div>
-                <div class="grid-item results">
-                  <span matPrefix>Maximum monthly loan payment</span>
+                    <span matPrefix>Monthly payment:</span>
 
-                  <strong>
-                    {{ monthlyPaymentResultsDto.maxMonthlyPayment }}</strong
-                  >
+                    <strong> </strong>
+                  </div>
+                  <div class="grid-item results">
+                    <span matPrefix>Your estimated monthly payment </span>
+                    <strong>
+                      {{
+                        monthlyPaymentResultsDto.estimatedMonthlyPayment
+                      }}</strong
+                    >
+                  </div>
+                  <div class="grid-item results">
+                    <span matPrefix>Maximum monthly loan payment</span>
+
+                    <strong>
+                      {{ monthlyPaymentResultsDto.maxMonthlyPayment }}</strong
+                    >
+                  </div>
+                  <div class="grid-item results">
+                    <span matPrefix>Interest rate (fixed 2%):</span>
+
+                    <strong> </strong>
+                  </div>
+                  <div class="grid-item results">
+                    <span matPrefix>Euribor</span>
+
+                    <strong> </strong>
+                  </div>
+
+                  <div class="grid-items results">
+                    <span matPrefix>Total interest paid</span>
+
+                    <strong> </strong>
+                  </div>
+
+                  <div class="grid-items results">
+                    <span matPrefix>Total payment sum</span>
+
+                    <strong> </strong>
+                  </div>
                 </div>
               </div>
+
               <div class="button-container">
                 <button
                   mat-button
                   type="submit"
-                  (click)="showPopupForm()"
                   class="my-button apply-button"
+                  (click)="calculateMonthly()"
                 >
-                  Apply
+                  Calculate
                 </button>
                 <button
                   mat-button
@@ -393,7 +407,7 @@
                   class="my-button apply-button"
                   (click)="showPopupForm()"
                 >
-                  Offers
+                  Apply
                 </button>
               </div>
             </form>
@@ -408,4 +422,3 @@
   </div>
 </div>
 <app-popup-form *ngIf="showPopup"></app-popup-form>
-<!-- (click)="calculateMonthly()" -->
