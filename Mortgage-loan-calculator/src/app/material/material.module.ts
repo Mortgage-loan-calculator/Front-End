@@ -14,6 +14,7 @@ import {  MatCardModule} from '@angular/material/card'
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
 import { MatDividerModule } from '@angular/material/divider';
 import {MatSliderModule} from '@angular/material/slider';
+import { MatTabGroup } from '@angular/material/tabs';
 
 const MaterialComponents=[
 MatButtonModule,
@@ -29,7 +30,7 @@ MatInputModule,
 MatFormFieldModule,
 MatCardModule,
 MatAutocompleteModule,
-MatSliderModule
+MatSliderModule,
 ];
 
 @NgModule({

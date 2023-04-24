@@ -58,8 +58,8 @@ h2 {
   margin-right: 10px;
 }
 
-.total{
-  font-weight:bold;
+.total {
+  font-weight: bold;
 }
 
 .grid-container2 {
@@ -190,7 +190,7 @@ mat-slider {
 .mat-slider2 {
   margin-left: 25px;
 }
-.slider-labels2{
+.slider-labels2 {
   margin-left: 15px;
 
   display: flex;
@@ -308,7 +308,6 @@ mat-form-field {
   display: flex;
   flex-direction: column;
   align-items: center;
-
 }
 .apply-button {
   margin-top: 50px;
@@ -354,4 +353,10 @@ mat-error {
 .amount-positioning {
   margin-top: 15px;
   font-weight: bold;
+}
+
+.results {
+  width: 180%;
+  justify-content: space-around;
+  space-around: 20px
 }

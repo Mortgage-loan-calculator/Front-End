@@ -1,5 +1,14 @@
 import { LabelType, Options } from '@angular-slider/ngx-slider';
-import { Component, OnInit, ViewChild } from '@angular/core';
+
+import {
+  ChangeDetectorRef,
+  Component,
+  OnInit,
+  ViewChild,
+  OnChanges,
+  SimpleChanges,
+} from '@angular/core';
+
 import { delay, distinctUntilChanged, takeUntil, tap } from 'rxjs/operators';
 
 import {
@@ -20,11 +29,13 @@ import { Observable, Subject, map, of, pipe, startWith, switchMap } from 'rxjs';
 
 import { CalculatorService } from './service/calculator.service';
 import { CalculateFormDto, CalculateResultsDto } from './calculate-form-dto';
+
 import {
   MonthlyPaymentDto,
   MonthlyPaymentResultsDto,
 } from '../monthly-payment/monthly-payment-dto';
 import { MonthlyPaymentComponent } from '../monthly-payment/monthly-payment.component';
+import { MonthlyPaymentService } from '../monthly-payment/service/monthly-payment.service';
 
 const fb = new FormBuilder().nonNullable;
 interface City {
@@ -56,40 +67,40 @@ export class CalculatorFormComponent implements OnInit {
   calculateFormDto: CalculateFormDto = {} as CalculateFormDto;
   calculateResultsDto: CalculateResultsDto = {} as CalculateResultsDto;
 
-  myControl = new FormControl('');
-  cityNames: string[] = [];
-  filteredOptions!: Observable<string[]>;
+  myControl = new FormControl<string | City>('');
+  options: City[] = [];
+  filteredOptions!: Observable<City[]>;
 
   monthlyPaymentResultsDto: MonthlyPaymentResultsDto =
     {} as MonthlyPaymentResultsDto;
   @ViewChild(MonthlyPaymentComponent)
   monthlyPaymentComponent!: MonthlyPaymentComponent;
-  constructor(
-    private http: HttpClient,
-    private calculatorService: CalculatorService
-  ) {}
-  ngOnChanges() {
-    if (this.citiesInfo != null) {
-      this.cityNames = this.citiesInfo.map((city: any) => city.name);
-      this.filteredOptions = this.myControl.valueChanges.pipe(
-        startWith(''),
-        map((value) => this._filter(value || ''))
-      );
-    }
-  }
-  private _filter(value: string): string[] {
-    const filterValue = value.toLowerCase();
-    return this.cityNames.filter((name) =>
-      name.toLowerCase().includes(filterValue)
+
+  private _filter(name: string): City[] {
+    const filterValue = name.toLowerCase();
+
+    return this.options.filter((option) =>
+      option.name.toLowerCase().includes(filterValue)
     );
   }
 
+  constructor(
+    private http: HttpClient,
+    private calculatorService: CalculatorService,
+    private monthlyPaymentService: MonthlyPaymentService
+  ) {}
+  displayFn(city: City): string {
+    return city && city.name ? city.name : '';
+  }
   ngOnInit() {
     this.http.get('./assets/Cities.json').subscribe((res: any) => {
-      this.cityNames = res.map((city: any) => city.name);
-      this.filteredOptions = this.myControl.valueChanges.pipe(
+      this.options = res.map((city: any) => ({ name: city.name }));
+      this.filteredOptions = this.citySelect.valueChanges.pipe(
         startWith(''),
-        map((value) => this._filter(value || ''))
+        map((value) => {
+          const name = typeof value === 'string' ? value : value?.name;
+          return name ? this._filter(name as string) : this.options.slice();
+        })
       );
     });
 
@@ -108,7 +119,7 @@ export class CalculatorFormComponent implements OnInit {
         distinctUntilChanged(),
 
         tap((value) => {
-          this.onUpdate(value);
+          this.updateResultsMontly(value);
         }),
         takeUntil(this.destroy$)
       )
@@ -182,9 +193,9 @@ export class CalculatorFormComponent implements OnInit {
 
       familyMembers: [''],
       haveChildren: [''],
-      citySelect: ['', [Validators.required]],
+      citySelect: [<string | City>'', [Validators.required]],
     },
-    { updateOn: 'blur' }
+    { updateOn: 'change' }
   );
 
   submitForm = fb.group(
@@ -237,8 +248,6 @@ export class CalculatorFormComponent implements OnInit {
     { updateOn: 'blur' }
   );
 
-
-
   showColumn2 = false;
   ngAfterViewInit() {
     const calculateBtn = document.getElementById('calculate-btn');
@@ -289,8 +298,8 @@ export class CalculatorFormComponent implements OnInit {
     return this.applyForm.get('monthlyIncome') as FormControl;
   }
 
-  public citySelect(city: string) {
-    return city;
+  get citySelect() {
+    return this.calculateForm.controls.citySelect;
   }
 
   actionText: string = '';
@@ -301,7 +310,7 @@ export class CalculatorFormComponent implements OnInit {
   }
 
   updateResults(value: any) {
-    if (value !== null) {
+    if (this.calculateForm.valid) {
       this.calculatorService
         .getFormCalculationResults(value)
         .subscribe((data: CalculateResultsDto) => {
@@ -310,6 +319,21 @@ export class CalculatorFormComponent implements OnInit {
     }
   }
 
+  updateResultsMontly(value: any) {
+    if (this.applyForm.valid) {
+      this.monthlyPaymentService
+        .getCalculationResults(value)
+        .subscribe((data: MonthlyPaymentResultsDto) => {
+          this.monthlyPaymentResultsDto = data;
+        });
+    }
+  }
+  calculateMonthly() {
+    if (this.applyForm.valid) {
+      const formData: MonthlyPaymentDto = this.applyForm.value;
+      this.monthlyPaymentComponent.calculateResults(formData);
+    }
+  }
   onUpdate(value: any) {
     this.updateResults(value);
   }
@@ -334,18 +358,12 @@ export class CalculatorFormComponent implements OnInit {
     }
   }
 
-  calculateMonthly() {
-    if (this.applyForm.valid) {
-      const formData: MonthlyPaymentDto = this.applyForm.value;
-      this.monthlyPaymentComponent.calculateResults(formData);
-    }
-  }
+
 
   handleResultsCalculated(results: MonthlyPaymentResultsDto): void {
-    this.applyForm.patchValue({
-      estimatedMonthlyPayment: results.estimatedMonthlyPayment,
-      maxMonthlyPayment: results.maxMonthlyPayment,
-    });
+    this.monthlyPaymentResultsDto.estimatedMonthlyPayment =
+      results.estimatedMonthlyPayment;
+    this.monthlyPaymentResultsDto.maxMonthlyPayment = results.maxMonthlyPayment;
   }
 
   onChange() {}
