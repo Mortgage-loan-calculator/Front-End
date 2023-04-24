@@ -9,7 +9,6 @@ import { Observable, map, throwError } from 'rxjs';
 import { CalculateFormDto, CalculateResultsDto } from '../calculate-form-dto';
 import { catchError } from 'rxjs/operators';
 import { ErrorHandlerService } from 'src/app/errors/error-handler.service';
-import { Error } from 'src/app/errors/error';
 
 @Injectable({
   providedIn: 'root',
