@@ -1,6 +1,17 @@
 import { LabelType, Options } from '@angular-slider/ngx-slider';
-import { Component, OnInit, ViewChild } from '@angular/core';
+
+import {
+  ChangeDetectorRef,
+  Component,
+  OnInit,
+  ViewChild,
+  OnChanges,
+  SimpleChanges,
+} from '@angular/core';
+
+
 import { delay, distinctUntilChanged, takeUntil, tap } from 'rxjs/operators';
+
 
 import {
   AbstractControl,
@@ -56,9 +67,12 @@ export class CalculatorFormComponent implements OnInit {
   calculateFormDto: CalculateFormDto = {} as CalculateFormDto;
   calculateResultsDto: CalculateResultsDto = {} as CalculateResultsDto;
 
-  myControl = new FormControl('');
-  cityNames: string[] = [];
-  filteredOptions!: Observable<string[]>;
+
+  myControl = new FormControl<string | City>('');
+  options: City[] = [];
+  filteredOptions!: Observable<City[]>;
+
+ 
 
   monthlyPaymentResultsDto: MonthlyPaymentResultsDto =
     {} as MonthlyPaymentResultsDto;
@@ -68,30 +82,36 @@ export class CalculatorFormComponent implements OnInit {
     private http: HttpClient,
     private calculatorService: CalculatorService
   ) {}
-  ngOnChanges() {
-    if (this.citiesInfo != null) {
-      this.cityNames = this.citiesInfo.map((city: any) => city.name);
-      this.filteredOptions = this.myControl.valueChanges.pipe(
-        startWith(''),
-        map((value) => this._filter(value || ''))
-      );
-    }
-  }
-  private _filter(value: string): string[] {
-    const filterValue = value.toLowerCase();
-    return this.cityNames.filter((name) =>
-      name.toLowerCase().includes(filterValue)
-    );
-  }
+
+
 
   ngOnInit() {
     this.http.get('./assets/Cities.json').subscribe((res: any) => {
-      this.cityNames = res.map((city: any) => city.name);
-      this.filteredOptions = this.myControl.valueChanges.pipe(
+      this.options = res.map((city: any) => ({ name: city.name }));
+      this.filteredOptions = this.citySelect.valueChanges.pipe(
         startWith(''),
-        map((value) => this._filter(value || ''))
+        map((value) => {
+          const name = typeof value === 'string' ? value : value?.name;
+          return name ? this._filter(name as string) : this.options.slice();
+        })
       );
     });
+    displayFn(city: City): string {
+    return city && city.name ? city.name : '';
+  }
+
+  private _filter(name: string): City[] {
+    const filterValue = name.toLowerCase();
+
+    return this.options.filter((option) =>
+      option.name.toLowerCase().includes(filterValue)
+    );
+  }
+
+  constructor(
+    private http: HttpClient,
+    private calculatorService: CalculatorService
+  ) {}
 
     this.calculateForm.valueChanges
       .pipe(
@@ -116,6 +136,9 @@ export class CalculatorFormComponent implements OnInit {
   }
   private readonly destroy$ = new Subject<void>();
 
+
+  
+
   ngOnDestroy(): void {
     this.destroy$.next();
     this.destroy$.complete();
@@ -125,6 +148,7 @@ export class CalculatorFormComponent implements OnInit {
     if (value >= 30) {
       Math.round(value / 30);
     }
+
 
     return `${value}`;
   }
@@ -182,9 +206,9 @@ export class CalculatorFormComponent implements OnInit {
 
       familyMembers: [''],
       haveChildren: [''],
-      citySelect: ['', [Validators.required]],
+      citySelect: [<string | City>'', [Validators.required]],
     },
-    { updateOn: 'blur' }
+    { updateOn: 'change' }
   );
 
   submitForm = fb.group(
@@ -289,8 +313,10 @@ export class CalculatorFormComponent implements OnInit {
     return this.applyForm.get('monthlyIncome') as FormControl;
   }
 
-  public citySelect(city: string) {
-    return city;
+
+  get citySelect() {
+    return this.calculateForm.controls.citySelect;
+
   }
 
   actionText: string = '';
