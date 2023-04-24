@@ -106,7 +106,7 @@
                       Number of adult family members:
                     </div>
                     <mat-slider
-                      min="0"
+                      min="1"
                       max="5"
                       step="1"
                       showTickMarks
@@ -116,7 +116,7 @@
                       <input matSliderThumb formControlName="familyMembers" />
                     </mat-slider>
                     <div class="slider-labels">
-                      <div class="slider-label-left">0</div>
+                      <div class="slider-label-left">1</div>
                       <div class="slider-label-right">5+</div>
                     </div>
                   </div>
@@ -133,6 +133,7 @@
                     <div class="dropdown-label">
                       City of the family's residence:
                     </div>
+
                     <mat-form-field
                       class="example-full-width"
                       appearance="outline"
@@ -143,27 +144,24 @@
                         matInput
                         formControlName="citySelect"
                         [matAutocomplete]="auto"
-                        name="citySelect"
                         required
                       />
-                      <mat-autocomplete #auto="matAutocomplete">
+                      <mat-autocomplete
+                        #auto="matAutocomplete"
+                        [displayWith]="displayFn"
+                      >
                         <mat-option
                           *ngFor="let option of filteredOptions | async"
                           [value]="option"
                         >
-                          {{ option }}
-                        </mat-option>
+                          {{ option.name }}</mat-option
+                        >
                       </mat-autocomplete>
+                      <mat-error *ngIf="citySelect.hasError('required')">
+                        Please select a city.
+                      </mat-error>
                     </mat-form-field>
-                    <mat-error
-                      class="selectCity"
-                      *ngIf="
-                        calculateForm.get('citySelect')?.invalid &&
-                        calculateForm.get('citySelect')?.touched
-                      "
-                    >
-                      Please select a city.
-                    </mat-error>
+
                   </div>
 
                   <div class="button-container">
