@@ -32,14 +32,17 @@
 .my-button {
   font-family: Verdana, Arial, Helvetica, sans-serif;
 
-  width: 220px;
-  font-size: 18px;
+  width: 240px;
+  font-size: 16px;
   border: none;
   border-radius: 5px;
   color: white;
   cursor: pointer;
   transition: all 0.3s ease;
   height: 50px;
+  padding-left: 25px;
+  padding-right: 25px;
+
 }
 .my-button:hover {
   box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
@@ -79,7 +82,6 @@ h1 {
   letter-spacing: 0.1rem;
   color: #e3dcd2;
   font-size: 35px;
-
   padding-bottom: 1rem;
 }
 
@@ -100,34 +102,5 @@ h2 {
     font-size: 48px;
   }
 }
-
-/* @media screen and (max-width: 480px) {
-  .hero .container {
-    font-size: 8px;
-
-    grid-template-columns: 1fr;
-    margin-left: -60px;
-    padding: 0 20px;
-  }
-  .hero .content {
-    margin-top: 70px;
-  }
-  h1 {
-    font-size: 20px;
-  }
-  h2 {
-    font-size: 16px;
-
-    width: 80%;
-    text-align: left;
-  }
-  .hero button {
-    height: 40px;
-    font-size: 15px;
-    margin-left: 40px;
-    margin-top: 40px;
-  }
-} */
-
 
 

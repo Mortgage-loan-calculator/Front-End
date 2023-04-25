@@ -1,7 +1,6 @@
-<head>
+<!-- <head>
   <script src="./show.js"></script>
-</head>
-<div class="formOuter">
+</head> -->
   <div class="formBlock">
     <h2>Mortgage loan calculator</h2>
 
@@ -152,7 +151,7 @@
                           >Housing co-operative apartment</mat-radio-button
                         >
                         <mat-radio-button value="Second Home"
-                          >Sencond Home</mat-radio-button
+                          >Second Home</mat-radio-button
                         >
 
                       </mat-radio-group>
@@ -430,30 +429,30 @@
                 </div>
 
                 <div class="results">
-                  <div class="grid-item results">
+                  <div class="grid-items results">
                     <span matPrefix>Your estimated monthly payment </span>
                     <strong>
                       {{
                         monthlyPaymentResultsDto.estimatedMonthlyPayment
-                      }}</strong
+                      }} </strong
                     >
                   </div>
-                  <div class="grid-item results">
+                  <div class="grid-items results">
                     <span matPrefix>Maximum monthly loan payment</span>
 
                     <strong class="amount">
                       {{ monthlyPaymentResultsDto.maxMonthlyPayment }}</strong
                     >
                   </div>
-                  <div class="grid-item results">
-                    <span matPrefix>Interest rate (fixed 2%):</span>
+                  <div class="grid-items results">
+                    <span matPrefix>Interest rate (fixed 2%)</span>
 
-                    <strong class="amount">22 </strong>
+                    <strong > </strong>
                   </div>
-                  <div class="grid-item results">
+                  <div class="grid-items results">
                     <span matPrefix>Euribor</span>
 
-                    <strong>22 </strong>
+                    <strong> </strong>
                   </div>
 
 
@@ -471,7 +470,7 @@
                 </div>
               </div>
 
-              <div class="button-container">
+              <div class="button-containers">
                 <button
                   mat-button
                   type="submit"
@@ -502,7 +501,6 @@
       </div>
     </div>
   </div>
-</div>
 
 <app-popup-form
   *ngIf="showPopup"
