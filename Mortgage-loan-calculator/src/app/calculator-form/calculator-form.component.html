@@ -161,7 +161,6 @@
                         Please select a city.
                       </mat-error>
                     </mat-form-field>
-
                   </div>
 
                   <div class="button-container">
@@ -362,7 +361,7 @@
                     >
                   </mat-form-field>
                 </div>
-                  <div class="grid-item results">
+                <div class="grid-item results">
                   <span matPrefix>Your estimated monthly payment </span>
                   <strong>
                     {{
@@ -382,10 +381,11 @@
                 <button
                   mat-button
                   type="submit"
-                  (click)="showPopupForm()"
                   class="my-button apply-button"
+                  (change)="show()"
+                  (click)="calculateMonthly()"
                 >
-                  Apply
+                  Calculate
                 </button>
                 <button
                   mat-button
@@ -393,7 +393,7 @@
                   class="my-button apply-button"
                   (click)="showPopupForm()"
                 >
-                  Offers
+                  Apply
                 </button>
               </div>
             </form>
@@ -407,5 +407,8 @@
     </div>
   </div>
 </div>
-<app-popup-form *ngIf="showPopup"></app-popup-form>
+<app-popup-form
+  *ngIf="showPopup"
+  (onClose)="showPopup = false"
+></app-popup-form>
 <!-- (click)="calculateMonthly()" -->
