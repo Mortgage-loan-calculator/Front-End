@@ -343,7 +343,29 @@ export class CalculatorFormComponent implements OnInit {
     this.updateResults(value);
   }
 
-  onSubmit() {
+  onCalculateButton() {
+    if (this.calculateForm.valid) {
+      this.calculateFormDto = this.calculateForm.value;
+      this.calculateResultsDto = this.submitForm.value;
+
+      this.calculatorService
+        .getFormCalculationResultsButton(this.calculateFormDto)
+        .subscribe((data: CalculateResultsDto) => {
+          this.calculateResultsDto = data;
+        });
+
+        this.updateResults(this.calculateFormDto);
+
+      this.actionText = 'Calculated';
+      this.showColumn2 = true;
+      this.actionText = 'Submitted form';
+      const calculateFormData = this.calculateForm.value;
+      console.log("in calculate function");
+      
+    }
+  }
+
+  onSubmit(): CalculateFormDto {
     if (this.calculateForm.valid) {
       this.calculateFormDto = this.calculateForm.value;
       this.calculateResultsDto = this.submitForm.value;
@@ -353,17 +375,12 @@ export class CalculatorFormComponent implements OnInit {
         .subscribe((data: CalculateFormDto) => {
           this.calculateFormDto = data;
         });
-
-      this.updateResults(this.calculateFormDto);
-
-      this.actionText = 'Calculated';
-      this.showColumn2 = true;
-      this.actionText = 'Submitted form';
-      const calculateFormData = this.calculateForm.value;
+      return this.calculateFormDto;
+    }else{
+      
     }
+    return this.calculateFormDto;
   }
-
-
 
   handleResultsCalculated(results: MonthlyPaymentResultsDto): void {
     this.monthlyPaymentResultsDto.estimatedMonthlyPayment =

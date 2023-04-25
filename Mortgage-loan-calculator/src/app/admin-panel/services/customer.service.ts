@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Customer } from '../../types';
 import { Observable } from 'rxjs';
+import { CalculateFormDto } from 'src/app/calculator-form/calculate-form-dto';
 
 @Injectable({
   providedIn: 'root',
@@ -10,7 +11,7 @@ export class CustomerService {
   constructor(private http: HttpClient) {}
   customerUrl =
     'https://mortgage-loan-calculator-back-end.onrender.com/customers';
-    //'http://localhost:8080/customers';
+    // 'http://localhost:8080/customers';
 
   public getCustomer(): Observable<Customer[]> {
     return this.http.get<Customer[]>(this.customerUrl);
@@ -18,6 +19,10 @@ export class CustomerService {
 
   public saveCustomerInfo(customer: Customer) {
     return this.http.post<Customer>(this.customerUrl, customer);
+  }
+
+  getCalculateFormDtoById(id: number): Observable<CalculateFormDto> {
+    return this.http.get<CalculateFormDto>(`https://mortgage-loan-calculator-back-end.onrender.com/calculate/forms/${id}`);
   }
 
   public deleteCustomer(id: string){
