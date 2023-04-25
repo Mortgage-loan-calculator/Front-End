@@ -22,7 +22,7 @@ const fb = new FormBuilder().nonNullable;
 })
 export class PopupFormComponent {
   @Output() onClose = new EventEmitter<void>();
-
+  hideFormBody: boolean = false;
   constructor(private customerservice: CustomerService, private calculatorFormComponent: CalculatorFormComponent) {}
 
   postForm = fb.group({
@@ -34,6 +34,7 @@ export class PopupFormComponent {
         Validators.maxLength(30),
       ],
     ],
+
     phoneNumber: ['', [Validators.maxLength(20), Validators.pattern(/^[0-9]\d*$/)]],
     email: ['', [Validators.required, Validators.email, Validators.maxLength(30)]],
     ipAddress: [''],
@@ -44,6 +45,7 @@ export class PopupFormComponent {
     homePrice: [this.calculatorFormComponent.calculateForm.value.homePrice],
     loanTerm: [this.calculatorFormComponent.calculateForm.value.loanTerm],
     monthlyFamilyIncome: [this.calculatorFormComponent.calculateForm.value.monthlyFamilyIncome]
+
   });
 
   emailValidator(control: FormControl): ValidationErrors | null {
@@ -76,6 +78,8 @@ export class PopupFormComponent {
         .saveCustomerInfo(this.postForm.value as unknown as Customer)
         .pipe(
           tap(() => {
+            console.log('Post added: ', this.postForm.value);
+            this.hideFormBody = true;
             this.postForm.reset();
           })
         )
