@@ -206,12 +206,14 @@ export class CalculatorFormComponent implements OnInit {
       loanTerm: ['1', Validators.required],
 
       familyMembers: [''],
-      haveChildren: [''],
+
+      haveChildren: ['false'],
       citySelect: [<string | City>''],
       houseType: [''],
       studentLoan: [''],
       otherLoan: [''],
       politicalyExposed: [''],
+
     },
     { updateOn: 'change' }
   );
@@ -316,6 +318,10 @@ export class CalculatorFormComponent implements OnInit {
     return this.applyForm.get('monthlyIncome') as FormControl;
   }
 
+  get partnerStatus() {
+    return this.applyForm.get('partnerToggle') as FormControl;
+  }
+
   get citySelect() {
     return this.calculateForm.controls.citySelect;
   }
@@ -361,6 +367,7 @@ export class CalculatorFormComponent implements OnInit {
   calculateMonthly() {
     if (this.applyForm.valid) {
       const formData: MonthlyPaymentDto = this.applyForm.value;
+      console.log(formData);
       this.monthlyPaymentComponent.calculateResults(formData);
     }
   }

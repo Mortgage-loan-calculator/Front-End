@@ -1,5 +1,6 @@
 export interface MonthlyPaymentDto {
     id?: any;
+    partnerToggle?: boolean;
     dealAmount?: any;
     downPayment?: any;
     loanPeriod?: any;

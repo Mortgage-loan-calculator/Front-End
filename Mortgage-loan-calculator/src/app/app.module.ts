@@ -23,6 +23,7 @@ import { MonthlyPaymentComponent } from './monthly-payment/monthly-payment.compo
 import { PieChartComponent } from './pie-chart/pie-chart.component';
 import { httpInterceptorProviders } from './admin-login/helpers/http.interceptor';
 import { ErrorHandlerService } from './errors/error-handler.service';
+import {MatNativeDateModule} from "@angular/material/core";
 
 @NgModule({
   declarations: [
@@ -49,6 +50,7 @@ import { ErrorHandlerService } from './errors/error-handler.service';
     MatGridListModule,
     MatListModule,
     FormsModule,
+    MatNativeDateModule
   ],
   providers: [httpInterceptorProviders],
   bootstrap: [AppComponent],
