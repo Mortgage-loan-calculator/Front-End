@@ -71,6 +71,7 @@ interface City {
 })
 export class CalculatorFormComponent implements OnInit {
   @ViewChild(PieChartComponent) PieChartComponent!: PieChartComponent;
+  errorTrue = 'true';
   spinnerOn = false;
   showMore: boolean = false;
   title = 'json-read-example';
@@ -230,7 +231,6 @@ export class CalculatorFormComponent implements OnInit {
       studentLoan: [''],
       otherLoan: [''],
       politicalyExposed: [''],
-
     },
     { updateOn: 'change' }
   );
@@ -422,16 +422,29 @@ export class CalculatorFormComponent implements OnInit {
   }
 
   onSubmit() {
+    console.log(this.studentLoan.value);
     console.log(this.calculateForm.value);
     if (this.calculateForm.valid) {
       this.calculateFormDto = this.calculateForm.value;
       this.calculateResultsDto = this.submitForm.value;
-
-      this.calculatorService
-        .sendData(this.calculateFormDto)
-        .subscribe((data: CalculateFormDto) => {
-          this.calculateFormDto = data;
-        });
+      if (
+        this.studentLoan.value != '' ||
+        this.otherLoan.value != '' ||
+        this.politicalyExposed.value != '' ||
+        this.houseType.value != ''
+      ) {
+        this.calculatorService
+          .sendDataDetailed(this.calculateFormDto)
+          .subscribe((data: CalculateFormDto) => {
+            this.calculateFormDto = data;
+          });
+      } else {
+        this.calculatorService
+          .sendData(this.calculateFormDto)
+          .subscribe((data: CalculateFormDto) => {
+            this.calculateFormDto = data;
+          });
+      }
 
       this.updateResults(this.calculateFormDto);
 
@@ -439,7 +452,6 @@ export class CalculatorFormComponent implements OnInit {
       this.showColumn2 = true;
       this.actionText = 'Submitted form';
       const calculateFormData = this.calculateForm.value;
-      this.spinnerOn = true;
     }
   }
 

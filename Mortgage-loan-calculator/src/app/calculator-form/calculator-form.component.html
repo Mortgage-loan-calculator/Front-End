@@ -155,7 +155,6 @@
                           >Sencond Home</mat-radio-button
                         >
 
-
                       </mat-radio-group>
 
                       <div class="Radio-label">Do you have a student loan?</div>
@@ -225,7 +224,16 @@
                     </div>
                   </ng-container>
 
-
+                  <div
+                    class="warning"
+                    *ngIf="
+                      studentLoan.value == 'true' ||
+                      otherLoan.value == 'true' ||
+                      politicalyExposed.value == 'true'
+                    "
+                  >
+                    You need to talk with bank assistant
+                  </div>
 
                   <div class="button-container">
                     <button
@@ -312,7 +320,7 @@
                     <div class="button-container">
                       <button
                         mat-button
-                        type="submit"
+                        type="button"
                         class="my-button submit-button"
                         (click)="onSubmit()"
                         (click)="showPopupForm()"
