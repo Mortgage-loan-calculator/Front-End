@@ -4,8 +4,8 @@ import { Observable } from 'rxjs';
 import {FormControl} from "@angular/forms";
 
 const AUTH_API =
-  //'https://mortgage-loan-calculator-back-end.onrender.com/auth/';
-  'http://localhost:8080/auth/';
+  'https://mortgage-loan-calculator-back-end.onrender.com/auth/';
+  //'http://localhost:8080/auth/';
 
 
 

@@ -335,6 +335,7 @@ export class CalculatorFormComponent implements OnInit {
   calculateMonthly() {
     if (this.applyForm.valid) {
       const formData: MonthlyPaymentDto = this.applyForm.value;
+      console.log(formData);
       this.monthlyPaymentComponent.calculateResults(formData);
     }
   }
