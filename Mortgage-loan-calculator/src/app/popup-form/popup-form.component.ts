@@ -1,5 +1,5 @@
 import { getLocaleDateTimeFormat } from '@angular/common';
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, Output, ViewChild } from '@angular/core';
 import {
   AbstractControl,
   FormBuilder,
@@ -34,8 +34,8 @@ export class PopupFormComponent {
         Validators.maxLength(30),
       ],
     ],
-    phoneNumber: ['', [Validators.maxLength(20)]],
-    email: ['', [Validators.required, Validators.maxLength(30)]],
+    phoneNumber: ['', [Validators.maxLength(20), Validators.pattern(/^[0-9]\d*$/)]],
+    email: ['', [Validators.required, Validators.email, Validators.maxLength(30)]],
     ipAddress: [''],
     time: [new Date()],
     action: ['Submitted'],
@@ -84,6 +84,7 @@ export class PopupFormComponent {
         .subscribe();
     }
   }
+
   onPostFormReset() {
     this.postForm.reset();
   }

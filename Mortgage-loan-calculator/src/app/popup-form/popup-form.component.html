@@ -23,8 +23,6 @@
             class="btnClose"
             aria-label="Close"
             (click)="onClose.emit()"
-            onclick="document.getElementById('popUpForm').style.display='none'"
-            onclick="document.getElementById('modalContainer').style.display='none'"
           >
             cancel</mat-icon
           >
@@ -68,6 +66,11 @@
                 id="phoneNumber"
               />
               <mat-error
+                *ngIf="postForm.controls.phoneNumber.errors?.['pattern']"
+              >
+              Input should be only positive numbers.
+              </mat-error>
+              <mat-error
                 *ngIf="postForm.controls.phoneNumber.errors?.['maxlength']"
               >
                 Maximum input of 20 characters reached.
@@ -95,7 +98,7 @@
                 Email is required.
               </mat-error>
               <mat-error
-                *ngIf="postForm.controls.email.errors?.['invalidEmail']"
+                *ngIf="postForm.controls.email.errors?.['email']"
               >
                 Invalid email format. Please enter a valid email.
               </mat-error>
