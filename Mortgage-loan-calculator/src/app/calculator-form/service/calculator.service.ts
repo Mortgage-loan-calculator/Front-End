@@ -39,6 +39,15 @@ export class CalculatorService {
     );
   }
 
+  sendDataDetailed(
+    calculateFormDto: CalculateFormDto
+  ): Observable<CalculateFormDto> {
+    return this.http.post<CalculateFormDto>(
+      'https://mortgage-loan-calculator-back-end.onrender.com/calculate/details',
+      calculateFormDto
+    );
+  }
+
   getFormCalculationResults(object: {
     [key: string]: string;
   }): Observable<CalculateResultsDto> {

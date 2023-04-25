@@ -37,6 +37,9 @@
 .example-form-field {
   width: 100%;
 }
+.hide {
+  display: none !important;
+}
 .mat-icon {
   display: flex;
   align-items: center;

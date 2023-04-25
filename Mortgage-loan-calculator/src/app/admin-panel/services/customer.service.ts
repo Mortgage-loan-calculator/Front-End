@@ -10,7 +10,10 @@ export class CustomerService {
   constructor(private http: HttpClient) {}
   customerUrl =
     'https://mortgage-loan-calculator-back-end.onrender.com/customers';
-    // 'http://localhost:8090/customers';
+
+
+    //'http://localhost:8080/customers';
+
 
   public getCustomer(): Observable<Customer[]> {
     return this.http.get<Customer[]>(this.customerUrl);
@@ -18,5 +21,18 @@ export class CustomerService {
 
   public saveCustomerInfo(customer: Customer) {
     return this.http.post<Customer>(this.customerUrl, customer);
+  }
+
+  public deleteCustomer(id: string){
+    this.http.delete(this.customerUrl + '/' + id).subscribe(
+      (response) => {
+        // Handle successful response here
+        console.log('Delete request successful:', response);
+      },
+      (error) => {
+        // Handle error here
+        console.error('Delete request failed:', error);
+      }
+    );
   }
 }
