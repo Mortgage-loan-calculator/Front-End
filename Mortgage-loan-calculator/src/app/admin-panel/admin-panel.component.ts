@@ -30,9 +30,12 @@ import { CalculateResultsDto } from '../calculator-form/calculate-form-dto';
   ],
 })
 export class AdminPanelComponent implements AfterViewInit, OnInit {
+
+  spinerOn = true;
+
   columnsToDisplay = ['name', 'phoneNumber', 'email', 'time', 'action'];
-  expandedCustomer!: Customer;
-  expandedResults!: CalculateResultsDto;
+  expandedCustomer: Customer | undefined;
+  //expandedResults!: CalculateResultsDto;
 
   constructor(private service: CustomerService) {}
   ngOnInit() {}
@@ -56,6 +59,7 @@ export class AdminPanelComponent implements AfterViewInit, OnInit {
     this.service.getCustomer().subscribe((data) => {
       this.customers.data = data;
       this.customers.paginator = this.paginator;
+      this.spinerOn = false;
     });
   }
   deleteCustomer(id: string): void {
@@ -71,4 +75,5 @@ export class AdminPanelComponent implements AfterViewInit, OnInit {
         this.expandedCustomer = customer;
       });
   }
+
 }

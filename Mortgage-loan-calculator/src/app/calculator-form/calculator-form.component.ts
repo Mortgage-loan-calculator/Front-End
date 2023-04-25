@@ -1,5 +1,5 @@
 import { LabelType, Options } from '@angular-slider/ngx-slider';
-
+import { expandCollapse } from './animations';
 import {
   ChangeDetectorRef,
   Component,
@@ -57,11 +57,23 @@ interface City {
         animate('500ms', style({ opacity: 0, transform: 'translateX(50px)' })),
       ]),
     ]),
+    trigger('expandCollapse', [
+      transition(':enter', [
+        style({ height: 0, opacity: 0 }),
+        animate('500ms ease-out', style({ height: '*', opacity: 1 })),
+      ]),
+      transition(':leave', [
+        style({ height: '*', opacity: 1 }),
+        animate('500ms ease-in', style({ height: 0, opacity: 0 })),
+      ]),
+    ]),
   ],
 })
 export class CalculatorFormComponent implements OnInit {
   @ViewChild(PieChartComponent) PieChartComponent!: PieChartComponent;
-
+  errorTrue = 'true';
+  spinnerOn = false;
+  showMore: boolean = false;
   title = 'json-read-example';
   citiesInfo: City[] = [];
   calculateFormDto: CalculateFormDto = {} as CalculateFormDto;
@@ -82,6 +94,9 @@ export class CalculatorFormComponent implements OnInit {
     return this.options.filter((option) =>
       option.name.toLowerCase().includes(filterValue)
     );
+  }
+  toggleShowMore(): void {
+    this.showMore = !this.showMore;
   }
 
   constructor(
@@ -173,10 +188,18 @@ export class CalculatorFormComponent implements OnInit {
         '',
         [
           Validators.required,
-          this.numbersOnly,
+          Validators.pattern(/^[0-9]+$/),
           Validators.min(1),
-          Validators.max(999999999999),
-          this.validateMaxNumbers.bind(this),
+          Validators.maxLength(12),
+          (control: FormControl) => {
+            if (
+              control.value &&
+              (control.value.includes('-') || isNaN(control.value))
+            ) {
+              return { invalidNumber: true };
+            }
+            return null;
+          },
         ],
       ],
       monthlyFamilyIncome: [
@@ -187,13 +210,27 @@ export class CalculatorFormComponent implements OnInit {
           Validators.min(1),
           Validators.max(999999999999),
           this.validateMaxNumbers.bind(this),
+          (control: FormControl) => {
+            if (
+              control.value &&
+              (control.value.includes('-') || isNaN(control.value))
+            ) {
+              return { invalidNumber: true };
+            }
+            return null;
+          },
         ],
       ],
       loanTerm: ['1', Validators.required],
 
       familyMembers: [''],
+
       haveChildren: [false],
-      citySelect: [<string | City>'', [Validators.required]],
+      citySelect: [<string | City>''],
+      houseType: [''],
+      studentLoan: [''],
+      otherLoan: [''],
+      politicalyExposed: [''],
     },
     { updateOn: 'change' }
   );
@@ -219,6 +256,15 @@ export class CalculatorFormComponent implements OnInit {
           Validators.min(1),
           Validators.max(999999999999),
           this.validateMaxNumbers.bind(this),
+          (control: FormControl) => {
+            if (
+              control.value &&
+              (control.value.includes('-') || isNaN(control.value))
+            ) {
+              return { invalidNumber: true };
+            }
+            return null;
+          },
         ],
       ],
       downPayment: [
@@ -229,6 +275,16 @@ export class CalculatorFormComponent implements OnInit {
           Validators.min(1),
           Validators.max(999999999999),
           this.validateMaxNumbers.bind(this),
+          this.validateMaxNumbers.bind(this),
+          (control: FormControl) => {
+            if (
+              control.value &&
+              (control.value.includes('-') || isNaN(control.value))
+            ) {
+              return { invalidNumber: true };
+            }
+            return null;
+          },
         ],
       ],
       loanPeriod: ['1', Validators.required],
@@ -240,6 +296,16 @@ export class CalculatorFormComponent implements OnInit {
           Validators.min(1),
           Validators.max(999999999999),
           this.validateMaxNumbers.bind(this),
+          this.validateMaxNumbers.bind(this),
+          (control: FormControl) => {
+            if (
+              control.value &&
+              (control.value.includes('-') || isNaN(control.value))
+            ) {
+              return { invalidNumber: true };
+            }
+            return null;
+          },
         ],
       ],
       estimatedMonthlyPayment: [''],
@@ -305,6 +371,18 @@ export class CalculatorFormComponent implements OnInit {
   get citySelect() {
     return this.calculateForm.controls.citySelect;
   }
+  get houseType() {
+    return this.calculateForm.controls.houseType;
+  }
+  get studentLoan() {
+    return this.calculateForm.controls.studentLoan;
+  }
+  get otherLoan() {
+    return this.calculateForm.controls.otherLoan;
+  }
+  get politicalyExposed() {
+    return this.calculateForm.controls.politicalyExposed;
+  }
 
   actionText: string = '';
   show() {
@@ -343,6 +421,7 @@ export class CalculatorFormComponent implements OnInit {
     this.updateResults(value);
   }
 
+
   onCalculateButton() {
     if (this.calculateForm.valid) {
       this.calculateFormDto = this.calculateForm.value;
@@ -353,8 +432,8 @@ export class CalculatorFormComponent implements OnInit {
         .subscribe((data: CalculateResultsDto) => {
           this.calculateResultsDto = data;
         });
-
-        this.updateResults(this.calculateFormDto);
+        
+           this.updateResults(this.calculateFormDto);
 
       this.actionText = 'Calculated';
       this.showColumn2 = true;
@@ -364,8 +443,33 @@ export class CalculatorFormComponent implements OnInit {
       
     }
   }
-
-  onSubmit(): CalculateFormDto {
+//CIA TIKRIAUSIAI REIKS PERKELT I VIRSUTINE FUNKCIJA. Arba ne
+  onSubmit() {
+    console.log(this.studentLoan.value);
+    console.log(this.calculateForm.value);
+    if (this.calculateForm.valid) {
+      this.calculateFormDto = this.calculateForm.value;
+      this.calculateResultsDto = this.submitForm.value;
+      if (
+        this.studentLoan.value != '' ||
+        this.otherLoan.value != '' ||
+        this.politicalyExposed.value != '' ||
+        this.houseType.value != ''
+      ) {
+        this.calculatorService
+          .sendDataDetailed(this.calculateFormDto)
+          .subscribe((data: CalculateFormDto) => {
+            this.calculateFormDto = data;
+          });
+      } else {
+        this.calculatorService
+          .sendData(this.calculateFormDto)
+          .subscribe((data: CalculateFormDto) => {
+            this.calculateFormDto = data;
+          });
+      }
+     
+ /* onSubmit(): CalculateFormDto {
     if (this.calculateForm.valid) {
       this.calculateFormDto = this.calculateForm.value;
       this.calculateResultsDto = this.submitForm.value;
@@ -380,7 +484,8 @@ export class CalculatorFormComponent implements OnInit {
       
     }
     return this.calculateFormDto;
-  }
+  } */
+
 
   handleResultsCalculated(results: MonthlyPaymentResultsDto): void {
     this.monthlyPaymentResultsDto.estimatedMonthlyPayment =
