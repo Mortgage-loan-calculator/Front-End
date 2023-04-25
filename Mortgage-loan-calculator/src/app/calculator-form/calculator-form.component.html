@@ -129,39 +129,109 @@
                     ></mat-slide-toggle>
                   </div>
 
-                  <div class="dropdown-container">
-                    <div class="dropdown-label">
-                      City of the family's residence:
-                    </div>
-
-                    <mat-form-field
-                      class="example-full-width"
-                      appearance="outline"
+                  <button
+                    class="show-more"
+                    mat-button
+                    type="button"
+                    (click)="toggleShowMore()"
+                  >
+                    {{
+                      showMore
+                        ? "▲ Less detailed calculator"
+                        : "▼ Advanced calculator"
+                    }}
+                  </button>
+                  <ng-container *ngIf="showMore">
+                    <div
+                      [@expandCollapse]="showMore ? 'expanded' : 'collapsed'"
+                      [ngClass]="showMore ? 'show-more-expanded' : 'show-more'"
+                      class="show-more-content"
                     >
-                      <mat-label>Select city</mat-label>
-                      <input
-                        type="text"
-                        matInput
-                        formControlName="citySelect"
-                        [matAutocomplete]="auto"
-                        required
-                      />
-                      <mat-autocomplete
-                        #auto="matAutocomplete"
-                        [displayWith]="displayFn"
+                      <div class="Radio-label">What would you like to buy?</div>
+                      <mat-radio-group
+                        class="radioselect"
+                        formControlName="houseType"
+                        aria-label="Select an option"
                       >
-                        <mat-option
-                          *ngFor="let option of filteredOptions | async"
-                          [value]="option"
+                        <mat-radio-button value="New House"
+                          >New House</mat-radio-button
+                        ><br />
+                        <mat-radio-button value="Housing co-operative apartment"
+                          >Housing co-operative apartment</mat-radio-button
                         >
-                          {{ option.name }}</mat-option
+                        <mat-radio-button value="Second Home"
+                          >Sencond Home</mat-radio-button
                         >
-                      </mat-autocomplete>
-                      <mat-error *ngIf="citySelect.hasError('required')">
-                        Please select a city.
-                      </mat-error>
-                    </mat-form-field>
-                  </div>
+
+                      </mat-radio-group>
+
+                      <div class="Radio-label">Do you have a student loan?</div>
+                      <mat-radio-group
+                        formControlName="studentLoan"
+                        aria-label="Select an option"
+                      >
+                        <mat-radio-button value="true">Yes</mat-radio-button>
+                        <mat-radio-button value="false">No</mat-radio-button>
+                      </mat-radio-group>
+
+                      <div class="Radio-label">
+                        Do you have other loans which you will keep such as car
+                        loan or credit card loans?
+                      </div>
+                      <mat-radio-group
+                        formControlName="otherLoan"
+                        aria-label="Select an option"
+                      >
+                        <mat-radio-button value="true">Yes</mat-radio-button>
+                        <mat-radio-button value="false">No</mat-radio-button>
+                      </mat-radio-group>
+
+                      <div class="Radio-label">
+                        Are you PEP (politically exposed person)?
+                      </div>
+                      <mat-radio-group
+                        formControlName="politicalyExposed"
+                        aria-label="Select an option"
+                      >
+                        <mat-radio-button value="true">Yes</mat-radio-button>
+                        <mat-radio-button value="false">No</mat-radio-button>
+                      </mat-radio-group>
+
+                      <div class="dropdown-container">
+                        <div class="dropdown-label">
+                          City of the family's residence:
+                        </div>
+
+                        <mat-form-field
+                          class="example-full-width"
+                          appearance="outline"
+                        >
+                          <mat-label>Select city</mat-label>
+                          <input
+                            type="text"
+                            matInput
+                            formControlName="citySelect"
+                            [matAutocomplete]="auto"
+                          />
+                          <mat-autocomplete
+                            #auto="matAutocomplete"
+                            [displayWith]="displayFn"
+                          >
+                            <mat-option
+                              *ngFor="let option of filteredOptions | async"
+                              [value]="option"
+                            >
+                              {{ option.name }}</mat-option
+                            >
+                          </mat-autocomplete>
+                          <!-- <mat-error *ngIf="citySelect.hasError('required')">
+                            Please select a city.
+                          </mat-error> -->
+                        </mat-form-field>
+                      </div>
+                    </div>
+                  </ng-container>
+
 
                   <div class="button-container">
                     <button
@@ -412,3 +482,12 @@
   (onClose)="showPopup = false"
 ></app-popup-form>
 <!-- (click)="calculateMonthly()" -->
+<div
+  class="spinner-container"
+  *ngIf="spinnerOn && calculateResultsDto.totalInterestPaid == 0"
+>
+  <div class="spinner-overlay"></div>
+  <div class="spinner">
+    <mat-spinner></mat-spinner>
+  </div>
+</div>
