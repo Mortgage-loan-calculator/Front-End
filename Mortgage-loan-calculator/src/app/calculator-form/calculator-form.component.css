@@ -394,7 +394,7 @@ mat-error {
 .results {
   width: 180%;
   justify-content: space-around;
-}
+}}
 .spinner-container {
   position: fixed;
   top: 0;
