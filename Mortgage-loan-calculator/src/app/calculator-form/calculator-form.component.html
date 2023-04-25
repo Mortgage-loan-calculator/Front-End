@@ -258,100 +258,97 @@
             <form class="column3" [formGroup]="applyForm">
               <div class="grid-container2">
                 <div class="user">
-                <div class="toggle-container2">
-                  <div class="toggle-label">Alone/With partner</div>
+                  <div class="toggle-container2">
+                    <div class="toggle-label">Alone/With partner</div>
 
-                  <mat-slide-toggle
-                    class="toggle"
-                    formControlName="partnerToggle"
-                    (change)="onChange()"
-                  ></mat-slide-toggle>
-                </div>
-                <mat-form-field class="dealAmount" appearance="outline">
-                  <mat-label>Deal amount</mat-label>
-                  <input
-                    maxlength="12"
-                    matInput
-                    formControlName="dealAmount"
-                    placeholder="Enter deal amount"
-                  />
-                  <mat-error *ngIf="dealAmount.hasError('required')"
-                    >Deal amount field is required.</mat-error
-                  >
-                  <mat-error *ngIf="dealAmount.errors?.['invalidNumber']">
-                    Input should accept only numbers.
-                  </mat-error>
-                  <mat-error *ngIf="dealAmount.hasError('maxNumbersReached')"
-                    >Maximum input of 12 numbers reached.</mat-error
-                  >
-                </mat-form-field>
-                <mat-form-field class="downPayment" appearance="outline">
-                  <mat-label>Down payment</mat-label>
-                  <input
-                    maxlength="12"
-                    matInput
-                    formControlName="downPayment"
-                    placeholder="Enter down payment"
-                  />
-                  <mat-error *ngIf="downPayment.hasError('required')"
-                    >Down payment field is required.</mat-error
-                  >
-                  <mat-error *ngIf="downPayment.errors?.['invalidNumber']">
-                    Input should accept only numbers.
-                  </mat-error>
-                  <mat-error *ngIf="downPayment.hasError('maxNumbersReached')"
-                    >Maximum input of 12 numbers reached.</mat-error
-                  >
-                </mat-form-field>
-                <div class="grid-item">
-                  <div class="slider-container">
-                    <div class="slider-name">Loan period:</div>
-                    <mat-slider
-                      class="mat-slider2"
-                      min="1"
-                      max="30"
-                      step="1"
-                      showTickMarks
-                      discrete
-                      [displayWith]="formatLabelLoan"
-                      required
-                    >
-                      <input matSliderThumb formControlName="loanPeriod" />
-                    </mat-slider>
-                    <div class="slider-labels2">
-                      <div class="slider-label-left">1</div>
-                      <div class="slider-label-right">30</div>
-                    </div>
+                    <mat-slide-toggle
+                      class="toggle"
+                      formControlName="partnerToggle"
+                      (change)="onChange()"
+                    ></mat-slide-toggle>
                   </div>
-                </div>
-                <div class="grid-item">
-                  <mat-form-field class="monthlyIncome1" appearance="outline">
-                    <mat-label>Monthly family income</mat-label>
+                  <mat-form-field class="dealAmount" appearance="outline">
+                    <mat-label>Deal amount</mat-label>
                     <input
                       maxlength="12"
                       matInput
-                      placeholder="Monthly family income"
-                      formControlName="monthlyIncome"
+                      formControlName="dealAmount"
+                      placeholder="Enter deal amount"
                     />
-                    <mat-error *ngIf="monthlyIncome.hasError('required')"
-                      >Monthly family income field is required.</mat-error
+                    <mat-error *ngIf="dealAmount.hasError('required')"
+                      >Deal amount field is required.</mat-error
                     >
-                    <mat-error *ngIf="monthlyIncome.errors?.['invalidNumber']">
+                    <mat-error *ngIf="dealAmount.errors?.['invalidNumber']">
                       Input should accept only numbers.
                     </mat-error>
-                    <mat-error
-                      *ngIf="monthlyIncome.hasError('maxNumbersReached')"
+                    <mat-error *ngIf="dealAmount.hasError('maxNumbersReached')"
                       >Maximum input of 12 numbers reached.</mat-error
                     >
                   </mat-form-field>
-                </div>
-              </div>
-                <div class="results">
-                  <div class="grid-item results">
-                    <span matPrefix>Monthly payment:</span>
-
-                    <strong> </strong>
+                  <mat-form-field class="downPayment" appearance="outline">
+                    <mat-label>Down payment</mat-label>
+                    <input
+                      maxlength="12"
+                      matInput
+                      formControlName="downPayment"
+                      placeholder="Enter down payment"
+                    />
+                    <mat-error *ngIf="downPayment.hasError('required')"
+                      >Down payment field is required.</mat-error
+                    >
+                    <mat-error *ngIf="downPayment.errors?.['invalidNumber']">
+                      Input should accept only numbers.
+                    </mat-error>
+                    <mat-error *ngIf="downPayment.hasError('maxNumbersReached')"
+                      >Maximum input of 12 numbers reached.</mat-error
+                    >
+                  </mat-form-field>
+                  <div class="grid-item">
+                    <div class="slider-container">
+                      <div class="slider-name">Loan period:</div>
+                      <mat-slider
+                        class="mat-slider2"
+                        min="1"
+                        max="30"
+                        step="1"
+                        showTickMarks
+                        discrete
+                        [displayWith]="formatLabelLoan"
+                        required
+                      >
+                        <input matSliderThumb formControlName="loanPeriod" />
+                      </mat-slider>
+                      <div class="slider-labels2">
+                        <div class="slider-label-left">1</div>
+                        <div class="slider-label-right">30</div>
+                      </div>
+                    </div>
                   </div>
+                  <div class="grid-item">
+                    <mat-form-field class="monthlyIncome1" appearance="outline">
+                      <mat-label>Monthly family income</mat-label>
+                      <input
+                        maxlength="12"
+                        matInput
+                        placeholder="Monthly family income"
+                        formControlName="monthlyIncome"
+                      />
+                      <mat-error *ngIf="monthlyIncome.hasError('required')"
+                        >Monthly family income field is required.</mat-error
+                      >
+                      <mat-error
+                        *ngIf="monthlyIncome.errors?.['invalidNumber']"
+                      >
+                        Input should accept only numbers.
+                      </mat-error>
+                      <mat-error
+                        *ngIf="monthlyIncome.hasError('maxNumbersReached')"
+                        >Maximum input of 12 numbers reached.</mat-error
+                      >
+                    </mat-form-field>
+                  </div>
+                </div>
+                <div class="results">
                   <div class="grid-item results">
                     <span matPrefix>Your estimated monthly payment </span>
                     <strong>
@@ -363,19 +360,19 @@
                   <div class="grid-item results">
                     <span matPrefix>Maximum monthly loan payment</span>
 
-                    <strong>
+                    <strong class="amount">
                       {{ monthlyPaymentResultsDto.maxMonthlyPayment }}</strong
                     >
                   </div>
                   <div class="grid-item results">
                     <span matPrefix>Interest rate (fixed 2%):</span>
 
-                    <strong> </strong>
+                    <strong class="amount">22 </strong>
                   </div>
                   <div class="grid-item results">
                     <span matPrefix>Euribor</span>
 
-                    <strong> </strong>
+                    <strong>22 </strong>
                   </div>
 
                   <div class="grid-items results">

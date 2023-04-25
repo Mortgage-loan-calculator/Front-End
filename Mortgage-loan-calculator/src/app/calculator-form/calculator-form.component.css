@@ -316,7 +316,6 @@ mat-form-field {
 }
 
 .user {
-
   width: 50%;
 }
 
@@ -325,10 +324,7 @@ mat-form-field {
   gap: 15px;
   display: grid;
   margin-left: -10px;
-
 }
-
-
 
 .apply-button {
   margin-top: 50px;
@@ -378,7 +374,7 @@ mat-error {
   margin-top: 15px;
   font-weight: bold;
 }
-.grid-items{
+.grid-items {
   font-size: 14px;
   display: flex;
   align-items: center;
@@ -403,3 +399,4 @@ mat-error {
 .results .grid-item.results:not(:last-child) {
   margin-bottom: 10px;
 }
+
