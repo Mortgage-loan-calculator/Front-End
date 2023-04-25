@@ -406,6 +406,7 @@ export class CalculatorFormComponent implements OnInit {
       this.showColumn2 = true;
       this.actionText = 'Submitted form';
       const calculateFormData = this.calculateForm.value;
+      this.spinnerOn = true;
     }
   }
 
