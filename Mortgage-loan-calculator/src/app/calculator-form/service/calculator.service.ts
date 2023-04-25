@@ -1,10 +1,11 @@
 import {
   HttpClient,
-  HttpErrorResponse,
+
+  HttpHeaders,
   HttpParams,
+  HttpErrorResponse,
 } from '@angular/common/http';
 
-import { HttpHeaders } from '@angular/common/http';
 
 import { Injectable } from '@angular/core';
 import { Observable, map, throwError } from 'rxjs';
@@ -12,6 +13,7 @@ import { CalculateFormDto, CalculateResultsDto } from '../calculate-form-dto';
 import { catchError } from 'rxjs/operators';
 import { ErrorHandlerService } from 'src/app/errors/error-handler.service';
 import { Error } from 'src/app/errors/error';
+
 @Injectable({
   providedIn: 'root',
 })
@@ -31,12 +33,24 @@ export class CalculatorService {
   }
 
   sendData(calculateFormDto: CalculateFormDto): Observable<CalculateFormDto> {
-    return this.http.post<CalculateFormDto>(
-      'https://mortgage-loan-calculator-back-end.onrender.com/calculate',
-      // 'http://localhost:8090/calculate',
+    return this.http
+      .post<CalculateFormDto>(
+        'https://mortgage-loan-calculator-back-end.onrender.com/calculate',
+        calculateFormDto
+      )
+      .pipe(
+        catchError((error: any) => {
+          const httpError = new HttpErrorResponse({
+            error: error,
+            status: error.status,
+            statusText: error.statusText,
+            url: error.url,
+          });
+          this.errorHandler.handleError(error);
+          return throwError(httpError);
+        })
+      );
 
-      calculateFormDto
-    );
   }
 
   sendDataDetailed(
@@ -46,17 +60,30 @@ export class CalculatorService {
       'https://mortgage-loan-calculator-back-end.onrender.com/calculate/detailed',
       calculateFormDto
     );
+
   }
 
   getFormCalculationResults(object: {
     [key: string]: string;
   }): Observable<CalculateResultsDto> {
-    return this.http.post<CalculateFormDto>(
-      'https://mortgage-loan-calculator-back-end.onrender.com/calculate/results',
-      // 'http://localhost:8090/calculate/results',
+    return this.http
+      .post<CalculateFormDto>(
+        'https://mortgage-loan-calculator-back-end.onrender.com/calculate/results',
+        object
+      )
+      .pipe(
+        catchError((error: any) => {
+          const httpError = new HttpErrorResponse({
+            error: error,
+            status: error.status,
+            statusText: error.statusText,
+            url: error.url,
+          });
+          this.errorHandler.handleError(error);
+          return throwError(httpError);
+        })
+      );
 
-      object
-    );
   }
 
   getCalculationResults(
@@ -64,11 +91,24 @@ export class CalculatorService {
   ): Observable<CalculateResultsDto> {
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
 
-    return this.http.post<CalculateFormDto>(
-      'https://mortgage-loan-calculator-back-end.onrender.com/calculate',
-    //  'http://localhost:8090/calculate',
-      requestData,
-      { headers }
-    );
+    return this.http
+      .post<CalculateFormDto>(
+        'https://mortgage-loan-calculator-back-end.onrender.com/calculate',
+        requestData,
+        { headers }
+      )
+      .pipe(
+        catchError((error: any) => {
+          const httpError = new HttpErrorResponse({
+            error: error,
+            status: error.status,
+            statusText: error.statusText,
+            url: error.url,
+          });
+          this.errorHandler.handleError(error);
+          return throwError(httpError);
+        })
+      );
+
   }
 }

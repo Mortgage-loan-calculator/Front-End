@@ -1,13 +1,17 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Customer } from '../../types';
-import { Observable } from 'rxjs';
+import { catchError, Observable, throwError } from 'rxjs';
+import { ErrorHandlerService } from 'src/app/errors/error-handler.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class CustomerService {
-  constructor(private http: HttpClient) {}
+  constructor(
+    private http: HttpClient,
+    private errorHandler: ErrorHandlerService
+  ) {}
   customerUrl =
     'https://mortgage-loan-calculator-back-end.onrender.com/customers';
 
@@ -20,7 +24,18 @@ export class CustomerService {
   }
 
   public saveCustomerInfo(customer: Customer) {
-    return this.http.post<Customer>(this.customerUrl, customer);
+    return this.http.post<Customer>(this.customerUrl, customer).pipe(
+      catchError((error: any) => {
+        const httpError = new HttpErrorResponse({
+          error: error,
+          status: error.status,
+          statusText: error.statusText,
+          url: error.url,
+        });
+        this.errorHandler.handleError(error);
+        return throwError(httpError);
+      })
+    );
   }
 
   public deleteCustomer(id: string){

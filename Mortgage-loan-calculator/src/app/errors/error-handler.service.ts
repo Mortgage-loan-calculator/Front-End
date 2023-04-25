@@ -23,6 +23,12 @@ export class ErrorHandlerService {
       window.alert('An error occurred.');
       return throwError('An error occurred .');
     } else {
+
+      if (error.error.message) {
+        window.alert(error.error.message);
+        return throwError(error.error.message);
+      }
+
       window.alert('Sorry, an error occurred on the server.');
       return throwError('Sorry, an error occurred on the server.');
     }
