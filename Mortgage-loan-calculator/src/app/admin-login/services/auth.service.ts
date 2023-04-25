@@ -8,7 +8,10 @@ import { catchError, Observable, throwError } from 'rxjs';
 import { FormControl } from '@angular/forms';
 import { ErrorHandlerService } from 'src/app/errors/error-handler.service';
 
-const AUTH_API = 'https://mortgage-loan-calculator-back-end.onrender.com/auth/';
+const AUTH_API =
+  'https://mortgage-loan-calculator-back-end.onrender.com/auth/';
+  //'http://localhost:8080/auth/';
+
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' }),

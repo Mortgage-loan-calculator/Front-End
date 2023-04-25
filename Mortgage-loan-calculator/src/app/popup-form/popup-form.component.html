@@ -23,17 +23,17 @@
             class="btnClose"
             aria-label="Close"
             (click)="onClose.emit()"
-            onclick="document.getElementById('popUpForm').style.display='none'"
-            onclick="document.getElementById('modalContainer').style.display='none'"
           >
             cancel</mat-icon
           >
 
-          <h3 class="titlespan">
+          <h3 [ngClass]="{'hide' : hideFormBody}" class="titlespan">
             Please enter your personal data to get personal offer:
           </h3>
+          <h3 [ngClass]="{'hide' : !hideFormBody}">Your information successfully added!</h3>
+          <h4 [ngClass]="{'hide' : !hideFormBody}">We will get back to you shortly!</h4>
 
-          <mat-form-field class="example-form-field" appearance="outline">
+          <mat-form-field class="example-form-field" [ngClass]="{'hide' : hideFormBody}" appearance="outline">
             <mat-label>Name:</mat-label>
             <input matInput type="text" formControlName="name" id="name" />
             <mat-error *ngIf="postForm.controls.name.errors?.['required']">
@@ -57,7 +57,7 @@
           </mat-form-field>
 
           <p>
-            <mat-form-field class="example-form-field" appearance="outline">
+            <mat-form-field class="example-form-field" [ngClass]="{'hide' : hideFormBody}" appearance="outline">
               <mat-label>Phone number:</mat-label>
               <input
                 matInput
@@ -65,10 +65,19 @@
                 formControlName="phoneNumber"
                 id="phoneNumber"
               />
+
+              <mat-error
+                *ngIf="postForm.controls.phoneNumber.errors?.['pattern']"
+              >
+              Input should be only positive numbers.
+              </mat-error>
               <mat-error
                 *ngIf="postForm.controls.phoneNumber.errors?.['maxlength']"
               >
                 Maximum input of 20 characters reached.
+              </mat-error>
+              <mat-error *ngIf="postForm.controls.phoneNumber.errors?.['pattern']">
+                Please enter a valid phone number.
               </mat-error>
               <button
                 *ngIf="phoneNumber.value"
@@ -83,7 +92,7 @@
           </p>
 
           <p>
-            <mat-form-field class="example-form-field" appearance="outline">
+            <mat-form-field class="example-form-field" [ngClass]="{'hide' : hideFormBody}" appearance="outline">
               <mat-label>Email</mat-label>
               <input matInput type="email" formControlName="email" id="email" />
               <mat-error *ngIf="postForm.controls.email.errors?.['maxlength']">
@@ -93,7 +102,7 @@
                 Email is required.
               </mat-error>
               <mat-error
-                *ngIf="postForm.controls.email.errors?.['invalidEmail']"
+                *ngIf="postForm.controls.email.errors?.['email']"
               >
                 Invalid email format. Please enter a valid email.
               </mat-error>
@@ -109,7 +118,7 @@
             </mat-form-field>
           </p>
 
-          <div class="sendBtnCotainer" id="sendBtnCotainer">
+          <div [ngClass]="{'hide' : hideFormBody}" class="sendBtnCotainer" id="sendBtnCotainer">
             <button mat-button type="submit" class="sendBtn" id="sendBtn">
               Send
             </button>

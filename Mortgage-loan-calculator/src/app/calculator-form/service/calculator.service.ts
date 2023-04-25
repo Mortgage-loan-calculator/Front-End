@@ -50,6 +50,17 @@ export class CalculatorService {
           return throwError(httpError);
         })
       );
+
+  }
+
+  sendDataDetailed(
+    calculateFormDto: CalculateFormDto
+  ): Observable<CalculateFormDto> {
+    return this.http.post<CalculateFormDto>(
+      'https://mortgage-loan-calculator-back-end.onrender.com/calculate/detailed',
+      calculateFormDto
+    );
+
   }
 
   getFormCalculationResults(object: {
@@ -72,6 +83,7 @@ export class CalculatorService {
           return throwError(httpError);
         })
       );
+
   }
 
   getCalculationResults(
@@ -97,5 +109,6 @@ export class CalculatorService {
           return throwError(httpError);
         })
       );
+
   }
 }
