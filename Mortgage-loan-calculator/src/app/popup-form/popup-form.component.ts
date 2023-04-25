@@ -22,7 +22,7 @@ const fb = new FormBuilder().nonNullable;
 })
 export class PopupFormComponent {
   @Output() onClose = new EventEmitter<void>();
-
+  hideFormBody: boolean = false;
   constructor(private customerservice: CustomerService, private calculatorFormComponent: CalculatorFormComponent) {}
 
   postForm = fb.group({
@@ -77,6 +77,7 @@ export class PopupFormComponent {
         .pipe(
           tap(() => {
             console.log('Post added: ', this.postForm.value);
+            this.hideFormBody = true;
             this.postForm.reset();
           })
         )
