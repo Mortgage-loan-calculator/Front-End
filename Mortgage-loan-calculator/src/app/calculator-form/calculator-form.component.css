@@ -1,3 +1,7 @@
+.formOuter{
+  background-color: #e3dcd2 ;
+
+}
 h2 {
   text-align: center;
   font-size: 24px;
@@ -7,6 +11,8 @@ h2 {
 }
 
 .box {
+  background-color: #e3dcd2;
+
   margin: 0 auto;
   max-width: 800px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 3);
@@ -97,17 +103,16 @@ h2 {
 }
 
 mat-icon.brightness-1-icon {
-  color: #AF6E4A;
+  color: #af6e4a;
   width: 40px;
 }
 
-
 mat-icon.brightness-2-icon {
-  color: #5D8779;
+  color: #5d8779;
   width: 40px;
 }
 mat-icon.brightness-3-icon {
-  color: #3B432A;
+  color: #3b432a;
   width: 40px;
 }
 .grid-item span {
@@ -291,8 +296,8 @@ mat-form-field {
 }
 .calculate-button:hover,
 .apply-button:hover {
-  background-color:  #100c0d;
-  border: 2px solid  #100c0d;
+  background-color: #100c0d;
+  border: 2px solid #100c0d;
 }
 
 .submit-button {
@@ -382,7 +387,6 @@ mat-error {
   margin-top: 10px;
 }
 
-
 .results .grid-item.results {
   font-size: 14px;
   display: flex;
@@ -392,10 +396,11 @@ mat-error {
 
 .results .grid-item.results span.mat-prefix {
   margin-right: 10px;
-.results {
-  width: 180%;
-  justify-content: space-around;
-}}
+  .results {
+    width: 180%;
+    justify-content: space-around;
+  }
+}
 .spinner-container {
   position: fixed;
   top: 0;
@@ -455,10 +460,8 @@ mat-error {
   margin-bottom: 10px;
 }
 
-
 .warning {
   color: red;
   font-weight: 600;
   font-size: large;
 }
-
