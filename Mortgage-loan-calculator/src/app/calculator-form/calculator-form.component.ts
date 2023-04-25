@@ -225,7 +225,7 @@ export class CalculatorFormComponent implements OnInit {
 
       familyMembers: [''],
 
-      haveChildren: ['false'],
+      haveChildren: [false],
       citySelect: [<string | City>''],
       houseType: [''],
       studentLoan: [''],
