@@ -5,55 +5,52 @@
 <h3>Customer, who want to get offer:</h3>
 
 <div class="mat-elevation-z8">
-<table
-  mat-table
-  [dataSource]="customers"
-  multiTemplateDataRows
->
-  <ng-container
-    matColumnDef="{{column}}"
-    *ngFor="let column of columnsToDisplay"
-  >
-    <th mat-header-cell *matHeaderCellDef>{{column}}</th>
-    <td mat-cell *matCellDef="let customer">{{customer[column]}}
-      </td>
-  </ng-container>
+  <table mat-table [dataSource]="customers" multiTemplateDataRows>
+    <ng-container matColumnDef="{{column}}" *ngFor="let column of columnsToDisplay" >
+      <mat-header-cell *matHeaderCellDef>
+        <ng-container [ngSwitch]="column">
+          <ng-container *ngSwitchCase="'name'">Name</ng-container>
+          <ng-container *ngSwitchCase="'phoneNumber'">Phone Number</ng-container>
+          <ng-container *ngSwitchCase="'email'">Email address</ng-container>
+          <ng-container *ngSwitchCase="'time'">Submission time</ng-container>
+          <ng-container *ngSwitchCase="'action'">Action</ng-container>
 
-  <!-- Expanded Content Column - The detail row is made up of this one column that spans across all columns -->
-  <ng-container matColumnDef="expandedDetail">
-    <td
-      mat-cell
-      *matCellDef="let customer"
-      [attr.colspan]="columnsToDisplay.length"
-    >
-      <div
-        class="example-element-detail"
-        [@detailExpand]="customer == expandedCustomer ? 'expanded' : 'collapsed'"
-      >
-        <div class="example-element-description">Number of family members: {{customer.familyMembers}}</div>
-        <div class="example-element-description">Customer has children: {{customer.haveChildren}}</div>
-        <div class="example-element-description">Customer's home price: {{customer.homePrice}}</div>
-        <div class="example-element-description">Customer's loan term: {{customer.loanTerm}} years</div>
-        <div class="example-element-description">Customer's monthly family income: {{customer.monthlyFamilyIncome}}</div>
-        <div class="example-element-description"><button mat-button (click)="deleteCustomer(customer.id)">Delete</button></div>
-      </div>
-    </td>
-  </ng-container>
+        </ng-container>
+      </mat-header-cell>
+      <mat-cell *matCellDef="let customer">
+        <ng-container *ngIf="column !== 'time'; else timeCell">
+          {{customer[column]}}
+        </ng-container>
+        <ng-template #timeCell>
+          {{ customer.time.slice(0, 10) + " " + customer.time.substring(11, 19) }}
+        </ng-template>
+      </mat-cell>
+    </ng-container>
 
-  <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
-  <tr
-    mat-row
-    *matRowDef="let customer; columns: columnsToDisplay;"
-    class="example-element-row"
-    [class.example-expanded-row]="expandedCustomer === customer"
-    (click)="expandedCustomer = expandedCustomer === customer ? null : customer"
-  ></tr>
-  <tr
-    mat-row
-    *matRowDef="let row; columns: ['expandedDetail']"
-    class="example-detail-row"
-  ></tr>
-</table>
+    <ng-container matColumnDef="expandedDetail">
+      <mat-cell *matCellDef="let customer" [attr.colspan]="columnsToDisplay.length">
+        <div [@detailExpand]="customer == expandedCustomer ? 'expanded' : 'collapsed'">
+          <div>Number of family members: {{customer.familyMembers}}</div>
+          <div>Customer has children: {{customer.haveChildren}}</div>
+          <div>Customer's home price: {{customer.homePrice}}</div>
+          <div>Customer's loan term: {{customer.loanTerm}} years</div>
+          <div>Customer's monthly family income: {{customer.monthlyFamilyIncome}}</div>
+          <button mat-raised-button (click)="deleteCustomer(customer.id)">Delete</button>
+        </div>
+      </mat-cell>
+    </ng-container>
+
+
+    <mat-header-row *matHeaderRowDef="columnsToDisplay"></mat-header-row>
+    <mat-row *matRowDef="let customer; columns: columnsToDisplay;"
+             class="example-element-row"
+             [class.example-expanded-row]="expandedCustomer === customer"
+             (click)="expandedCustomer = expandedCustomer === customer ? null : customer"
+             matRipple>
+    </mat-row>
+    <mat-row *matRowDef="let row; columns: ['expandedDetail']"
+             class="example-detail-row"></mat-row>
+  </table>
 
 <mat-paginator
   [pageSizeOptions]="[5, 10, 20]"

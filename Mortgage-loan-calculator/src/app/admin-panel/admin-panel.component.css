@@ -2,7 +2,6 @@
   scale: 80%;
 }
 mat-cell {
-  padding: 10px;
   font-size: 1.5em;
 }
 @media only screen and (max-width: 1000px) {
@@ -104,3 +103,4 @@ tr.example-element-row:not(.example-expanded-row):active {
 .example-element-description-attribution {
   opacity: 0.5;
 }
+
