@@ -5,13 +5,24 @@ import { CustomerService } from './services/customer.service';
 import { Customer } from '../types';
 import { CalculatorFormComponent } from '../calculator-form/calculator-form.component';
 import {StorageService} from "../admin-login/services/storage.service";
+import {animate, state, style, transition, trigger} from "@angular/animations";
 
 @Component({
   selector: 'app-admin-panel',
   templateUrl: './admin-panel.component.html',
   styleUrls: ['./admin-panel.component.css'],
+  animations: [
+    trigger('detailExpand', [
+      state('collapsed', style({height: '0px', minHeight: '0'})),
+      state('expanded', style({height: '*'})),
+      transition('expanded <=> collapsed', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')),
+    ]),
+  ],
 })
 export class AdminPanelComponent implements AfterViewInit, OnInit {
+
+  columnsToDisplay = ['name', 'phoneNumber', 'email', 'time', 'action'];
+  expandedCustomer: Customer | undefined;
   constructor (private service: CustomerService) {
   }
   ngOnInit(){
@@ -38,5 +49,9 @@ export class AdminPanelComponent implements AfterViewInit, OnInit {
       this.customers.paginator = this.paginator;
     });
   }
+  deleteCustomer(id: string): void{
+    this.service.deleteCustomer(id);
+    location.reload();
+}
 
 }

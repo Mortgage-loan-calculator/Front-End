@@ -192,7 +192,7 @@ export class CalculatorFormComponent implements OnInit {
       loanTerm: ['1', Validators.required],
 
       familyMembers: [''],
-      haveChildren: [''],
+      haveChildren: [false],
       citySelect: [<string | City>'', [Validators.required]],
     },
     { updateOn: 'change' }
@@ -335,6 +335,7 @@ export class CalculatorFormComponent implements OnInit {
   calculateMonthly() {
     if (this.applyForm.valid) {
       const formData: MonthlyPaymentDto = this.applyForm.value;
+      console.log(formData);
       this.monthlyPaymentComponent.calculateResults(formData);
     }
   }
