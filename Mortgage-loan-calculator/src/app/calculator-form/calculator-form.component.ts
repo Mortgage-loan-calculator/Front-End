@@ -9,6 +9,11 @@ import {
   SimpleChanges,
 } from '@angular/core';
 
+
+
+
+
+
 import { delay, distinctUntilChanged, takeUntil, tap } from 'rxjs/operators';
 
 import {
@@ -87,6 +92,8 @@ export class CalculatorFormComponent implements OnInit {
     {} as MonthlyPaymentResultsDto;
   @ViewChild(MonthlyPaymentComponent)
   monthlyPaymentComponent!: MonthlyPaymentComponent;
+
+  
 
   private _filter(name: string): City[] {
     const filterValue = name.toLowerCase();
