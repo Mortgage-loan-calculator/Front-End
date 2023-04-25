@@ -1,5 +1,5 @@
 import { LabelType, Options } from '@angular-slider/ngx-slider';
-
+import { expandCollapse } from './animations';
 import {
   ChangeDetectorRef,
   Component,
@@ -57,11 +57,22 @@ interface City {
         animate('500ms', style({ opacity: 0, transform: 'translateX(50px)' })),
       ]),
     ]),
+    trigger('expandCollapse', [
+      transition(':enter', [
+        style({ height: 0, opacity: 0 }),
+        animate('500ms ease-out', style({ height: '*', opacity: 1 })),
+      ]),
+      transition(':leave', [
+        style({ height: '*', opacity: 1 }),
+        animate('500ms ease-in', style({ height: 0, opacity: 0 })),
+      ]),
+    ]),
   ],
 })
 export class CalculatorFormComponent implements OnInit {
   @ViewChild(PieChartComponent) PieChartComponent!: PieChartComponent;
-
+  spinnerOn = false;
+  showMore: boolean = false;
   title = 'json-read-example';
   citiesInfo: City[] = [];
   calculateFormDto: CalculateFormDto = {} as CalculateFormDto;
@@ -82,6 +93,9 @@ export class CalculatorFormComponent implements OnInit {
     return this.options.filter((option) =>
       option.name.toLowerCase().includes(filterValue)
     );
+  }
+  toggleShowMore(): void {
+    this.showMore = !this.showMore;
   }
 
   constructor(
@@ -193,7 +207,11 @@ export class CalculatorFormComponent implements OnInit {
 
       familyMembers: [''],
       haveChildren: [''],
-      citySelect: [<string | City>'', [Validators.required]],
+      citySelect: [<string | City>''],
+      houseType: [''],
+      studentLoan: [''],
+      otherLoan: [''],
+      politicalyExposed: [''],
     },
     { updateOn: 'change' }
   );
@@ -301,6 +319,18 @@ export class CalculatorFormComponent implements OnInit {
   get citySelect() {
     return this.calculateForm.controls.citySelect;
   }
+  get houseType() {
+    return this.calculateForm.controls.houseType;
+  }
+  get studentLoan() {
+    return this.calculateForm.controls.studentLoan;
+  }
+  get otherLoan() {
+    return this.calculateForm.controls.otherLoan;
+  }
+  get politicalyExposed() {
+    return this.calculateForm.controls.politicalyExposed;
+  }
 
   actionText: string = '';
   show() {
@@ -339,6 +369,7 @@ export class CalculatorFormComponent implements OnInit {
   }
 
   onSubmit() {
+    console.log(this.calculateForm.value);
     if (this.calculateForm.valid) {
       this.calculateFormDto = this.calculateForm.value;
       this.calculateResultsDto = this.submitForm.value;
@@ -355,10 +386,9 @@ export class CalculatorFormComponent implements OnInit {
       this.showColumn2 = true;
       this.actionText = 'Submitted form';
       const calculateFormData = this.calculateForm.value;
+      this.spinnerOn = true;
     }
   }
-
-
 
   handleResultsCalculated(results: MonthlyPaymentResultsDto): void {
     this.monthlyPaymentResultsDto.estimatedMonthlyPayment =
