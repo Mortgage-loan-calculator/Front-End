@@ -409,3 +409,8 @@ mat-error {
 .show-more {
   margin: 50px;
 }
+.warning {
+  color: red;
+  font-weight: 600;
+  font-size: large;
+}
