@@ -65,6 +65,7 @@
                 formControlName="phoneNumber"
                 id="phoneNumber"
               />
+
               <mat-error
                 *ngIf="postForm.controls.phoneNumber.errors?.['pattern']"
               >
@@ -74,6 +75,9 @@
                 *ngIf="postForm.controls.phoneNumber.errors?.['maxlength']"
               >
                 Maximum input of 20 characters reached.
+              </mat-error>
+              <mat-error *ngIf="postForm.controls.phoneNumber.errors?.['pattern']">
+                Please enter a valid phone number.
               </mat-error>
               <button
                 *ngIf="phoneNumber.value"

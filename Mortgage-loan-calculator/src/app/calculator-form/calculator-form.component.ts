@@ -188,10 +188,18 @@ export class CalculatorFormComponent implements OnInit {
         '',
         [
           Validators.required,
-          this.numbersOnly,
+          Validators.pattern(/^[0-9]+$/),
           Validators.min(1),
-          Validators.max(999999999999),
-          this.validateMaxNumbers.bind(this),
+          Validators.maxLength(12),
+          (control: FormControl) => {
+            if (
+              control.value &&
+              (control.value.includes('-') || isNaN(control.value))
+            ) {
+              return { invalidNumber: true };
+            }
+            return null;
+          },
         ],
       ],
       monthlyFamilyIncome: [
@@ -202,6 +210,15 @@ export class CalculatorFormComponent implements OnInit {
           Validators.min(1),
           Validators.max(999999999999),
           this.validateMaxNumbers.bind(this),
+          (control: FormControl) => {
+            if (
+              control.value &&
+              (control.value.includes('-') || isNaN(control.value))
+            ) {
+              return { invalidNumber: true };
+            }
+            return null;
+          },
         ],
       ],
       loanTerm: ['1', Validators.required],
@@ -239,6 +256,15 @@ export class CalculatorFormComponent implements OnInit {
           Validators.min(1),
           Validators.max(999999999999),
           this.validateMaxNumbers.bind(this),
+          (control: FormControl) => {
+            if (
+              control.value &&
+              (control.value.includes('-') || isNaN(control.value))
+            ) {
+              return { invalidNumber: true };
+            }
+            return null;
+          },
         ],
       ],
       downPayment: [
@@ -249,6 +275,16 @@ export class CalculatorFormComponent implements OnInit {
           Validators.min(1),
           Validators.max(999999999999),
           this.validateMaxNumbers.bind(this),
+          this.validateMaxNumbers.bind(this),
+          (control: FormControl) => {
+            if (
+              control.value &&
+              (control.value.includes('-') || isNaN(control.value))
+            ) {
+              return { invalidNumber: true };
+            }
+            return null;
+          },
         ],
       ],
       loanPeriod: ['1', Validators.required],
@@ -260,6 +296,16 @@ export class CalculatorFormComponent implements OnInit {
           Validators.min(1),
           Validators.max(999999999999),
           this.validateMaxNumbers.bind(this),
+          this.validateMaxNumbers.bind(this),
+          (control: FormControl) => {
+            if (
+              control.value &&
+              (control.value.includes('-') || isNaN(control.value))
+            ) {
+              return { invalidNumber: true };
+            }
+            return null;
+          },
         ],
       ],
       estimatedMonthlyPayment: [''],
