@@ -27,11 +27,13 @@
             cancel</mat-icon
           >
 
-          <h3 class="titlespan">
+          <h3 [ngClass]="{'hide' : hideFormBody}" class="titlespan">
             Please enter your personal data to get personal offer:
           </h3>
+          <h3 [ngClass]="{'hide' : !hideFormBody}">Your information successfully added!</h3>
+          <h4 [ngClass]="{'hide' : !hideFormBody}">We will get back to you shortly!</h4>
 
-          <mat-form-field class="example-form-field" appearance="outline">
+          <mat-form-field class="example-form-field" [ngClass]="{'hide' : hideFormBody}" appearance="outline">
             <mat-label>Name:</mat-label>
             <input matInput type="text" formControlName="name" id="name" />
             <mat-error *ngIf="postForm.controls.name.errors?.['required']">
@@ -55,7 +57,7 @@
           </mat-form-field>
 
           <p>
-            <mat-form-field class="example-form-field" appearance="outline">
+            <mat-form-field class="example-form-field" [ngClass]="{'hide' : hideFormBody}" appearance="outline">
               <mat-label>Phone number:</mat-label>
               <input
                 matInput
@@ -86,7 +88,7 @@
           </p>
 
           <p>
-            <mat-form-field class="example-form-field" appearance="outline">
+            <mat-form-field class="example-form-field" [ngClass]="{'hide' : hideFormBody}" appearance="outline">
               <mat-label>Email</mat-label>
               <input matInput type="email" formControlName="email" id="email" />
               <mat-error *ngIf="postForm.controls.email.errors?.['maxlength']">
@@ -112,7 +114,7 @@
             </mat-form-field>
           </p>
 
-          <div class="sendBtnCotainer" id="sendBtnCotainer">
+          <div [ngClass]="{'hide' : hideFormBody}" class="sendBtnCotainer" id="sendBtnCotainer">
             <button mat-button type="submit" class="sendBtn" id="sendBtn">
               Send
             </button>
