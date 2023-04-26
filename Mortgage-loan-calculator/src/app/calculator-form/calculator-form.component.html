@@ -13,7 +13,7 @@
                 <form
                   class="column"
                   [formGroup]="calculateForm"
-                  (ngSubmit)="onSubmit()"
+                  
                 >
                   <div class="toggle-container">
                     <div class="toggle-label">Alone/With partner</div>
@@ -240,6 +240,7 @@
                       type="submit"
                       class="my-button calculate-button"
                       (change)="show()"
+                      (click)="onCalculateButton()"
                     >
                       Calculate
                     </button>
@@ -251,6 +252,7 @@
                   [formGroup]="submitForm"
                   *ngIf="showColumn2"
                   [@form2Animation]
+                  (ngSubmit)="onSubmit()"
                 >
                   <div class="chart-container-div">
                     <app-pie-chart
@@ -321,7 +323,7 @@
                         mat-button
                         type="button"
                         class="my-button submit-button"
-                        (click)="onSubmit()"
+                        
                         (click)="showPopupForm()"
                       >
                         Submit application

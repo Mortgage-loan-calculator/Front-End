@@ -428,6 +428,29 @@ export class CalculatorFormComponent implements OnInit {
     this.updateResults(value);
   }
 
+
+  onCalculateButton() {
+    if (this.calculateForm.valid) {
+      this.calculateFormDto = this.calculateForm.value;
+      this.calculateResultsDto = this.submitForm.value;
+
+      this.calculatorService
+        .getFormCalculationResultsButton(this.calculateFormDto)
+        .subscribe((data: CalculateResultsDto) => {
+          this.calculateResultsDto = data;
+        });
+        
+           this.updateResults(this.calculateFormDto);
+
+      this.actionText = 'Calculated';
+      this.showColumn2 = true;
+      this.actionText = 'Submitted form';
+      const calculateFormData = this.calculateForm.value;
+      console.log("in calculate function");
+      
+    }
+  }
+//CIA TIKRIAUSIAI REIKS PERKELT I VIRSUTINE FUNKCIJA. Arba ne
   onSubmit() {
     console.log(this.studentLoan.value);
     console.log(this.calculateForm.value);
@@ -452,15 +475,24 @@ export class CalculatorFormComponent implements OnInit {
             this.calculateFormDto = data;
           });
       }
+     
+ /* onSubmit(): CalculateFormDto {
+    if (this.calculateForm.valid) {
+      this.calculateFormDto = this.calculateForm.value;
+      this.calculateResultsDto = this.submitForm.value;
 
-      this.updateResults(this.calculateFormDto);
-
-      this.actionText = 'Calculated';
-      this.showColumn2 = true;
-      this.actionText = 'Submitted form';
-      const calculateFormData = this.calculateForm.value;
+      this.calculatorService
+        .sendData(this.calculateFormDto)
+        .subscribe((data: CalculateFormDto) => {
+          this.calculateFormDto = data;
+        });
+      return this.calculateFormDto;
+    }else{
+      
     }
-  }
+    return this.calculateFormDto;
+  } */
+
 
   handleResultsCalculated(results: MonthlyPaymentResultsDto): void {
     this.monthlyPaymentResultsDto.estimatedMonthlyPayment =
