@@ -6,10 +6,12 @@ export interface CalculateFormDto {
   familyMembers?: any;
   haveChildren?: any;
   city?: any;
+
   houseType?: any;
   studentLoan?: any;
   otherLoan?: any;
   politicalyExposed?: any;
+
 }
 export interface CalculateResultsDto {
   id?: any;
@@ -17,5 +19,5 @@ export interface CalculateResultsDto {
   totalInterestPaid?: any;
   agreementFee?: any;
   totalPaymentSum?: any;
-  calculateForm?: any;
+  // calculateForm?: any;
 }

@@ -12,6 +12,7 @@ import {
   transition,
   trigger,
 } from '@angular/animations';
+import { CalculateResultsDto } from '../calculator-form/calculate-form-dto';
 
 @Component({
   selector: 'app-admin-panel',
@@ -29,10 +30,13 @@ import {
   ],
 })
 export class AdminPanelComponent implements AfterViewInit, OnInit {
+
   spinerOn = true;
 
   columnsToDisplay = ['name', 'phoneNumber', 'email', 'time', 'action'];
   expandedCustomer: Customer | undefined;
+  //expandedResults!: CalculateResultsDto;
+
   constructor(private service: CustomerService) {}
   ngOnInit() {}
 
@@ -50,6 +54,7 @@ export class AdminPanelComponent implements AfterViewInit, OnInit {
   @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator;
   @ViewChild(CalculatorFormComponent)
   calculatorFormComponent?: CalculatorFormComponent;
+
   ngAfterViewInit() {
     this.service.getCustomer().subscribe((data) => {
       this.customers.data = data;
@@ -61,4 +66,14 @@ export class AdminPanelComponent implements AfterViewInit, OnInit {
     this.service.deleteCustomer(id);
     location.reload();
   }
+
+  getCalculateFormDto(customer: Customer): void {
+    this.service
+      .getCalculateFormDtoById(customer.calculateForm.id)
+      .subscribe((calculateFormDto) => {
+        customer.calculateForm = calculateFormDto;
+        this.expandedCustomer = customer;
+      });
+  }
+
 }

@@ -26,21 +26,23 @@
           [@detailExpand]="
             customer == expandedCustomer ? 'expanded' : 'collapsed'
           "
+          (click)="getCalculateFormDto(customer)"
         >
           <div class="example-element-description">
-            Number of family members: {{ customer.familyMembers }}
+            Home price: {{ customer.calculateForm.homePrice }}€
           </div>
           <div class="example-element-description">
-            Customer has children: {{ customer.haveChildren }}
+            Monthly family income:
+            {{ customer.calculateForm.monthlyFamilyIncome }}€
           </div>
           <div class="example-element-description">
-            Customer's home price: {{ customer.homePrice }}
+            Loan term: <br> {{ customer.calculateForm.loanTerm }} years
           </div>
           <div class="example-element-description">
-            Customer's loan term: {{ customer.loanTerm }} years
+            Number of family members: {{ customer.calculateForm.familyMembers }}
           </div>
           <div class="example-element-description">
-            Customer's monthly family income: {{ customer.monthlyFamilyIncome }}
+            Has children: <br>{{ customer.calculateForm.haveChildren }}
           </div>
           <div class="example-element-description">
             <button mat-button (click)="deleteCustomer(customer.id)">
@@ -74,6 +76,7 @@
     aria-label="Select page of periodic elements"
   >
   </mat-paginator>
+
 </div>
 <div class="spinner-container" *ngIf="spinerOn">
   <div class="spinner-overlay"></div>
