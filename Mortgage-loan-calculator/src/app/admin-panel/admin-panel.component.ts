@@ -1,5 +1,5 @@
 import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
-import { MatPaginator } from '@angular/material/paginator';
+import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { CustomerService } from './services/customer.service';
 import { Customer } from '../types';
@@ -55,6 +55,8 @@ export class AdminPanelComponent implements AfterViewInit, OnInit {
   @ViewChild(CalculatorFormComponent)
   calculatorFormComponent?: CalculatorFormComponent;
 
+
+
   ngAfterViewInit() {
     this.service.getCustomer().subscribe((data) => {
       this.customers.data = data;
@@ -66,6 +68,7 @@ export class AdminPanelComponent implements AfterViewInit, OnInit {
     this.service.deleteCustomer(id);
     location.reload();
   }
+
 
   getCalculateFormDto(customer: Customer): void {
     this.service

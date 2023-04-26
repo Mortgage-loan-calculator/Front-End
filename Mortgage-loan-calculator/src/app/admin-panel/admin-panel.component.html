@@ -10,10 +10,18 @@
       matColumnDef="{{ column }}"
       *ngFor="let column of columnsToDisplay"
     >
-      <th mat-header-cell *matHeaderCellDef>{{ column }}</th>
-      <td mat-cell *matCellDef="let customer">{{ customer[column] }}</td>
-    </ng-container>
+      <th mat-header-cell *matHeaderCellDef>
+        {{ column === "time" ? "Time" : column }}
+      </th>
+      <td mat-cell *matCellDef="let customer">
+        {{
+          column === "time"
+            ? customer.time.slice(0, 10) + " " + customer.time.substring(11, 19)
+            : customer[column]
+        }}
+      </td>
 
+    </ng-container>
     <!-- Expanded Content Column - The detail row is made up of this one column that spans across all columns -->
     <ng-container matColumnDef="expandedDetail">
       <td
@@ -36,16 +44,17 @@
             {{ customer.calculateForm.monthlyFamilyIncome }}€
           </div>
           <div class="example-element-description">
-            Loan term: <br> {{ customer.calculateForm.loanTerm }} years
+            Loan term:
+            {{ customer.calculateForm.loanTerm }} years
           </div>
           <div class="example-element-description">
             Number of family members: {{ customer.calculateForm.familyMembers }}
           </div>
           <div class="example-element-description">
-            Has children: <br>{{ customer.calculateForm.haveChildren }}
+            Has children: {{ customer.calculateForm.haveChildren ? 'yes' : 'no' }}
           </div>
           <div class="example-element-description">
-            <button mat-button (click)="deleteCustomer(customer.id)">
+            <button mat-stroked-button color="warn" (click)="deleteCustomer(customer.id)">
               Delete
             </button>
           </div>
@@ -76,7 +85,6 @@
     aria-label="Select page of periodic elements"
   >
   </mat-paginator>
-
 </div>
 <div class="spinner-container" *ngIf="spinerOn">
   <div class="spinner-overlay"></div>

@@ -47,7 +47,6 @@ span {
   color: white;
 }
 
-
 .spinner-container {
   position: fixed;
   top: 0;
@@ -72,7 +71,8 @@ span {
 
 .spinner {
   position: relative;
-  z-index: 10000;}
+  z-index: 10000;
+}
 
 table {
   width: 100%;
@@ -96,8 +96,10 @@ tr.example-element-row:not(.example-expanded-row):active {
 
 .example-element-detail {
   overflow: hidden;
-  display: flex;
-  flex-direction:row;
+  flex-direction: column;
+  align-items: center;
+  white-space: nowrap;
+
 }
 
 @media only screen and (max-width: 1000px) {
@@ -122,12 +124,27 @@ tr.example-element-row:not(.example-expanded-row):active {
 }
 
 .example-element-description {
-  display: block;
-  float:left;
-  width: 33%;
+  width: 100%;
+  margin-bottom: 20px;
+
+  margin-top: 20px;
+  text-align: center;
+  flex: 1;
+  white-space: nowrap;
 }
 
 .example-element-description-attribution {
   opacity: 0.5;
+}
+
+mat-button {
+  color: red;
+}
+.example-expanded-row {
+  background-color: #f2f2f2;
+}
+
+.example-detail-row{
+  background-color: #f2f2f2;
 
 }
