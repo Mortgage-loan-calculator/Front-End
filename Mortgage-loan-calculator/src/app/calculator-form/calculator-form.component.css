@@ -316,6 +316,7 @@ mat-form-field {
   .grid-item {
     width: 220px;
   }
+
 }
 
 .my-button {
@@ -498,8 +499,10 @@ mat-error {
 }
 
 .show-more {
+  margin-top: 30px;
+  margin-bottom: 10px;
+
   font-size: 13px;
-  margin: 10px;
 }
 
 .warning {
