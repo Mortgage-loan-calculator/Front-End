@@ -1,6 +1,5 @@
-.formOuter{
-  background-color: #e3dcd2 ;
-
+.formOuter {
+  background-color: #e3dcd2;
 }
 h2 {
   text-align: center;
@@ -258,9 +257,6 @@ mat-form-field {
 
   } */
 
-  .form2 {
-  }
-
   .submit-button {
     margin-top: 40px;
     width: 200px;
@@ -396,11 +392,12 @@ mat-error {
 
 .results .grid-item.results span.mat-prefix {
   margin-right: 10px;
-  .results {
-    width: 180%;
-    justify-content: space-around;
-  }
 }
+.results {
+  width: 180%;
+  justify-content: space-around;
+}
+
 .spinner-container {
   position: fixed;
   top: 0;
@@ -446,6 +443,7 @@ mat-error {
   flex-direction: column;
   align-items: center;
   width: 50%;
+  font-size: 13px;
 }
 
 .show-more {
@@ -461,7 +459,8 @@ mat-error {
 }
 
 .warning {
-  color: red;
-  font-weight: 600;
-  font-size: large;
+  color: red !important;
+}
+.smallRadio {
+  transform: scale(0.9);
 }
