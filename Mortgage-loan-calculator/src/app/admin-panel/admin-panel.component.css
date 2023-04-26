@@ -117,8 +117,8 @@ tr.example-element-row:not(.example-expanded-row):active {
 
 .example-element-description {
   width: 100%;
-  margin-bottom: 20px;
-  margin-top: 20px;
+  margin-bottom: 30px;
+  margin-top: 30px;
   text-align: center;
   flex: 1;
   white-space: nowrap;
@@ -134,50 +134,15 @@ tr.example-element-row:not(.example-expanded-row):active {
   border: 2px solid black;
 }
 
-/*
-.example-element-detail {
-  overflow: hidden;
-  justify-content: space-between;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-
 .example-element-description-column {
-  align-items: center;
 
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  grid-gap: 8px;
-}
-
-.example-element-description-title {
-  align-items: center;
-  padding-right: 20px;
-
-  font-weight: bold;
-  margin-bottom: 8px;
-}
-
-.example-element-description-answer {
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
-  padding-left: 20px;
-}
-
-
- */
-
-.example-element-description-column {
+  width: 50%;
   margin-top: 20px;
   grid-template-columns: repeat(2, 1fr);
   align-items: center;
   display: grid;
-  flex-wrap: wrap;
-  gap: 10px;
-  justify-content: space-between;
+  gap: 5px;
+  justify-content: center;
 }
 
 .example-element-description-title {
@@ -194,3 +159,5 @@ tr.example-element-row:not(.example-expanded-row):active {
   margin-top: 20px;
   margin-bottom: 20px;
 }
+
+
