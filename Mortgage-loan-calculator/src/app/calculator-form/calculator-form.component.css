@@ -1,25 +1,63 @@
+.formBlock {
+  background-color: #ebebe8;
+  background: url("../../assets/home-key.jpg") no-repeat center center/cover;
+  height: 100%;
+  position: relative;
+}
+.formBlock:before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(235, 235, 232, 0.5);
+  z-index: 1;
+  filter: blur(80px);
+  -webkit-filter: blur(80px);
+}
+
 h2 {
   font-family: Verdana, Arial, Helvetica, sans-serif;
   letter-spacing: 0.1rem;
   text-align: center;
   font-size: 24px;
   line-height: 1.25;
-  margin-bottom: 15px;
-  margin-top: 15px;
 }
 
 .box {
   background-color: #ebebe8;
-
   margin: 0 auto;
   max-width: 800px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 3);
   border: 2px solid #ddd;
   border-radius: 10px;
 }
+
+.box::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  /* background: url("../../assets/home-key.jpg") no-repeat center center/cover; */
+}
+
+/* .columns::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: url("../../assets/home-key.jpg") no-repeat center center/cover;
+  filter: blur(15px);
+  z-index: -1;
+} */
+
 .columns {
   height: 600px;
-
   display: flex;
   justify-content: center;
 }
@@ -39,7 +77,6 @@ h2 {
   flex-basis: 50%;
   box-sizing: border-box;
   opacity: 0;
-
   transition: all 0.5s ease;
 }
 .column2.show {
@@ -341,11 +378,18 @@ mat-form-field {
   margin-left: -10px;
   align-items: center;
   justify-content: space-between;
+  transition: all 1s ease;
+  opacity: 0;
+}
+
+.show-results .results {
+  opacity: 1;
+  transform: translateY(0);
 }
 
 .results div.grid-items.results {
   font-size: 13px;
-  font-weight: bold;
+  /* font-weight: bold; */
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -504,12 +548,29 @@ mat-error {
 }
 
 .mat-mdc-tab-label-container {
+  -webkit-tab-hiflight-color: #013328;
   --mdc-tab-label-container-color: #013328;
   --mdc-tab-handle-color: #013328;
   --mdc-tab-label-label-text-color: #013328;
   --mdc-tab-indicator: #013328;
   --mdc-tab-indicator__content: #013328;
 }
+.mat-mdc-tab:not(.mat-mdc-tab-disabled).mdc-tab--active .mdc-tab__text-label,
+.mat-mdc-tab-link:not(.mat-mdc-tab-disabled).mdc-tab--active
+  .mdc-tab__text-label {
+  color: #013328;
+}
+.mat-mdc-tab {
+  --mdc-tab-label-container-color: #013328;
+}
+.mat-tab-label-active {
+  background-color: red;
+}
+mat-tabs .mat-ink-bar:nth-child(2) {
+  /* this will override default*/
+  color: red;
+}
+/*
 .md-tab.md-active {
   background-color: #013328;
 }
@@ -539,4 +600,30 @@ mat-error {
 
 .mdc-tab-indicator__content--underline {
   --mdc-tab-indicator-active-indicator-color: orange;
+} */
+
+/* ::ng-deep .mat-tab-list .mat-tab-labels .mat-tab-label-active {
+  color: red;
+  background-color: green;
+} */
+.mat-focused .mat-form-field-label {
+  /*change color of label*/
+  color: white !important;
+}
+
+.mat-form-field-underline {
+  /*change color of underline*/
+  background-color: white !important;
+}
+
+.mat-form-field-ripple {
+  /*change color of underline when focused*/
+  background-color: white !important;
+}
+.mat-form-field-appearance-outline.mat-focused .mat-form-field-outline-thick {
+  color: red;
+}
+
+.mat-form-field.mat-focused .mat-form-field-label {
+  color: red;
 }

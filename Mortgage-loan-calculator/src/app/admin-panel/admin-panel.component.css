@@ -94,13 +94,6 @@ tr.example-element-row:not(.example-expanded-row):active {
   border-bottom-width: 0;
 }
 
-/* .example-element-detail {
-  overflow: hidden;
-  flex-direction: column;
-  align-items: center;
-  white-space: nowrap;
-} */
-
 @media only screen and (max-width: 1000px) {
   .example-element-diagram {
     min-width: 50px;
@@ -131,10 +124,7 @@ tr.example-element-row:not(.example-expanded-row):active {
   white-space: nowrap;
 }
 
-
-
-.example-expanded-row
- {
+.example-expanded-row {
   background-color: #f2f2f2;
   border: 2px solid #f2f2f2;
 }
@@ -144,10 +134,9 @@ tr.example-element-row:not(.example-expanded-row):active {
   border: 2px solid black;
 }
 
-
+/*
 .example-element-detail {
   overflow: hidden;
-
   justify-content: space-between;
   display: flex;
   justify-content: center;
@@ -178,5 +167,30 @@ tr.example-element-row:not(.example-expanded-row):active {
   padding-left: 20px;
 }
 
-.example-element-description-answer button {
+
+ */
+
+.example-element-description-column {
+  margin-top: 20px;
+  grid-template-columns: repeat(2, 1fr);
+  align-items: center;
+  display: grid;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: space-between;
+}
+
+.example-element-description-title {
+  align-items: center;
+  padding-right: 20px;
+
+  font-weight: bold;
+  margin-bottom: 8px;
+}
+
+.example-element-description-button {
+  display: flex;
+  align-items: center;
+  margin-top: 20px;
+  margin-bottom: 20px;
 }

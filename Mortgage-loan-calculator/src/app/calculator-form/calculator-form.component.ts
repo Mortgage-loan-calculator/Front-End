@@ -412,6 +412,8 @@ export class CalculatorFormComponent implements OnInit {
   }
   calculateMonthly() {
     if (this.applyForm.valid) {
+      const resultsContainer = document.querySelector('.grid-container2');
+      resultsContainer?.classList.add('show-results');
       const formData: MonthlyPaymentDto = this.applyForm.value;
       console.log(formData);
       this.monthlyPaymentComponent.calculateResults(formData);
