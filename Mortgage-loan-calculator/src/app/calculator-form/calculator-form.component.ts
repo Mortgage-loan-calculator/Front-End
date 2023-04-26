@@ -466,6 +466,7 @@ export class CalculatorFormComponent implements OnInit {
             this.calculateFormDto = data;
           });
       }
+
     }
   }
 

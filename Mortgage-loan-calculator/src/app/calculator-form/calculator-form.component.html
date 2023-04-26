@@ -143,6 +143,7 @@
                         class="radioselect"
                         formControlName="houseType"
                         aria-label="Select an option"
+                        class="smallRadio"
                       >
                         <mat-radio-button value="New House"
                           >New House</mat-radio-button
@@ -153,13 +154,13 @@
                         <mat-radio-button value="Second Home"
                           >Second Home</mat-radio-button
                         >
-
                       </mat-radio-group>
 
                       <div class="Radio-label">Do you have a student loan?</div>
                       <mat-radio-group
                         formControlName="studentLoan"
                         aria-label="Select an option"
+                        class="smallRadio"
                       >
                         <mat-radio-button value="true">Yes</mat-radio-button>
                         <mat-radio-button value="false">No</mat-radio-button>
@@ -172,6 +173,7 @@
                       <mat-radio-group
                         formControlName="otherLoan"
                         aria-label="Select an option"
+                        class="smallRadio"
                       >
                         <mat-radio-button value="true">Yes</mat-radio-button>
                         <mat-radio-button value="false">No</mat-radio-button>
@@ -183,8 +185,13 @@
                       <mat-radio-group
                         formControlName="politicalyExposed"
                         aria-label="Select an option"
+                        class="smallRadio"
                       >
-                        <mat-radio-button value="true">Yes</mat-radio-button>
+                        <mat-radio-button
+                          class="custom-radio-button"
+                          value="true"
+                          >Yes</mat-radio-button
+                        >
                         <mat-radio-button value="false">No</mat-radio-button>
                       </mat-radio-group>
 
@@ -221,18 +228,17 @@
                         </mat-form-field>
                       </div>
                     </div>
+                    <div
+                      class="warning"
+                      *ngIf="
+                        studentLoan.value == 'true' ||
+                        otherLoan.value == 'true' ||
+                        politicalyExposed.value == 'true'
+                      "
+                    >
+                      You need to talk with bank assistant
+                    </div>
                   </ng-container>
-
-                  <div
-                    class="warning"
-                    *ngIf="
-                      studentLoan.value == 'true' ||
-                      otherLoan.value == 'true' ||
-                      politicalyExposed.value == 'true'
-                    "
-                  >
-                    You need to talk with bank assistant
-                  </div>
 
                   <div class="button-container">
                     <button
@@ -457,7 +463,6 @@
                     <strong> </strong>
                   </div>
 
-
                   <div class="grid-items results">
                     <span matPrefix>Total interest paid</span>
 
@@ -477,9 +482,7 @@
                   mat-button
                   type="submit"
                   class="my-button apply-button"
-
                   (change)="show()"
-
                   (click)="calculateMonthly()"
                 >
                   Calculate
@@ -518,4 +521,3 @@
     <mat-spinner></mat-spinner>
   </div>
 </div>
-
