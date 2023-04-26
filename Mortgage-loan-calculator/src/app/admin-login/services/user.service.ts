@@ -2,7 +2,8 @@ import { Injectable } from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
 
-const API_URL = 'https://mortgage-loan-calculator-back-end.onrender.com/auth/';
+const API_URL = //'https://mortgage-loan-calculator-back-end.onrender.com/auth/';
+  'http://localhost:8080/auth/';
 
 @Injectable({
   providedIn: 'root'
