@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Customer } from '../../types';
 import { Observable } from 'rxjs';
 import { CalculateFormDto } from 'src/app/calculator-form/calculate-form-dto';
-import { catchError, Observable, throwError } from 'rxjs';
+import { catchError, throwError } from 'rxjs';
 import { ErrorHandlerService } from 'src/app/errors/error-handler.service';
 
 @Injectable({
