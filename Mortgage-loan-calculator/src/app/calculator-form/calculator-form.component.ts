@@ -467,6 +467,7 @@ export class CalculatorFormComponent implements OnInit {
           });
       }
     }
+  }
 
     /* onSubmit(): CalculateFormDto {
     if (this.calculateForm.valid) {
@@ -484,7 +485,7 @@ export class CalculatorFormComponent implements OnInit {
     }
     return this.calculateFormDto;
   } */
-  }
+  
   handleResultsCalculated(results: MonthlyPaymentResultsDto): void {
     this.monthlyPaymentResultsDto.estimatedMonthlyPayment =
       results.estimatedMonthlyPayment;
