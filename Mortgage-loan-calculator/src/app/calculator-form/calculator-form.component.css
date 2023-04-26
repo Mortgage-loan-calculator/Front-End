@@ -1,3 +1,4 @@
+
 h2 {
   font-family: Verdana, Arial, Helvetica, sans-serif;
   letter-spacing: 0.1rem;
@@ -247,6 +248,7 @@ mat-form-field {
     order: 2;
   }
 
+
   .submit-button {
     margin-top: 80px;
     width: 200px;
@@ -407,6 +409,7 @@ mat-error {
   margin-top: 10px;
 }
 
+
 .spinner-container {
   position: fixed;
   top: 0;
@@ -473,9 +476,10 @@ mat-error {
 } */
 
 .warning {
-  color: red;
-  font-weight: 600;
-  font-size: large;
+  color: red !important;
+}
+.smallRadio {
+  transform: scale(0.9);
 }
 
 .smallradio {

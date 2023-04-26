@@ -8,7 +8,7 @@
     rgba(91, 67, 189, 0.1) 90%
   );
   opacity: 1;
-  background-position: bottom left;
+  background-position: right bottom;
 }
 
 .hero:before {
@@ -21,7 +21,7 @@
 }
 
 .hero .container {
-  max-width: 1240px;
+  max-width: 100%;
   margin: auto;
   height: 100%;
   position: relative;
@@ -103,4 +103,17 @@ h2 {
   }
 }
 
+@media (max-width: 768px) {
+  .hero:before {
+    background-position: calc(90%) bottom !important;
+  }
+  body {
+    overflow: hidden;
+  }
+}
+@media (min-width: 768px) and (max-width: 1200px) {
+  .hero:before {
+    background-position: calc(100%) bottom !important;
+  }
+}
 
