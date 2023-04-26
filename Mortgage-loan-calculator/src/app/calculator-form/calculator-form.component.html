@@ -10,11 +10,7 @@
         <mat-tab routerLink="/borrow" label="How much can you borrow">
           <ng-template matTabContent>
             <div class="columns">
-              <form
-                class="column"
-                [formGroup]="calculateForm"
-
-              >
+              <form class="column" [formGroup]="calculateForm">
                 <div class="toggle-container">
                   <div class="toggle-label">Alone/With partner</div>
 
@@ -93,9 +89,7 @@
                   </div>
                 </div>
                 <div class="slider-container">
-                  <div class="slider-name">
-                    Number of adult family members:
-                  </div>
+                  <div class="slider-name">Number of adult family members:</div>
                   <mat-slider
                     min="1"
                     max="5"
@@ -143,11 +137,11 @@
                       class="radioselect"
                       formControlName="houseType"
                       aria-label="Select an option"
-                      class="smallRadio"
+                      class="smallRadio fullWidth"
                     >
                       <mat-radio-button value="New House"
                         >New House</mat-radio-button
-                      ><br />
+                      >
                       <mat-radio-button value="Housing co-operative apartment"
                         >Housing co-operative apartment</mat-radio-button
                       >
@@ -166,10 +160,7 @@
                       <mat-radio-button value="false">No</mat-radio-button>
                     </mat-radio-group>
 
-                    <div class="Radio-label">
-                      Do you have other loans which you will keep such as car
-                      loan or credit card loans?
-                    </div>
+                    <div class="Radio-label">Do you have other loans?</div>
                     <mat-radio-group
                       formControlName="otherLoan"
                       aria-label="Select an option"
@@ -187,9 +178,7 @@
                       aria-label="Select an option"
                       class="smallRadio"
                     >
-                      <mat-radio-button
-                        class="custom-radio-button"
-                        value="true"
+                      <mat-radio-button class="custom-radio-button" value="true"
                         >Yes</mat-radio-button
                       >
                       <mat-radio-button value="false">No</mat-radio-button>
@@ -210,7 +199,11 @@
                           matInput
                           formControlName="citySelect"
                           [matAutocomplete]="auto"
-                        />
+                        /><mat-error
+                          *ngIf="calculateForm.controls.citySelect.errors?.['pattern']"
+                        >
+                          Only Letters are allowed.
+                        </mat-error>
                         <mat-autocomplete
                           #auto="matAutocomplete"
                           [displayWith]="displayFn"
@@ -329,7 +322,6 @@
                       mat-button
                       type="button"
                       class="my-button submit-button"
-
                       (click)="showPopupForm()"
                     >
                       Submit application
@@ -423,9 +415,7 @@
                     <mat-error *ngIf="monthlyIncome.hasError('required')"
                       >Monthly family income field is required.</mat-error
                     >
-                    <mat-error
-                      *ngIf="monthlyIncome.errors?.['invalidNumber']"
-                    >
+                    <mat-error *ngIf="monthlyIncome.errors?.['invalidNumber']">
                       Input should accept only numbers.
                     </mat-error>
                     <mat-error
@@ -440,10 +430,8 @@
                 <div class="grid-items results">
                   <span matPrefix>Your estimated monthly payment </span>
                   <strong>
-                    {{
-                      monthlyPaymentResultsDto.estimatedMonthlyPayment
-                    }} </strong
-                  >
+                    {{ monthlyPaymentResultsDto.estimatedMonthlyPayment }}
+                  </strong>
                 </div>
                 <div class="grid-items results">
                   <span matPrefix>Maximum monthly loan payment</span>
@@ -455,7 +443,7 @@
                 <div class="grid-items results">
                   <span matPrefix>Interest rate (fixed 2%)</span>
 
-                  <strong > </strong>
+                  <strong> </strong>
                 </div>
                 <div class="grid-items results">
                   <span matPrefix>Euribor</span>
@@ -508,16 +496,16 @@
 </div>
 
 <app-popup-form
-*ngIf="showPopup"
-(onClose)="showPopup = false"
+  *ngIf="showPopup"
+  (onClose)="showPopup = false"
 ></app-popup-form>
 <!-- (click)="calculateMonthly()" -->
 <div
-class="spinner-container"
-*ngIf="spinnerOn && calculateResultsDto.totalInterestPaid == 0"
+  class="spinner-container"
+  *ngIf="spinnerOn && calculateResultsDto.totalInterestPaid == 0"
 >
-<div class="spinner-overlay"></div>
-<div class="spinner">
-  <mat-spinner></mat-spinner>
-</div>
+  <div class="spinner-overlay"></div>
+  <div class="spinner">
+    <mat-spinner></mat-spinner>
+  </div>
 </div>
