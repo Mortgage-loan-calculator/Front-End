@@ -10,11 +10,11 @@
         <mat-tab routerLink="/borrow" label="How much can you borrow">
           <ng-template matTabContent>
             <div class="columns">
+
               <form
                 class="column"
                 [formGroup]="calculateForm"
 
-              >
                 <div class="toggle-container">
                   <div class="toggle-label">Alone/With partner</div>
 
@@ -93,6 +93,7 @@
                   </div>
                 </div>
                 <div class="slider-container">
+
                   <div class="slider-name">
                     Number of adult family members:
                   </div>
@@ -278,10 +279,10 @@
                             >brightness_1</mat-icon
                           >
 
-                          <span matPrefix>Loan amount</span>
+                          <span matPrefix>Loan amount:</span>
                         </div>
                         <div class="amount-positioning">
-                          {{ calculateResultsDto.maxLoan }}
+                          {{ calculateResultsDto.maxLoan }}€
                         </div>
                       </div>
                     </div>
@@ -291,11 +292,10 @@
                           <mat-icon class="brightness-2-icon"
                             >brightness_1</mat-icon
                           >
-
-                          <span matPrefix>Total interest paid</span>
+                          <span matPrefix>Total interest paid:</span>
                         </div>
                         <div class="amount-positioning">
-                          {{ calculateResultsDto.totalInterestPaid }}
+                          {{ calculateResultsDto.totalInterestPaid }}€
                         </div>
                       </div>
                     </div>
@@ -306,20 +306,19 @@
                           <mat-icon class="brightness-3-icon"
                             >brightness_1</mat-icon
                           >
-
-                          <span matPrefix>Agreement fee</span>
+                          <span matPrefix>Agreement fee:</span>
                         </div>
                         <div class="amount-positioning">
-                          {{ calculateResultsDto.agreementFee }}
+                          {{ calculateResultsDto.agreementFee }}€
                         </div>
                       </div>
                     </div>
                     <div class="grid-item-2">
                       <div class="amountDisplay">
-                        <span class="total" matPrefix>Total payment sum</span>
+                        <span class="total" matPrefix>Total payment sum:</span>
 
                         <strong>
-                          {{ calculateResultsDto.totalPaymentSum }}</strong
+                          {{ calculateResultsDto.totalPaymentSum }}€</strong
                         >
                       </div>
                     </div>
@@ -329,7 +328,6 @@
                       mat-button
                       type="button"
                       class="my-button submit-button"
-
                       (click)="showPopupForm()"
                     >
                       Submit application
@@ -438,41 +436,39 @@
 
               <div class="results">
                 <div class="grid-items results">
-                  <span matPrefix>Your estimated monthly payment </span>
+                  <span matPrefix>Your estimated monthly payment: </span>
                   <strong>
-                    {{
-                      monthlyPaymentResultsDto.estimatedMonthlyPayment
-                    }} </strong
-                  >
+                    {{ monthlyPaymentResultsDto.estimatedMonthlyPayment }}€
+                  </strong>
                 </div>
                 <div class="grid-items results">
-                  <span matPrefix>Maximum monthly loan payment</span>
+                  <span matPrefix>Maximum monthly loan payment:</span>
 
                   <strong class="amount">
-                    {{ monthlyPaymentResultsDto.maxMonthlyPayment }}</strong
+                    {{ monthlyPaymentResultsDto.maxMonthlyPayment }}€</strong
                   >
                 </div>
                 <div class="grid-items results">
-                  <span matPrefix>Interest rate (fixed 2%)</span>
+                  <span matPrefix>Interest rate (fixed):</span>
 
-                  <strong > </strong>
+                  <strong>{{ fixedRate }}%</strong>
                 </div>
                 <div class="grid-items results">
-                  <span matPrefix>Euribor</span>
+                  <span matPrefix>Euribor:</span>
 
-                  <strong> </strong>
-                </div>
-
-                <div class="grid-items results">
-                  <span matPrefix>Total interest paid</span>
-
-                  <strong> </strong>
+                  <strong> {{ euriborValue }}% </strong>
                 </div>
 
                 <div class="grid-items results">
-                  <span matPrefix>Total payment sum</span>
+                  <span matPrefix>Total interest paid:</span>
 
-                  <strong> </strong>
+                  <strong>{{ totalInterestRate }}€</strong>
+                </div>
+
+                <div class="grid-items results">
+                  <span matPrefix>Total payment sum:</span>
+
+                  <strong>{{ totalPaymenSum }}€ </strong>
                 </div>
               </div>
             </div>
