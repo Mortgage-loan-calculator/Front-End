@@ -10,7 +10,11 @@
         <mat-tab routerLink="/borrow" label="How much can you borrow">
           <ng-template matTabContent>
             <div class="columns">
-              <form class="column" [formGroup]="calculateForm">
+              <form
+                class="column"
+                [formGroup]="calculateForm"
+
+              >
                 <div class="toggle-container">
                   <div class="toggle-label">Alone/With partner</div>
 
@@ -90,7 +94,9 @@
                   </div>
                 </div>
                 <div class="slider-container">
-                  <div class="slider-name">Number of adult family members:</div>
+                  <div class="slider-name">
+                    Number of adult family members:
+                  </div>
                   <mat-slider
                     min="1"
                     max="5"
@@ -138,6 +144,7 @@
                       class="radioselect"
                       formControlName="houseType"
                       aria-label="Select an option"
+                      class="smallRadio"
                     >
                       <mat-radio-button value="New House"
                         >New House</mat-radio-button
@@ -152,9 +159,9 @@
 
                     <div class="Radio-label">Do you have a student loan?</div>
                     <mat-radio-group
-                      class="smallradio"
                       formControlName="studentLoan"
                       aria-label="Select an option"
+                      class="smallRadio"
                     >
                       <mat-radio-button value="true">Yes</mat-radio-button>
                       <mat-radio-button value="false">No</mat-radio-button>
@@ -167,6 +174,7 @@
                     <mat-radio-group
                       formControlName="otherLoan"
                       aria-label="Select an option"
+                      class="smallRadio"
                     >
                       <mat-radio-button value="true">Yes</mat-radio-button>
                       <mat-radio-button value="false">No</mat-radio-button>
@@ -178,8 +186,13 @@
                     <mat-radio-group
                       formControlName="politicalyExposed"
                       aria-label="Select an option"
+                      class="smallRadio"
                     >
-                      <mat-radio-button value="true">Yes</mat-radio-button>
+                      <mat-radio-button
+                        class="custom-radio-button"
+                        value="true"
+                        >Yes</mat-radio-button
+                      >
                       <mat-radio-button value="false">No</mat-radio-button>
                     </mat-radio-group>
 
@@ -211,23 +224,22 @@
                           >
                         </mat-autocomplete>
                         <!-- <mat-error *ngIf="citySelect.hasError('required')">
-                            Please select a city.
-                          </mat-error> -->
+                          Please select a city.
+                        </mat-error> -->
                       </mat-form-field>
                     </div>
                   </div>
+                  <div
+                    class="warning"
+                    *ngIf="
+                      studentLoan.value == 'true' ||
+                      otherLoan.value == 'true' ||
+                      politicalyExposed.value == 'true'
+                    "
+                  >
+                    You need to talk with bank assistant
+                  </div>
                 </ng-container>
-
-                <div
-                  class="warning"
-                  *ngIf="
-                    studentLoan.value == 'true' ||
-                    otherLoan.value == 'true' ||
-                    politicalyExposed.value == 'true'
-                  "
-                >
-                  You need to talk with bank assistant
-                </div>
 
                 <div class="button-container">
                   <button
@@ -318,6 +330,7 @@
                       mat-button
                       type="button"
                       class="my-button submit-button"
+
                       (click)="showPopupForm()"
                     >
                       Submit application
@@ -382,7 +395,6 @@
                   <div class="slider-container">
                     <div class="slider-name">Loan period:</div>
                     <mat-slider
-                      color="accent"
                       class="mat-slider2"
                       min="1"
                       max="30"
@@ -412,7 +424,9 @@
                     <mat-error *ngIf="monthlyIncome.hasError('required')"
                       >Monthly family income field is required.</mat-error
                     >
-                    <mat-error *ngIf="monthlyIncome.errors?.['invalidNumber']">
+                    <mat-error
+                      *ngIf="monthlyIncome.errors?.['invalidNumber']"
+                    >
                       Input should accept only numbers.
                     </mat-error>
                     <mat-error
@@ -427,8 +441,10 @@
                 <div class="grid-items results">
                   <span matPrefix>Your estimated monthly payment </span>
                   <strong>
-                    {{ monthlyPaymentResultsDto.estimatedMonthlyPayment }}
-                  </strong>
+                    {{
+                      monthlyPaymentResultsDto.estimatedMonthlyPayment
+                    }} </strong
+                  >
                 </div>
                 <div class="grid-items results">
                   <span matPrefix>Maximum monthly loan payment</span>
@@ -440,7 +456,7 @@
                 <div class="grid-items results">
                   <span matPrefix>Interest rate (fixed 2%)</span>
 
-                  <strong> </strong>
+                  <strong > </strong>
                 </div>
                 <div class="grid-items results">
                   <span matPrefix>Euribor</span>
@@ -493,16 +509,16 @@
 </div>
 
 <app-popup-form
-  *ngIf="showPopup"
-  (onClose)="showPopup = false"
+*ngIf="showPopup"
+(onClose)="showPopup = false"
 ></app-popup-form>
 <!-- (click)="calculateMonthly()" -->
 <div
-  class="spinner-container"
-  *ngIf="spinnerOn && calculateResultsDto.totalInterestPaid == 0"
+class="spinner-container"
+*ngIf="spinnerOn && calculateResultsDto.totalInterestPaid == 0"
 >
-  <div class="spinner-overlay"></div>
-  <div class="spinner">
-    <mat-spinner></mat-spinner>
-  </div>
+<div class="spinner-overlay"></div>
+<div class="spinner">
+  <mat-spinner></mat-spinner>
+</div>
 </div>
