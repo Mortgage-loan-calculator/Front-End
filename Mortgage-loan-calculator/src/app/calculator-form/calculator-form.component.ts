@@ -71,6 +71,7 @@ interface City {
 })
 export class CalculatorFormComponent implements OnInit {
   @ViewChild(PieChartComponent) PieChartComponent!: PieChartComponent;
+  errorTrue = 'true';
   spinnerOn = false;
   showMore: boolean = false;
   title = 'json-read-example';
@@ -187,10 +188,18 @@ export class CalculatorFormComponent implements OnInit {
         '',
         [
           Validators.required,
-          this.numbersOnly,
+          Validators.pattern(/^[0-9]+$/),
           Validators.min(1),
-          Validators.max(999999999999),
-          this.validateMaxNumbers.bind(this),
+          Validators.maxLength(12),
+          (control: FormControl) => {
+            if (
+              control.value &&
+              (control.value.includes('-') || isNaN(control.value))
+            ) {
+              return { invalidNumber: true };
+            }
+            return null;
+          },
         ],
       ],
       monthlyFamilyIncome: [
@@ -201,19 +210,27 @@ export class CalculatorFormComponent implements OnInit {
           Validators.min(1),
           Validators.max(999999999999),
           this.validateMaxNumbers.bind(this),
+          (control: FormControl) => {
+            if (
+              control.value &&
+              (control.value.includes('-') || isNaN(control.value))
+            ) {
+              return { invalidNumber: true };
+            }
+            return null;
+          },
         ],
       ],
       loanTerm: ['1', Validators.required],
 
       familyMembers: [''],
 
-      haveChildren: ['false'],
+      haveChildren: [false],
       citySelect: [<string | City>''],
       houseType: [''],
       studentLoan: [''],
       otherLoan: [''],
       politicalyExposed: [''],
-
     },
     { updateOn: 'change' }
   );
@@ -239,6 +256,15 @@ export class CalculatorFormComponent implements OnInit {
           Validators.min(1),
           Validators.max(999999999999),
           this.validateMaxNumbers.bind(this),
+          (control: FormControl) => {
+            if (
+              control.value &&
+              (control.value.includes('-') || isNaN(control.value))
+            ) {
+              return { invalidNumber: true };
+            }
+            return null;
+          },
         ],
       ],
       downPayment: [
@@ -249,6 +275,16 @@ export class CalculatorFormComponent implements OnInit {
           Validators.min(1),
           Validators.max(999999999999),
           this.validateMaxNumbers.bind(this),
+          this.validateMaxNumbers.bind(this),
+          (control: FormControl) => {
+            if (
+              control.value &&
+              (control.value.includes('-') || isNaN(control.value))
+            ) {
+              return { invalidNumber: true };
+            }
+            return null;
+          },
         ],
       ],
       loanPeriod: ['1', Validators.required],
@@ -260,6 +296,16 @@ export class CalculatorFormComponent implements OnInit {
           Validators.min(1),
           Validators.max(999999999999),
           this.validateMaxNumbers.bind(this),
+          this.validateMaxNumbers.bind(this),
+          (control: FormControl) => {
+            if (
+              control.value &&
+              (control.value.includes('-') || isNaN(control.value))
+            ) {
+              return { invalidNumber: true };
+            }
+            return null;
+          },
         ],
       ],
       estimatedMonthlyPayment: [''],
@@ -375,8 +421,56 @@ export class CalculatorFormComponent implements OnInit {
     this.updateResults(value);
   }
 
+  onCalculateButton() {
+    if (this.calculateForm.valid) {
+      this.calculateFormDto = this.calculateForm.value;
+      this.calculateResultsDto = this.submitForm.value;
+
+      this.calculatorService
+        .getFormCalculationResultsButton(this.calculateFormDto)
+        .subscribe((data: CalculateResultsDto) => {
+          this.calculateResultsDto = data;
+        });
+
+      this.updateResults(this.calculateFormDto);
+
+      this.actionText = 'Calculated';
+      this.showColumn2 = true;
+      this.actionText = 'Submitted form';
+      const calculateFormData = this.calculateForm.value;
+      console.log('in calculate function');
+    }
+  }
+  //CIA TIKRIAUSIAI REIKS PERKELT I VIRSUTINE FUNKCIJA. Arba ne
   onSubmit() {
+    console.log(this.studentLoan.value);
     console.log(this.calculateForm.value);
+    if (this.calculateForm.valid) {
+      this.calculateFormDto = this.calculateForm.value;
+      this.calculateResultsDto = this.submitForm.value;
+      if (
+        this.studentLoan.value != '' ||
+        this.otherLoan.value != '' ||
+        this.politicalyExposed.value != '' ||
+        this.houseType.value != ''
+      ) {
+        this.calculatorService
+          .sendDataDetailed(this.calculateFormDto)
+          .subscribe((data: CalculateFormDto) => {
+            this.calculateFormDto = data;
+          });
+      } else {
+        this.calculatorService
+          .sendData(this.calculateFormDto)
+          .subscribe((data: CalculateFormDto) => {
+            this.calculateFormDto = data;
+          });
+      }
+
+    }
+  }
+
+    /* onSubmit(): CalculateFormDto {
     if (this.calculateForm.valid) {
       this.calculateFormDto = this.calculateForm.value;
       this.calculateResultsDto = this.submitForm.value;
@@ -386,17 +480,13 @@ export class CalculatorFormComponent implements OnInit {
         .subscribe((data: CalculateFormDto) => {
           this.calculateFormDto = data;
         });
+      return this.calculateFormDto;
+    }else{
 
-      this.updateResults(this.calculateFormDto);
-
-      this.actionText = 'Calculated';
-      this.showColumn2 = true;
-      this.actionText = 'Submitted form';
-      const calculateFormData = this.calculateForm.value;
-      this.spinnerOn = true;
     }
-  }
-
+    return this.calculateFormDto;
+  } */
+  
   handleResultsCalculated(results: MonthlyPaymentResultsDto): void {
     this.monthlyPaymentResultsDto.estimatedMonthlyPayment =
       results.estimatedMonthlyPayment;

@@ -1,3 +1,5 @@
+import { CalculateFormDto } from "./calculator-form/calculate-form-dto";
+
 export interface Customer {
   name: string;
   id: string;
@@ -6,9 +8,5 @@ export interface Customer {
   ipAddress: string;
   time: Date;
   action: string;
-  familyMembers: number;
-  haveChildren: boolean;
-  homePrice: number;
-  loanTerm: number;
-  monthlyFamilyIncome: number;
+  calculateForm: CalculateFormDto;
 }

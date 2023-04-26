@@ -77,7 +77,7 @@ export class PieChartComponent {
           {
             label: 'Money',
             data: [this._loanAmount, this._intrestPaid, this._agreementFee],
-            backgroundColor: ['blue', 'red', 'green'],
+            backgroundColor: ['#CC8865', '#e3dcd2', '#3B432A'],
             hoverOffset: 4,
           },
         ],
