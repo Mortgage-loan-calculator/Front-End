@@ -85,8 +85,14 @@ export class CalculatorFormComponent implements OnInit {
 
   monthlyPaymentResultsDto: MonthlyPaymentResultsDto =
     {} as MonthlyPaymentResultsDto;
+
   @ViewChild(MonthlyPaymentComponent)
   monthlyPaymentComponent!: MonthlyPaymentComponent;
+
+  euriborValue!: number;
+  fixedRate!: string;
+  totalInterestRate!: number;
+  totalPaymenSum!: number;
 
   private _filter(name: string): City[] {
     const filterValue = name.toLowerCase();
@@ -413,8 +419,22 @@ export class CalculatorFormComponent implements OnInit {
   calculateMonthly() {
     if (this.applyForm.valid) {
       const formData: MonthlyPaymentDto = this.applyForm.value;
-      console.log(formData);
       this.monthlyPaymentComponent.calculateResults(formData);
+
+      this.monthlyPaymentService.getEuribor().subscribe((data) => {
+        this.euriborValue = data;
+        this.fixedRate = '2';
+      });
+      this.monthlyPaymentService
+        .getTotalInterestRate(formData)
+        .subscribe((data) => {
+          this.totalInterestRate = data;
+        });
+      this.monthlyPaymentService
+        .getTotalPaymentSum(formData)
+        .subscribe((data) => {
+          this.totalPaymenSum = data;
+        });
     }
   }
   onUpdate(value: any) {
@@ -469,22 +489,6 @@ export class CalculatorFormComponent implements OnInit {
     }
   }
 
-  /* onSubmit(): CalculateFormDto {
-    if (this.calculateForm.valid) {
-      this.calculateFormDto = this.calculateForm.value;
-      this.calculateResultsDto = this.submitForm.value;
-
-      this.calculatorService
-        .sendData(this.calculateFormDto)
-        .subscribe((data: CalculateFormDto) => {
-          this.calculateFormDto = data;
-        });
-      return this.calculateFormDto;
-    }else{
-
-    }
-    return this.calculateFormDto;
-  } */
 
   handleResultsCalculated(results: MonthlyPaymentResultsDto): void {
     this.monthlyPaymentResultsDto.estimatedMonthlyPayment =
