@@ -20,7 +20,6 @@
             : customer[column]
         }}
       </td>
-
     </ng-container>
     <!-- Expanded Content Column - The detail row is made up of this one column that spans across all columns -->
     <ng-container matColumnDef="expandedDetail">
@@ -36,27 +35,42 @@
           "
           (click)="getCalculateFormDto(customer)"
         >
-          <div class="example-element-description">
-            Home price: {{ customer.calculateForm.homePrice }}€
+          <div class="example-element-description-column">
+            <div class="example-element-description-title">Home price:</div>
+            <div class="example-element-description-answer">
+              {{ customer.calculateForm.homePrice }}€
+            </div>
+            <div class="example-element-description-title">
+              Monthly family income:
+            </div>
+            <div class="example-element-description-answer">
+              {{ customer.calculateForm.monthlyFamilyIncome }}€
+            </div>
+            <div class="example-element-description-title">Loan term:</div>
+            <div class="example-element-description-answer">
+              {{ customer.calculateForm.loanTerm }} years
+            </div>
+            <div class="example-element-description-title">
+              Number of family members:
+            </div>
+            <div class="example-element-description-answer">
+              {{ customer.calculateForm.familyMembers }}
+            </div>
+            <div class="example-element-description-title">Has children:</div>
+            <div class="example-element-description-answer">
+              {{ customer.calculateForm.haveChildren ? "yes" : "no" }}
+            </div>
           </div>
-          <div class="example-element-description">
-            Monthly family income:
-            {{ customer.calculateForm.monthlyFamilyIncome }}€
-          </div>
-          <div class="example-element-description">
-            Loan term:
-            {{ customer.calculateForm.loanTerm }} years
-          </div>
-          <div class="example-element-description">
-            Number of family members: {{ customer.calculateForm.familyMembers }}
-          </div>
-          <div class="example-element-description">
-            Has children: {{ customer.calculateForm.haveChildren ? 'yes' : 'no' }}
-          </div>
-          <div class="example-element-description">
-            <button mat-stroked-button color="warn" (click)="deleteCustomer(customer.id)">
-              Delete
-            </button>
+          <div class="example-element-description-column">
+            <div class="example-element-description-answer">
+              <button
+                mat-stroked-button
+                color="warn"
+                (click)="deleteCustomer(customer.id)"
+              >
+                Delete
+              </button>
+            </div>
           </div>
         </div>
       </td>
