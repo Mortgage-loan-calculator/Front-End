@@ -9,7 +9,7 @@ import {
   SimpleChanges,
 } from '@angular/core';
 
-import { delay, distinctUntilChanged, takeUntil, tap } from 'rxjs/operators';
+import { debounceTime, delay, distinctUntilChanged, filter, takeUntil, tap } from 'rxjs/operators';
 
 import {
   AbstractControl,
@@ -82,6 +82,7 @@ export class CalculatorFormComponent implements OnInit {
   myControl = new FormControl<string | City>('');
   options: City[] = [];
   filteredOptions!: Observable<City[]>;
+  firstUpdate: boolean = true;
 
   monthlyPaymentResultsDto: MonthlyPaymentResultsDto =
     {} as MonthlyPaymentResultsDto;
@@ -128,9 +129,10 @@ export class CalculatorFormComponent implements OnInit {
     this.calculateForm.valueChanges
       .pipe(
         distinctUntilChanged(),
-
         tap((value) => {
-          this.onUpdate(value);
+          if (!this.firstUpdate && this.calculateForm.valid) {
+            this.onUpdate(value);
+          }
         }),
         takeUntil(this.destroy$)
       )
@@ -232,8 +234,8 @@ export class CalculatorFormComponent implements OnInit {
       familyMembers: [''],
 
       haveChildren: [false],
-      citySelect: [<string | City>'', [Validators.pattern(/^[^0-9]*$/)]],
-      houseType: [''],
+      citySelect: [<string | City>'', [Validators.pattern(/^[a-zA-Z]$/)]],
+      buyOption: [''],
       studentLoan: [''],
       otherLoan: [''],
       politicalyExposed: [''],
@@ -377,8 +379,8 @@ export class CalculatorFormComponent implements OnInit {
   get citySelect() {
     return this.calculateForm.controls.citySelect;
   }
-  get houseType() {
-    return this.calculateForm.controls.houseType;
+  get buyOption() {
+    return this.calculateForm.controls.buyOption;
   }
   get studentLoan() {
     return this.calculateForm.controls.studentLoan;
@@ -398,14 +400,20 @@ export class CalculatorFormComponent implements OnInit {
   }
 
   updateResults(value: any) {
-    if (this.calculateForm.valid) {
+    if(this.showMore) {
       this.calculatorService
-        .getFormCalculationResults(value)
+      .sendDataDetailed(this.getCombinedData())
+      .subscribe((data: CalculateResultsDto) => {
+        this.calculateResultsDto = data;
+      });
+    } else {
+      this.calculatorService
+        .sendData(this.calculateFormDto)
         .subscribe((data: CalculateResultsDto) => {
           this.calculateResultsDto = data;
         });
+      }
     }
-  }
 
   updateResultsMontly(value: any) {
     if (this.applyForm.valid) {
@@ -440,7 +448,9 @@ export class CalculatorFormComponent implements OnInit {
     }
   }
   onUpdate(value: any) {
-    this.updateResults(value);
+    if (this.calculateForm.valid) {
+      this.updateResults(value);
+    }
   }
 
   onCalculateButton() {
@@ -459,38 +469,71 @@ export class CalculatorFormComponent implements OnInit {
       this.actionText = 'Calculated';
       this.showColumn2 = true;
       this.actionText = 'Submitted form';
-      const calculateFormData = this.calculateForm.value;
-      console.log('in calculate function');
     }
   }
-  //CIA TIKRIAUSIAI REIKS PERKELT I VIRSUTINE FUNKCIJA. Arba ne
-  onSubmit() {
-    console.log(this.studentLoan.value);
-    console.log(this.calculateForm.value);
+
+  handleButtonClick() {
     if (this.calculateForm.valid) {
-      this.calculateFormDto = this.calculateForm.value;
-      this.calculateResultsDto = this.submitForm.value;
-      if (
-        this.studentLoan.value != '' ||
-        this.otherLoan.value != '' ||
-        this.politicalyExposed.value != '' ||
-        this.houseType.value != ''
-      ) {
-        this.calculatorService
-          .sendDataDetailed(this.calculateFormDto)
-          .subscribe((data: CalculateFormDto) => {
-            this.calculateFormDto = data;
-          });
+      if (this.showMore) {
+        this.onSubmit();
       } else {
-        this.calculatorService
-          .sendData(this.calculateFormDto)
-          .subscribe((data: CalculateFormDto) => {
-            this.calculateFormDto = data;
-          });
+        if (this.firstUpdate) {
+          this.onCalculateButton();
+          this.firstUpdate = false;
+        }
       }
     }
   }
 
+  triggerFirstUpdate() {
+    if (this.calculateForm.valid) {
+      this.updateResults(this.calculateFormDto);
+      if (this.firstUpdate) {
+        this.firstUpdate = false;
+      }
+    }
+  }
+
+  onSubmit() {
+    if (this.calculateForm.valid) {
+      this.calculateFormDto = this.calculateForm.value;
+      this.calculateResultsDto = this.submitForm.value;
+    
+      if (this.showMore) {
+        this.calculatorService
+          .sendDataDetailed(this.getCombinedData())
+          .subscribe((data: CalculateResultsDto) => {
+            this.calculateResultsDto = data;
+          });
+      } else {
+        this.calculatorService
+          .sendData(this.calculateFormDto)
+          .subscribe((data: CalculateResultsDto) => {
+            this.calculateResultsDto = data;
+          });
+      }
+      this.updateResults(this.calculateFormDto);
+
+    }
+  }
+
+  getCombinedData(): CalculateFormDto {
+    return {
+      homePrice: this.calculateForm.value.homePrice,
+      monthlyFamilyIncome: this.calculateForm.value.monthlyFamilyIncome,
+      loanTerm: this.calculateForm.value.loanTerm,
+      familyMembers: this.calculateForm.value.familyMembers,
+      haveChildren: this.calculateForm.value.haveChildren,
+      detailedFormDto: {
+        city: this.calculateForm.value.citySelect,
+        buyOption: this.calculateForm.value.buyOption,
+        studentLoan: this.calculateForm.value.studentLoan,
+        otherLoan: this.calculateForm.value.otherLoan,
+        politicalyExposed: this.calculateForm.value.politicalyExposed,
+      },
+    };
+  }
+ 
   handleResultsCalculated(results: MonthlyPaymentResultsDto): void {
     this.monthlyPaymentResultsDto.estimatedMonthlyPayment =
       results.estimatedMonthlyPayment;
