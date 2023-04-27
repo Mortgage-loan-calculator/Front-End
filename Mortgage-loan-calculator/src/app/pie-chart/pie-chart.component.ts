@@ -52,7 +52,7 @@ export class PieChartComponent {
   }
 
   @Input() set agreementFee(value: number) {
-    this._agreementFee = value;
+    this._agreementFee = value * 10;
   }
 
   get agreementFee(): number {

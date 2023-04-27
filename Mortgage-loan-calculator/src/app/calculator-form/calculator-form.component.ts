@@ -9,7 +9,14 @@ import {
   SimpleChanges,
 } from '@angular/core';
 
-import { debounceTime, delay, distinctUntilChanged, filter, takeUntil, tap } from 'rxjs/operators';
+import {
+  debounceTime,
+  delay,
+  distinctUntilChanged,
+  filter,
+  takeUntil,
+  tap,
+} from 'rxjs/operators';
 
 import {
   AbstractControl,
@@ -401,23 +408,25 @@ export class CalculatorFormComponent implements OnInit {
 
   updateResults(value: any) {
 
+
     this.calculateFormDto = this.calculateForm.value;
     this.calculateResultsDto = this.submitForm.value;
 
     if(this.showMore) {
+
       this.calculatorService
-      .sendDataDetailed(this.getCombinedData())
-      .subscribe((data: CalculateResultsDto) => {
-        this.calculateResultsDto = data;
-      });
+        .sendDataDetailed(this.getCombinedData())
+        .subscribe((data: CalculateResultsDto) => {
+          this.calculateResultsDto = data;
+        });
     } else {
       this.calculatorService
         .sendData(this.calculateFormDto)
         .subscribe((data: CalculateResultsDto) => {
           this.calculateResultsDto = data;
         });
-      }
     }
+  }
 
   updateResultsMontly(value: any) {
 
@@ -434,8 +443,12 @@ export class CalculatorFormComponent implements OnInit {
   calculateMonthly() {
     if (this.applyForm.valid) {
 
+      this.spinnerOn = true;
+
+
       this.monthlyPaymentComponent.monthlyPaymentDto = this.applyForm.value;
       this.monthlyPaymentResultsDto = this.applyForm.value;
+
       const resultsContainer = document.querySelector('.grid-container2');
       resultsContainer?.classList.add('show-results');
       const formData: MonthlyPaymentDto = this.applyForm.value;
@@ -454,6 +467,7 @@ export class CalculatorFormComponent implements OnInit {
         .getTotalPaymentSum(formData)
         .subscribe((data) => {
           this.totalPaymenSum = data;
+          this.spinnerOn = false;
         });
 
         this.updateResultsMontly(this.monthlyPaymentResultsDto);
@@ -476,10 +490,12 @@ export class CalculatorFormComponent implements OnInit {
       this.calculateFormDto = this.calculateForm.value;
       this.calculateResultsDto = this.submitForm.value;
 
+      this.spinnerOn = true;
       this.calculatorService
         .getFormCalculationResultsButton(this.calculateFormDto)
         .subscribe((data: CalculateResultsDto) => {
           this.calculateResultsDto = data;
+          this.spinnerOn = false;
         });
 
       this.updateResults(this.calculateFormDto);
@@ -507,7 +523,7 @@ export class CalculatorFormComponent implements OnInit {
     if (this.calculateForm.valid) {
       this.calculateFormDto = this.calculateForm.value;
       this.calculateResultsDto = this.submitForm.value;
-    
+
       if (this.showMore) {
         this.calculatorService
           .sendDataDetailed(this.getCombinedData())
@@ -522,7 +538,6 @@ export class CalculatorFormComponent implements OnInit {
           });
       }
       this.updateResults(this.calculateFormDto);
-
     }
   }
 
@@ -542,7 +557,7 @@ export class CalculatorFormComponent implements OnInit {
       },
     };
   }
- 
+
   handleResultsCalculated(results: MonthlyPaymentResultsDto): void {
     this.monthlyPaymentResultsDto.estimatedMonthlyPayment =
       results.estimatedMonthlyPayment;

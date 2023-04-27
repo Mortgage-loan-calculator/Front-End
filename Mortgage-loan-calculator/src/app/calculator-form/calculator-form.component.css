@@ -584,9 +584,6 @@ mat-error {
   --mat-mdc-radio-ripple-color: #000;
   --mat-mdc-radio-checked-ripple-color: #cc8b65;
 }
-.fullWidth {
-  width: 270%;
-}
 
 /*::ng-deep {
 
@@ -655,4 +652,14 @@ mat-error {
   .fullWidth {
     width: 100%;
   }
+}
+.mat-mdc-progress-spinner {
+  display: block;
+  overflow: hidden;
+  line-height: 0;
+  width: 50px !important;
+  height: 52px !important;
+}
+.mat-mdc-progress-spinner {
+  --mdc-circular-progress-active-indicator-color: #cc8b65;
 }
