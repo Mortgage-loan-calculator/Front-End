@@ -533,7 +533,7 @@ export class CalculatorFormComponent implements OnInit {
       },
     };
   }
-  
+ 
   handleResultsCalculated(results: MonthlyPaymentResultsDto): void {
     this.monthlyPaymentResultsDto.estimatedMonthlyPayment =
       results.estimatedMonthlyPayment;
