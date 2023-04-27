@@ -9,7 +9,7 @@ import {
   SimpleChanges,
 } from '@angular/core';
 
-import { delay, distinctUntilChanged, takeUntil, tap } from 'rxjs/operators';
+import { debounceTime, delay, distinctUntilChanged, filter, takeUntil, tap } from 'rxjs/operators';
 
 import {
   AbstractControl,
@@ -82,11 +82,18 @@ export class CalculatorFormComponent implements OnInit {
   myControl = new FormControl<string | City>('');
   options: City[] = [];
   filteredOptions!: Observable<City[]>;
+  firstUpdate: boolean = true;
 
   monthlyPaymentResultsDto: MonthlyPaymentResultsDto =
     {} as MonthlyPaymentResultsDto;
+
   @ViewChild(MonthlyPaymentComponent)
   monthlyPaymentComponent!: MonthlyPaymentComponent;
+
+  euriborValue!: number;
+  fixedRate!: string;
+  totalInterestRate!: number;
+  totalPaymenSum!: number;
 
   private _filter(name: string): City[] {
     const filterValue = name.toLowerCase();
@@ -122,9 +129,10 @@ export class CalculatorFormComponent implements OnInit {
     this.calculateForm.valueChanges
       .pipe(
         distinctUntilChanged(),
-
         tap((value) => {
-          this.onUpdate(value);
+          if (!this.firstUpdate) {
+            this.onUpdate(value);
+          }
         }),
         takeUntil(this.destroy$)
       )
@@ -134,7 +142,7 @@ export class CalculatorFormComponent implements OnInit {
         distinctUntilChanged(),
 
         tap((value) => {
-          this.updateResultsMontly(value);
+          this.onUpdateMonthly(value);
         }),
         takeUntil(this.destroy$)
       )
@@ -226,8 +234,8 @@ export class CalculatorFormComponent implements OnInit {
       familyMembers: [''],
 
       haveChildren: [false],
-      citySelect: [<string | City>''],
-      houseType: [''],
+      citySelect: [<string | City>'', [Validators.pattern(/^[a-zA-Z]$/)]],
+      buyOption: [''],
       studentLoan: [''],
       otherLoan: [''],
       politicalyExposed: [''],
@@ -371,8 +379,8 @@ export class CalculatorFormComponent implements OnInit {
   get citySelect() {
     return this.calculateForm.controls.citySelect;
   }
-  get houseType() {
-    return this.calculateForm.controls.houseType;
+  get buyOption() {
+    return this.calculateForm.controls.buyOption;
   }
   get studentLoan() {
     return this.calculateForm.controls.studentLoan;
@@ -392,35 +400,75 @@ export class CalculatorFormComponent implements OnInit {
   }
 
   updateResults(value: any) {
-    if (this.calculateForm.valid) {
+
+    this.calculateFormDto = this.calculateForm.value;
+    this.calculateResultsDto = this.submitForm.value;
+
+    if(this.showMore) {
       this.calculatorService
-        .getFormCalculationResults(value)
+      .sendDataDetailed(this.getCombinedData())
+      .subscribe((data: CalculateResultsDto) => {
+        this.calculateResultsDto = data;
+      });
+    } else {
+      this.calculatorService
+        .sendData(this.calculateFormDto)
         .subscribe((data: CalculateResultsDto) => {
           this.calculateResultsDto = data;
         });
+      }
     }
-  }
 
   updateResultsMontly(value: any) {
-    if (this.applyForm.valid) {
+
+    this.monthlyPaymentComponent.monthlyPaymentDto = this.applyForm.value;
+    this.monthlyPaymentResultsDto = this.applyForm.value;
+
       this.monthlyPaymentService
         .getCalculationResults(value)
         .subscribe((data: MonthlyPaymentResultsDto) => {
           this.monthlyPaymentResultsDto = data;
         });
-    }
   }
+  
   calculateMonthly() {
     if (this.applyForm.valid) {
+
+      this.monthlyPaymentComponent.monthlyPaymentDto = this.applyForm.value;
+      this.monthlyPaymentResultsDto = this.applyForm.value;
       const resultsContainer = document.querySelector('.grid-container2');
       resultsContainer?.classList.add('show-results');
       const formData: MonthlyPaymentDto = this.applyForm.value;
-      console.log(formData);
       this.monthlyPaymentComponent.calculateResults(formData);
+
+      this.monthlyPaymentService.getEuribor().subscribe((data) => {
+        this.euriborValue = data;
+        this.fixedRate = '2';
+      });
+      this.monthlyPaymentService
+        .getTotalInterestRate(formData)
+        .subscribe((data) => {
+          this.totalInterestRate = data;
+        });
+      this.monthlyPaymentService
+        .getTotalPaymentSum(formData)
+        .subscribe((data) => {
+          this.totalPaymenSum = data;
+        });
+
+        this.updateResultsMontly(this.monthlyPaymentResultsDto);
     }
   }
   onUpdate(value: any) {
-    this.updateResults(value);
+    if (this.calculateForm.valid) {
+      this.updateResults(value);
+    }
+  }
+
+  onUpdateMonthly(value: any) {
+    if (this.applyForm.valid) {
+      this.updateResultsMontly(value);
+    }
   }
 
   onCalculateButton() {
@@ -439,56 +487,62 @@ export class CalculatorFormComponent implements OnInit {
       this.actionText = 'Calculated';
       this.showColumn2 = true;
       this.actionText = 'Submitted form';
-      const calculateFormData = this.calculateForm.value;
-      console.log('in calculate function');
     }
   }
-  //CIA TIKRIAUSIAI REIKS PERKELT I VIRSUTINE FUNKCIJA. Arba ne
+
+  handleButtonClick() {
+    if (this.calculateForm.valid) {
+      if (this.showMore) {
+        this.onSubmit();
+      } else {
+        if (this.firstUpdate) {
+          this.onCalculateButton();
+          this.firstUpdate = false;
+        }
+      }
+    }
+  }
+
   onSubmit() {
-    console.log(this.studentLoan.value);
-    console.log(this.calculateForm.value);
     if (this.calculateForm.valid) {
       this.calculateFormDto = this.calculateForm.value;
       this.calculateResultsDto = this.submitForm.value;
-      if (
-        this.studentLoan.value != '' ||
-        this.otherLoan.value != '' ||
-        this.politicalyExposed.value != '' ||
-        this.houseType.value != ''
-      ) {
+    
+      if (this.showMore) {
         this.calculatorService
-          .sendDataDetailed(this.calculateFormDto)
-          .subscribe((data: CalculateFormDto) => {
-            this.calculateFormDto = data;
+          .sendDataDetailed(this.getCombinedData())
+          .subscribe((data: CalculateResultsDto) => {
+            this.calculateResultsDto = data;
           });
       } else {
         this.calculatorService
           .sendData(this.calculateFormDto)
-          .subscribe((data: CalculateFormDto) => {
-            this.calculateFormDto = data;
+          .subscribe((data: CalculateResultsDto) => {
+            this.calculateResultsDto = data;
           });
       }
+      this.updateResults(this.calculateFormDto);
 
     }
   }
 
-    /* onSubmit(): CalculateFormDto {
-    if (this.calculateForm.valid) {
-      this.calculateFormDto = this.calculateForm.value;
-      this.calculateResultsDto = this.submitForm.value;
-
-      this.calculatorService
-        .sendData(this.calculateFormDto)
-        .subscribe((data: CalculateFormDto) => {
-          this.calculateFormDto = data;
-        });
-      return this.calculateFormDto;
-    }else{
-
-    }
-    return this.calculateFormDto;
-  } */
-  
+  getCombinedData(): CalculateFormDto {
+    return {
+      homePrice: this.calculateForm.value.homePrice,
+      monthlyFamilyIncome: this.calculateForm.value.monthlyFamilyIncome,
+      loanTerm: this.calculateForm.value.loanTerm,
+      familyMembers: this.calculateForm.value.familyMembers,
+      haveChildren: this.calculateForm.value.haveChildren,
+      detailedFormDto: {
+        city: this.calculateForm.value.citySelect,
+        buyOption: this.calculateForm.value.buyOption,
+        studentLoan: this.calculateForm.value.studentLoan,
+        otherLoan: this.calculateForm.value.otherLoan,
+        politicalyExposed: this.calculateForm.value.politicalyExposed,
+      },
+    };
+  }
+ 
   handleResultsCalculated(results: MonthlyPaymentResultsDto): void {
     this.monthlyPaymentResultsDto.estimatedMonthlyPayment =
       results.estimatedMonthlyPayment;

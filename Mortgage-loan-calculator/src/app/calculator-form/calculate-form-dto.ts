@@ -5,12 +5,7 @@ export interface CalculateFormDto {
   loanTerm?: any;
   familyMembers?: any;
   haveChildren?: any;
-  city?: any;
-
-  houseType?: any;
-  studentLoan?: any;
-  otherLoan?: any;
-  politicalyExposed?: any;
+  detailedFormDto?: DetailedFormDto;
 
 }
 export interface CalculateResultsDto {
@@ -20,4 +15,12 @@ export interface CalculateResultsDto {
   agreementFee?: any;
   totalPaymentSum?: any;
   // calculateForm?: any;
+}
+
+export interface DetailedFormDto {
+  city?: any;
+  buyOption?: any;
+  studentLoan?: any;
+  otherLoan?: any;
+  politicalyExposed?: any;
 }
