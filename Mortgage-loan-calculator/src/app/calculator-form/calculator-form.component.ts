@@ -130,7 +130,7 @@ export class CalculatorFormComponent implements OnInit {
       .pipe(
         distinctUntilChanged(),
         tap((value) => {
-          if (!this.firstUpdate && this.calculateForm.valid) {
+          if (!this.firstUpdate) {
             this.onUpdate(value);
           }
         }),
@@ -142,7 +142,7 @@ export class CalculatorFormComponent implements OnInit {
         distinctUntilChanged(),
 
         tap((value) => {
-          this.updateResultsMontly(value);
+          this.onUpdateMonthly(value);
         }),
         takeUntil(this.destroy$)
       )
@@ -400,6 +400,10 @@ export class CalculatorFormComponent implements OnInit {
   }
 
   updateResults(value: any) {
+
+    this.calculateFormDto = this.calculateForm.value;
+    this.calculateResultsDto = this.submitForm.value;
+
     if(this.showMore) {
       this.calculatorService
       .sendDataDetailed(this.getCombinedData())
@@ -416,16 +420,22 @@ export class CalculatorFormComponent implements OnInit {
     }
 
   updateResultsMontly(value: any) {
-    if (this.applyForm.valid) {
+
+    this.monthlyPaymentComponent.monthlyPaymentDto = this.applyForm.value;
+    this.monthlyPaymentResultsDto = this.applyForm.value;
+
       this.monthlyPaymentService
         .getCalculationResults(value)
         .subscribe((data: MonthlyPaymentResultsDto) => {
           this.monthlyPaymentResultsDto = data;
         });
-    }
   }
+  
   calculateMonthly() {
     if (this.applyForm.valid) {
+
+      this.monthlyPaymentComponent.monthlyPaymentDto = this.applyForm.value;
+      this.monthlyPaymentResultsDto = this.applyForm.value;
       const resultsContainer = document.querySelector('.grid-container2');
       resultsContainer?.classList.add('show-results');
       const formData: MonthlyPaymentDto = this.applyForm.value;
@@ -445,11 +455,19 @@ export class CalculatorFormComponent implements OnInit {
         .subscribe((data) => {
           this.totalPaymenSum = data;
         });
+
+        this.updateResultsMontly(this.monthlyPaymentResultsDto);
     }
   }
   onUpdate(value: any) {
     if (this.calculateForm.valid) {
       this.updateResults(value);
+    }
+  }
+
+  onUpdateMonthly(value: any) {
+    if (this.applyForm.valid) {
+      this.updateResultsMontly(value);
     }
   }
 
@@ -481,15 +499,6 @@ export class CalculatorFormComponent implements OnInit {
           this.onCalculateButton();
           this.firstUpdate = false;
         }
-      }
-    }
-  }
-
-  triggerFirstUpdate() {
-    if (this.calculateForm.valid) {
-      this.updateResults(this.calculateFormDto);
-      if (this.firstUpdate) {
-        this.firstUpdate = false;
       }
     }
   }
