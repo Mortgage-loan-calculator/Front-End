@@ -589,7 +589,7 @@ mat-error {
 .fullWidth {
   width: 270%;
 }
-::ng-deep {
+/*::ng-deep {
   .mat-tab-label {
     &:nth-of-type(1){
       background-color: green;
@@ -601,7 +601,7 @@ mat-error {
       background-color: brown;
     }
   }
-}
+}*/
 @media screen and (max-width: 800px) {
   .columns {
     flex-wrap: wrap;
