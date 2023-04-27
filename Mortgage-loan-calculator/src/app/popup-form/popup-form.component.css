@@ -75,11 +75,11 @@
   color: white;
   cursor: pointer;
   transition: all 0.3s ease;
-  background-color: #449d44;
+  background-color: #cc8b65;
 }
 .sendBtn:hover {
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-  border: 2px solid #449d44;
+  border: 2px solid #cc8b65;
 }
 
 .sendBtnCotainer {

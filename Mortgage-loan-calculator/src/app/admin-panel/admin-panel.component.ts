@@ -30,45 +30,43 @@ import { CalculateResultsDto } from '../calculator-form/calculate-form-dto';
   ],
 })
 export class AdminPanelComponent implements AfterViewInit, OnInit {
-
   spinerOn = true;
 
   columnsToDisplay = ['name', 'phoneNumber', 'email', 'time', 'action'];
   expandedCustomer: Customer | undefined;
-  //expandedResults!: CalculateResultsDto;
 
   constructor(private service: CustomerService) {}
   ngOnInit() {}
 
   customers: MatTableDataSource<Customer> = new MatTableDataSource<Customer>();
 
-  displayedColumns: string[] = [
-    'name',
-    'phoneNumber',
-    'email',
-    'ip',
-    'time',
-    'action',
-  ];
-
-  @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator;
+   @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator;
   @ViewChild(CalculatorFormComponent)
   calculatorFormComponent?: CalculatorFormComponent;
-
-
+  length = 0;
+  pageSize = 25;
+  pageSizeOptions = [5, 10, 25, 100];
 
   ngAfterViewInit() {
     this.service.getCustomer().subscribe((data) => {
       this.customers.data = data;
       this.customers.paginator = this.paginator;
+      this.length = data.length;
       this.spinerOn = false;
     });
   }
+  onPageChange(event: PageEvent) {
+    const pageSize = event.pageSize;
+    const pageIndex = event.pageIndex;
+    this.service.getCustomer().subscribe((data) => {
+      this.customers.data = data;
+    });
+  }
+
   deleteCustomer(id: string): void {
     this.service.deleteCustomer(id);
     location.reload();
   }
-
 
   getCalculateFormDto(customer: Customer): void {
     this.service
@@ -78,5 +76,4 @@ export class AdminPanelComponent implements AfterViewInit, OnInit {
         this.expandedCustomer = customer;
       });
   }
-
 }
