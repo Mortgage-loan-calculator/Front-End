@@ -136,19 +136,17 @@
                     <div class="Radio-label">What would you like to buy?</div>
                     <mat-radio-group
                       class="radioselect"
-                      formControlName="buyOption"
+                      formControlName="houseType"
                       aria-label="Select an option"
-                      [ngClass]="
-                        showColumn2 ? 'smallRadio' : 'smallRadio fullWidth'
-                      "
+                      class="smallRadio"
                     >
-                      <mat-radio-button value="NEW_HOUSE"
+                      <mat-radio-button value="New House"
                         >New House</mat-radio-button
-                      ><br />
-                      <mat-radio-button value="COOPERATIVE"
+                      >
+                      <mat-radio-button value="Housing co-operative apartment"
                         >Housing co-operative apartment</mat-radio-button
                       >
-                      <mat-radio-button value="SECOND_HOUSE"
+                      <mat-radio-button value="Second Home"
                         >Second Home</mat-radio-button
                       >
                     </mat-radio-group>
@@ -242,7 +240,7 @@
                     type="submit"
                     class="my-button calculate-button"
                     (change)="show()"
-                    (click)="handleButtonClick()"
+                    (click)="onCalculateButton()"
                   >
                     Calculate
                   </button>
@@ -304,7 +302,7 @@
                           <span matPrefix>Agreement fee:</span>
                         </div>
                         <div class="amount-positioning">
-                          {{ calculateResultsDto.agreementFee }}€
+                          {{ calculateResultsDto.agreementFee * 10 }}€
                         </div>
                       </div>
                     </div>
@@ -501,10 +499,7 @@
   (onClose)="showPopup = false"
 ></app-popup-form>
 <!-- (click)="calculateMonthly()" -->
-<div
-  class="spinner-container"
-  *ngIf="spinnerOn && calculateResultsDto.totalInterestPaid == 0"
->
+<div class="spinner-container" *ngIf="spinnerOn">
   <div class="spinner-overlay"></div>
   <div class="spinner">
     <mat-spinner></mat-spinner>

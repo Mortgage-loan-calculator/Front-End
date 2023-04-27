@@ -135,7 +135,6 @@ tr.example-element-row:not(.example-expanded-row):active {
 }
 
 .example-element-description-column {
-
   width: 50%;
   margin-top: 20px;
   grid-template-columns: repeat(2, 1fr);
@@ -160,4 +159,13 @@ tr.example-element-row:not(.example-expanded-row):active {
   margin-bottom: 20px;
 }
 
-
+.mat-mdc-progress-spinner {
+  display: block;
+  overflow: hidden;
+  line-height: 0;
+  width: 50px !important;
+  height: 52px !important;
+}
+.mat-mdc-progress-spinner {
+  --mdc-circular-progress-active-indicator-color: #cc8b65;
+}
