@@ -241,7 +241,7 @@ export class CalculatorFormComponent implements OnInit {
       familyMembers: [''],
 
       haveChildren: [false],
-      citySelect: [<string | City>'', [Validators.pattern(/^[a-zA-Z]$/)]],
+      citySelect: [<string | City>'', [Validators.pattern(/^[^0-9]*$/)]],
       buyOption: [''],
       studentLoan: [''],
       otherLoan: [''],
