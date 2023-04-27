@@ -10,18 +10,11 @@
         <mat-tab routerLink="/borrow" label="How much can you borrow">
           <ng-template matTabContent>
             <div class="columns">
-
-
-              <form
-                class="column"
-                [formGroup]="calculateForm">
-
-
+              <form class="column" [formGroup]="calculateForm">
                 <div class="toggle-container">
                   <div class="toggle-label">Alone/With partner</div>
 
                   <mat-slide-toggle
-
                     class="toggle"
                     (change)="onChange()"
                     formControlName="partnerToggle"
@@ -96,11 +89,7 @@
                   </div>
                 </div>
                 <div class="slider-container">
-
-
-                  <div class="slider-name">
-                    Number of adult family members:
-                  </div>
+                  <div class="slider-name">Number of adult family members:</div>
 
                   <mat-slider
                     min="1"
@@ -149,7 +138,9 @@
                       class="radioselect"
                       formControlName="houseType"
                       aria-label="Select an option"
-                      class="smallRadio fullWidth"
+                      [ngClass]="
+                        showColumn2 ? 'smallRadio' : 'smallRadio fullWidth'
+                      "
                     >
                       <mat-radio-button value="New House"
                         >New House</mat-radio-button
@@ -440,9 +431,7 @@
                 <div class="grid-items results">
                   <span matPrefix>Your estimated monthly payment: </span>
                   <strong>
-
                     {{ monthlyPaymentResultsDto.estimatedMonthlyPayment }}€
-
                   </strong>
                 </div>
                 <div class="grid-items results">
@@ -455,9 +444,7 @@
                 <div class="grid-items results">
                   <span matPrefix>Interest rate (fixed):</span>
 
-
                   <strong>{{ fixedRate }}%</strong>
-
                 </div>
                 <div class="grid-items results">
                   <span matPrefix>Euribor:</span>
