@@ -1,26 +1,64 @@
 
+.formBlock {
+  background-color: #ebebe8;
+  background: url("../../assets/home-key.jpg") no-repeat center center/cover;
+  height: 100%;
+  position: relative;
+}
+.formBlock:before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(235, 235, 232, 0.5);
+  z-index: 1;
+  filter: blur(80px);
+  -webkit-filter: blur(80px);
+}
+
 h2 {
   font-family: Verdana, Arial, Helvetica, sans-serif;
   letter-spacing: 0.1rem;
   text-align: center;
   font-size: 24px;
   line-height: 1.25;
-  margin-bottom: 15px;
-  margin-top: 15px;
 }
 
 .box {
   background-color: #ebebe8;
-
   margin: 0 auto;
   max-width: 800px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 3);
   border: 2px solid #ddd;
   border-radius: 10px;
 }
+
+.box::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  /* background: url("../../assets/home-key.jpg") no-repeat center center/cover; */
+}
+
+/* .columns::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: url("../../assets/home-key.jpg") no-repeat center center/cover;
+  filter: blur(15px);
+  z-index: -1;
+} */
+
 .columns {
   height: 600px;
-
   display: flex;
   justify-content: center;
 }
@@ -40,7 +78,6 @@ h2 {
   flex-basis: 50%;
   box-sizing: border-box;
   opacity: 0;
-
   transition: all 0.5s ease;
 }
 .column2.show {
@@ -235,6 +272,12 @@ mat-form-field {
   scale: 90%;
 }
 
+
+/* .results .grid-item.results,
+  .results .grid-items.results {
+    margin-left: 30px;
+  } */
+
 @media screen and (max-width: 800px) {
   .columns {
     flex-wrap: wrap;
@@ -281,10 +324,7 @@ mat-form-field {
   .grid-item {
     width: 220px;
   }
-  /* .results .grid-item.results,
-  .results .grid-items.results {
-    margin-left: 30px;
-  } */
+
 }
 
 .my-button {
@@ -298,6 +338,10 @@ mat-form-field {
 }
 .my-button:hover {
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+}
+
+.calculate-button{
+  margin-top: 75px;
 }
 
 .calculate-button,
@@ -319,12 +363,11 @@ mat-form-field {
 }
 
 .column3 {
-  height: 570px;
+  height: 580px;
 }
 
 .grid-container2 {
-  margin-top: 30px;
-
+  margin-top: 20px;
   margin-left: 30px;
 
   display: flex;
@@ -333,9 +376,17 @@ mat-form-field {
 
 .user {
   width: 50%;
+  flex-direction: column;
+  gap: 10px;
+}
+.dealAmount,
+.downPayment {
+  margin-bottom: 15px;
 }
 
 .results {
+  margin-top: -10px;
+
   flex-basis: 50%;
   box-sizing: border-box;
   gap: 15px;
@@ -343,11 +394,17 @@ mat-form-field {
   margin-left: -10px;
   align-items: center;
   justify-content: space-between;
+  transition: all 1s ease;
+  opacity: 0;
+}
+
+.show-results .results {
+  opacity: 1;
+  transform: translateY(0);
 }
 
 .results div.grid-items.results {
   font-size: 13px;
-  font-weight: bold;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -409,7 +466,6 @@ mat-error {
   margin-top: 10px;
 }
 
-
 .spinner-container {
   position: fixed;
   top: 0;
@@ -437,23 +493,11 @@ mat-error {
   z-index: 10000;
 }
 
-/* .aligning-show-more {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-} */
-/* .radioselect {
-  margin-left: 20%;
-} */
-
 .mat-radio-button[value="Second Home"] {
-  transform: scale(0.3); /* adjust the scale value as per your requirement */
+  transform: scale(0.3);
 }
-
 .show-more-content {
   margin-top: 10px;
-  margin-left: 20px;
   margin-bottom: 20px;
   display: flex;
   flex-direction: column;
@@ -463,17 +507,11 @@ mat-error {
 }
 
 .show-more {
-  font-size: 13px;
-  margin: 50px;
-}
-
-/* .results .grid-item.results strong {
-  margin-left: 10px;
-} */
-
-/* .results .grid-item.results:not(:last-child) {
+  margin-top: 30px;
   margin-bottom: 10px;
-} */
+
+  font-size: 13px;
+}
 
 .warning {
   color: red !important;
@@ -508,26 +546,50 @@ mat-error {
 }
 
 .mat-mdc-tab-label-container {
+  -webkit-tab-hiflight-color: #013328;
   --mdc-tab-label-container-color: #013328;
   --mdc-tab-handle-color: #013328;
   --mdc-tab-label-label-text-color: #013328;
   --mdc-tab-indicator: #013328;
   --mdc-tab-indicator__content: #013328;
 }
+
 .md-tab.md-active {
   background-color: #013328;
 }
 
-::ng-deep .mat-tab-list .mat-tab-labels .mat-tab-label:first-child  {
-  color:red;
+::ng-deep .mat-tab-list .mat-tab-labels .mat-tab-label:first-child {
+  color: red;
   background-color: green;
 }
 
-::ng-deep .mat-tab-list .mat-tab-labels .mat-tab-label:first-child:hover  {
-  color:green;
+::ng-deep .mat-tab-list .mat-tab-labels .mat-tab-label:first-child:hover {
+  color: green;
   background-color: red;
 }
-::ng-deep {
+
+.mdc-tab-indicator__content--underline {
+  --mdc-tab-indicator-active-indicator-color: orange;
+}
+
+.mat-mdc-radio-button.mat-accent {
+  --mdc-radio-disabled-selected-icon-color: #000;
+  --mdc-radio-disabled-unselected-icon-color: #000;
+  --mdc-radio-unselected-focus-icon-color: #212121;
+  --mdc-radio-unselected-hover-icon-color: #212121;
+  --mdc-radio-unselected-icon-color: rgba(0, 0, 0, 0.54);
+  --mdc-radio-unselected-pressed-icon-color: rgba(0, 0, 0, 0.54);
+  --mdc-radio-selected-focus-icon-color: #cc8b65;
+  --mdc-radio-selected-hover-icon-color: #cc8b65;
+  --mdc-radio-selected-icon-color: #cc8b65;
+  --mdc-radio-selected-pressed-icon-color: #cc8b65;
+  --mat-mdc-radio-ripple-color: #000;
+  --mat-mdc-radio-checked-ripple-color: #cc8b65;
+}
+.fullWidth {
+  width: 270%;
+}
+/*::ng-deep {
   .mat-tab-label {
     &:nth-of-type(1){
       background-color: green;
@@ -539,8 +601,57 @@ mat-error {
       background-color: brown;
     }
   }
+}*/
+@media screen and (max-width: 800px) {
+  .columns {
+    flex-wrap: wrap;
+  }
+  .column {
+    width: 100%;
+    order: 1;
+  }
+  .column2 {
+    width: 100%;
+    order: 2;
+  }
+
+  .submit-button {
+    margin-top: 80px;
+    width: 200px;
+  }
+  .amountDisplay {
+    margin-right: 0px;
+    justify-content: space-between;
+  }
+  .grid-item-2 {
+    width: 120%;
+  }
+  .down {
+    margin-top: 0px;
+  }
+  .fullWidth {
+    width: 100%;
+  }
 }
 
-.mdc-tab-indicator__content--underline {
-  --mdc-tab-indicator-active-indicator-color: orange;
+@media screen and (max-width: 600px) {
+  .grid-container2 {
+    display: flex;
+    flex-direction: column;
+  }
+  .user {
+    order: 1;
+  }
+  .results {
+    margin-top: 20px;
+
+    order: 2;
+  }
+  .grid-item {
+    width: 220px;
+  }
+  .fullWidth {
+    width: 100%;
+  }
 }
+

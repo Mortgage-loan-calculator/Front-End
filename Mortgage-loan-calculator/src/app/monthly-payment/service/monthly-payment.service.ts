@@ -1,32 +1,26 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { MonthlyPaymentDto, MonthlyPaymentResultsDto } from '../monthly-payment-dto';
+import {
+  MonthlyPaymentDto,
+  MonthlyPaymentResultsDto,
+} from '../monthly-payment-dto';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class MonthlyPaymentService {
-
   constructor(private http: HttpClient) {}
 
-  sendData(monthlyPaymentDto: MonthlyPaymentDto): Observable<MonthlyPaymentDto> {
+  sendData(
+    monthlyPaymentDto: MonthlyPaymentDto
+  ): Observable<MonthlyPaymentDto> {
     return this.http.post<MonthlyPaymentDto>(
       'https://mortgage-loan-calculator-back-end.onrender.com/monthly-payment/form',
-      //'http://localhost:8080/monthly-payment/form',
+      // 'http://localhost:8080/monthly-payment/form',
       monthlyPaymentDto
     );
   }
-
-  // saveResultData(
-  //   monthlyPaymentResultsDto: MonthlyPaymentResultsDto
-  // ): Observable<MonthlyPaymentResultsDto> {
-  //   return this.http.post<MonthlyPaymentResultsDto>(
-  //     // 'https://mortgage-loan-calculator-back-end.onrender.com/monthly-payment',
-  //     'http://localhost:8080/monthly-payment',
-  //     monthlyPaymentResultsDto
-  //   );
-  // }
 
   getCalculationResults(
     requestData: MonthlyPaymentDto
@@ -35,10 +29,32 @@ export class MonthlyPaymentService {
 
     return this.http.post<MonthlyPaymentResultsDto>(
       'https://mortgage-loan-calculator-back-end.onrender.com/monthly-payment',
-      //'http://localhost:8080/monthly-payment',
+      // 'http://localhost:8080/monthly-payment',
       requestData,
       { headers }
     );
   }
 
+  getEuribor() {
+    return this.http.get<number>(
+      // 'http://localhost:8080/monthly-payment/euribor');
+      'https://mortgage-loan-calculator-back-end.onrender.com/monthly-payment/euribor'
+    );
+  }
+
+  getTotalInterestRate(requestData: MonthlyPaymentDto): Observable<number> {
+    return this.http.post<number>(
+      // 'http://localhost:8080/monthly-payment/interest/rate',
+      'https://mortgage-loan-calculator-back-end.onrender.com/monthly-payment/interest/rate',
+      requestData
+    );
+  }
+
+  getTotalPaymentSum(requestData: MonthlyPaymentDto): Observable<number> {
+    return this.http.post<number>(
+      // 'http://localhost:8080/monthly-payment/payment/sum',
+      'https://mortgage-loan-calculator-back-end.onrender.com/monthly-payment/payment/sum',
+      requestData
+    );
+  }
 }
