@@ -94,13 +94,6 @@ tr.example-element-row:not(.example-expanded-row):active {
   border-bottom-width: 0;
 }
 
-/* .example-element-detail {
-  overflow: hidden;
-  flex-direction: column;
-  align-items: center;
-  white-space: nowrap;
-} */
-
 @media only screen and (max-width: 1000px) {
   .example-element-diagram {
     min-width: 50px;
@@ -124,17 +117,14 @@ tr.example-element-row:not(.example-expanded-row):active {
 
 .example-element-description {
   width: 100%;
-  margin-bottom: 20px;
-  margin-top: 20px;
+  margin-bottom: 30px;
+  margin-top: 30px;
   text-align: center;
   flex: 1;
   white-space: nowrap;
 }
 
-
-
-.example-expanded-row
- {
+.example-expanded-row {
   background-color: #f2f2f2;
   border: 2px solid #f2f2f2;
 }
@@ -144,23 +134,15 @@ tr.example-element-row:not(.example-expanded-row):active {
   border: 2px solid black;
 }
 
-
-.example-element-detail {
-  overflow: hidden;
-
-  justify-content: space-between;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-
 .example-element-description-column {
-  align-items: center;
 
-  display: grid;
+  width: 50%;
+  margin-top: 20px;
   grid-template-columns: repeat(2, 1fr);
-  grid-gap: 8px;
+  align-items: center;
+  display: grid;
+  gap: 5px;
+  justify-content: center;
 }
 
 .example-element-description-title {
@@ -171,12 +153,11 @@ tr.example-element-row:not(.example-expanded-row):active {
   margin-bottom: 8px;
 }
 
-.example-element-description-answer {
+.example-element-description-button {
   display: flex;
   align-items: center;
-  justify-content: flex-end;
-  padding-left: 20px;
+  margin-top: 20px;
+  margin-bottom: 20px;
 }
 
-.example-element-description-answer button {
-}
+
