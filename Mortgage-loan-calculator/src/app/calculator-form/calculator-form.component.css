@@ -1,11 +1,11 @@
 
 .formBlock {
   background-color: #ebebe8;
-  background: url("../../assets/home-key.jpg") no-repeat center center/cover;
+  background: url("../../assets/home-key blur.jpg") no-repeat center center/cover;
   height: 100%;
   position: relative;
 }
-.formBlock:before {
+/* .formBlock:before {
   content: "";
   position: absolute;
   top: 0;
@@ -16,7 +16,7 @@
   z-index: 1;
   filter: blur(80px);
   -webkit-filter: blur(80px);
-}
+} */
 
 
 h2 {
@@ -336,7 +336,7 @@ mat-form-field {
 }
 
 .calculate-button{
-  margin-top: 75px;
+  margin-top: 62px;
 }
 
 .calculate-button,
