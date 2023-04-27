@@ -232,7 +232,7 @@ export class CalculatorFormComponent implements OnInit {
       familyMembers: [''],
 
       haveChildren: [false],
-      citySelect: [<string | City>'', [Validators.pattern(/^[a-zA-Z]$/)]],
+      citySelect: [<string | City>'', [Validators.pattern(/^[^0-9]*$/)]],
       houseType: [''],
       studentLoan: [''],
       otherLoan: [''],
@@ -490,7 +490,6 @@ export class CalculatorFormComponent implements OnInit {
       }
     }
   }
-
 
   handleResultsCalculated(results: MonthlyPaymentResultsDto): void {
     this.monthlyPaymentResultsDto.estimatedMonthlyPayment =
