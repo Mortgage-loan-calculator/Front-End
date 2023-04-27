@@ -61,16 +61,15 @@
               {{ customer.calculateForm.haveChildren ? "yes" : "no" }}
             </div>
           </div>
-          <div class="example-element-description-column">
-            <div class="example-element-description-answer">
-              <button
-                mat-stroked-button
-                color="warn"
-                (click)="deleteCustomer(customer.id)"
-              >
-                Delete
-              </button>
-            </div>
+
+          <div class="example-element-description-button">
+            <button
+              mat-stroked-button
+              color="warn"
+              (click)="deleteCustomer(customer.id)"
+            >
+              Delete
+            </button>
           </div>
         </div>
       </td>
