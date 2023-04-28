@@ -6,28 +6,26 @@ mat-cell {
   font-size: 1.5em;
 }
 @media only screen and (max-width: 1000px) {
-  mat-cell {
-    font-size: 1em;
-  }
 }
 @media only screen and (max-width: 500px) {
-  mat-table {
-    scale: 60%;
+  .mat-elevation-z8 {
+    scale: 80%;
   }
-  example-element-row {
-    width: 100px;
+  .header {
+    font-size: 25px;
   }
-  matColumnDef{
-    width: 100px;
 
+  .mdc-data-table {
+    width: 80%;
   }
 }
-
-.mat-form-field {
-  font-size: 14px;
-  width: 100%;
+.mat-sort-header {
+  user-select: none;
 }
 
+::ng-deep .mat-sort-header-arrow {
+color: red; /*change color of arrow*/
+}
 .header {
   display: flex;
   justify-content: center;
@@ -49,11 +47,9 @@ mat-toolbar {
   z-index: 10;
   background-color: #c2c0c0;
 }
-
 span {
   color: white;
 }
-
 .spinner-container {
   position: fixed;
   top: 0;
@@ -75,7 +71,6 @@ span {
   backdrop-filter: blur(5px);
   z-index: 9999;
 }
-
 .spinner {
   position: relative;
   z-index: 10000;
@@ -99,12 +94,6 @@ tr.example-element-row:not(.example-expanded-row):active {
 
 .example-element-row td {
   border-bottom-width: 0;
-}
-
-@media only screen and (max-width: 1000px) {
-  .example-element-diagram {
-    min-width: 50px;
-  }
 }
 
 .example-element-diagram {

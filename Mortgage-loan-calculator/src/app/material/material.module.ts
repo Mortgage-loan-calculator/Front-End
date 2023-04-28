@@ -18,6 +18,7 @@ import { MatTabGroup } from '@angular/material/tabs';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatRadioModule } from '@angular/material/radio';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatSortModule } from '@angular/material/sort';
 
 const MaterialComponents = [
   BrowserAnimationsModule,
@@ -37,6 +38,7 @@ const MaterialComponents = [
   MatSliderModule,
   MatProgressSpinnerModule,
   MatRadioModule,
+  MatSortModule
 ];
 
 @NgModule({

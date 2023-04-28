@@ -13,6 +13,7 @@ import {
   trigger,
 } from '@angular/animations';
 import { CalculateResultsDto } from '../calculator-form/calculate-form-dto';
+import { MatSort } from '@angular/material/sort';
 
 @Component({
   selector: 'app-admin-panel',
@@ -35,12 +36,33 @@ export class AdminPanelComponent implements AfterViewInit, OnInit {
   columnsToDisplay = ['name', 'phoneNumber', 'email', 'time', 'action'];
   expandedCustomer: Customer | undefined;
 
-  constructor(private service: CustomerService) {}
-  ngOnInit() {}
+  constructor(private service: CustomerService) {
+    this.sort = new MatSort();
+  }
 
   customers: MatTableDataSource<Customer> = new MatTableDataSource<Customer>();
 
-   @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator;
+  ngOnInit() {
+    this.customers.sort = this.sort;
+  }
+  sortData(sort: MatSort) {
+    const data = this.customers.data.slice();
+    if (!sort.active || sort.direction === '') {
+      this.customers.data = data;
+    }
+
+    this.customers.data = data.sort((a, b) => {
+      const isAsc = sort.direction === 'asc';
+      const timeA = new Date(a.time).getTime();
+      const timeB = new Date(b.time).getTime();
+      return this.compare(timeA, timeB, isAsc);
+    });
+  }
+  compare(a: number, b: number, isAsc: boolean) {
+    return (a < b ? -1 : 1) * (isAsc ? 1 : -1);
+  }
+  @ViewChild(MatSort, { static: true }) sort: MatSort;
+  @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator;
   @ViewChild(CalculatorFormComponent)
   calculatorFormComponent?: CalculatorFormComponent;
   length = 0;

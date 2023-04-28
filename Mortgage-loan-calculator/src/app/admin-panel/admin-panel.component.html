@@ -5,23 +5,34 @@
 <h3>Customer, who want to get offer:</h3>
 
 <div class="mat-elevation-z8">
-  <table mat-table [dataSource]="customers" multiTemplateDataRows>
-    <ng-container
-      matColumnDef="{{ column }}"
-      *ngFor="let column of columnsToDisplay"
-    >
-      <th mat-header-cell *matHeaderCellDef>
-        {{ column === "time" ? "Time" : column }}
-      </th>
-      <td mat-cell *matCellDef="let customer">
-        {{
-          column === "time"
-            ? customer.time.slice(0, 10) + " " + customer.time.substring(11, 19)
-            : customer[column]
-        }}
-      </td>
+  <table mat-table [dataSource]="customers" matSort multiTemplateDataRows>
+    <ng-container class="cell" matColumnDef="name">
+      <th mat-header-cell *matHeaderCellDef>Name</th>
+      <td mat-cell *matCellDef="let customer">{{ customer.name }}</td>
     </ng-container>
-    <!-- Expanded Content Column - The detail row is made up of this one column that spans across all columns -->
+
+    <ng-container matColumnDef="phoneNumber">
+      <th mat-header-cell *matHeaderCellDef>Phone Number</th>
+      <td mat-cell *matCellDef="let customer">{{ customer.phoneNumber }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="email">
+      <th mat-header-cell *matHeaderCellDef>Email</th>
+      <td mat-cell *matCellDef="let customer">{{ customer.email }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="time">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Submission time</th>
+      <td mat-cell *matCellDef="let customer">{{ customer.time.slice(0, 10) + " " + customer.time.substring(11, 19) }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="action">
+      <th mat-header-cell *matHeaderCellDef>Action</th>
+      <td mat-cell *matCellDef="let customer">{{ customer.action }}</td>
+
+    </ng-container>
+
+
     <ng-container matColumnDef="expandedDetail">
       <td
         mat-cell
@@ -35,6 +46,7 @@
           "
           (click)="getCalculateFormDto(customer)"
         >
+
           <div class="example-element-description-column">
             <div class="example-element-description-title">Home price:</div>
             <div class="example-element-description-answer">
@@ -76,6 +88,7 @@
     </ng-container>
 
     <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
+
     <tr
       mat-row
       *matRowDef="let customer; columns: columnsToDisplay"
@@ -85,7 +98,9 @@
         expandedCustomer = expandedCustomer === customer ? null : customer
       "
     ></tr>
+
     <tr
+
       mat-row
       *matRowDef="let row; columns: ['expandedDetail']"
       class="example-detail-row"
@@ -96,7 +111,6 @@
     [pageSize]="pageSize"
     [pageSizeOptions]="pageSizeOptions"
     (page)="onPageChange($event)"
-
   ></mat-paginator>
 </div>
 <div class="spinner-container" *ngIf="spinerOn">
