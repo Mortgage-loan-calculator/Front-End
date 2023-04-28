@@ -408,7 +408,7 @@ export class CalculatorFormComponent implements OnInit {
     this.calculateFormDto = this.calculateForm.value;
     this.calculateResultsDto = this.submitForm.value;
 
-    if(this.showMore && this.areValuesBlank()) {
+    if(this.showMore && this.areValuesBlank() && this.calculateForm.value.buyOption != "") {
 
       this.calculatorService
         .getDetailedFormCalculationResultsButton(this.getCombinedData())
@@ -512,7 +512,7 @@ export class CalculatorFormComponent implements OnInit {
   }
 
   onDetailedCalculateButton() {
-    if (this.calculateForm.valid) {
+    if (this.calculateForm.valid && this.calculateForm.value.buyOption != "") {
       this.calculateFormDto = this.calculateForm.value;
       this.calculateResultsDto = this.submitForm.value;
 
@@ -554,7 +554,7 @@ export class CalculatorFormComponent implements OnInit {
 
   areValuesBlank(): boolean {
     const fieldsToCheck = [
-      'city',
+      'citySelect',
       'buyOption',
       'studentLoan',
       'otherLoan',
@@ -577,13 +577,32 @@ export class CalculatorFormComponent implements OnInit {
       familyMembers: this.calculateForm.value.familyMembers,
       haveChildren: this.calculateForm.value.haveChildren,
       detailedFormDto: {
-        city: this.calculateForm.value.citySelect,
+        city: this.cityName,
         buyOption: this.calculateForm.value.buyOption,
         studentLoan: this.calculateForm.value.studentLoan,
         otherLoan: this.calculateForm.value.otherLoan,
         politicalyExposed: this.calculateForm.value.politicalyExposed,
       },
     };
+  }
+
+  get cityName(): string {
+    const citySelectValue = this.calculateForm.get('citySelect')?.value;
+
+    if (typeof citySelectValue === 'string') {
+      try {
+        const cityObject = JSON.parse(citySelectValue);
+        if (cityObject && typeof cityObject === 'object' && 'name' in cityObject) {
+          return cityObject.name;
+        }
+      } catch (error) {
+        return citySelectValue;
+      }
+    } else if (citySelectValue && typeof citySelectValue === 'object' && 'name' in citySelectValue) {
+      return citySelectValue.name;
+    }
+
+    return '';
   }
 
   handleResultsCalculated(results: MonthlyPaymentResultsDto): void {
