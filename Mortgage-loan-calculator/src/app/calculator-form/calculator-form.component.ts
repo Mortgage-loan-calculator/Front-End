@@ -89,7 +89,6 @@ export class CalculatorFormComponent implements OnInit {
   myControl = new FormControl<string | City>('');
   options: City[] = [];
   filteredOptions!: Observable<City[]>;
-  firstUpdate: boolean = true;
 
   monthlyPaymentResultsDto: MonthlyPaymentResultsDto =
     {} as MonthlyPaymentResultsDto;
@@ -137,9 +136,7 @@ export class CalculatorFormComponent implements OnInit {
       .pipe(
         distinctUntilChanged(),
         tap((value) => {
-          if (!this.firstUpdate) {
             this.onUpdate(value);
-          }
         }),
         takeUntil(this.destroy$)
       )
@@ -508,11 +505,8 @@ export class CalculatorFormComponent implements OnInit {
       if (this.showMore && this.areValuesBlank()) {
         console.log(this.areValuesBlank());
         this.onDetailedCalculateButton();
-        this.firstUpdate = true;
       } else {
-          this.onCalculateButton();
-          this.firstUpdate = false;
-        
+          this.onCalculateButton();        
       }
     }
   }
