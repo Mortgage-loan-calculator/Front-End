@@ -4,7 +4,8 @@ import { catchError, Observable, throwError } from 'rxjs';
 import { ErrorHandlerService } from 'src/app/errors/error-handler.service';
 import { Error } from 'src/app/errors/error';
 
-const API_URL = 'https://mortgage-loan-calculator-back-end.onrender.com/auth/';
+const API_URL = //'https://mortgage-loan-calculator-back-end.onrender.com/auth/';
+  'http://localhost:8080/auth/';
 
 @Injectable({
   providedIn: 'root',
