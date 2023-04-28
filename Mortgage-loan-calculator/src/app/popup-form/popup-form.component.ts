@@ -44,21 +44,9 @@ export class PopupFormComponent {
       [Validators.required, Validators.email, Validators.maxLength(30)],
     ],
     ipAddress: [''],
-    time: [new Date()],
+    time: [''],
     action: ['Submitted'],
     calculateFormDto: [this.calculatorFormComponent.calculateFormDto],
-
-
-   /* phoneNumber: ['', [Validators.maxLength(20), Validators.pattern(/^[0-9]\d*$/)]],
-    email: ['', [Validators.required, Validators.email, Validators.maxLength(30)]],
-    ipAddress: [''],
-    time: [new Date()],
-    action: ['Submitted'],
-    familyMembers: [this.calculatorFormComponent.calculateForm.value.familyMembers],
-    haveChildren: [this.calculatorFormComponent.calculateForm.value.haveChildren],
-    homePrice: [this.calculatorFormComponent.calculateForm.value.homePrice],
-    loanTerm: [this.calculatorFormComponent.calculateForm.value.loanTerm],
-    monthlyFamilyIncome: [this.calculatorFormComponent.calculateForm.value.monthlyFamilyIncome] */
 
   });
 
