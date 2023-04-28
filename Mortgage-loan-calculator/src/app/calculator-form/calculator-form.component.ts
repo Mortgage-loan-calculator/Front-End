@@ -408,20 +408,19 @@ export class CalculatorFormComponent implements OnInit {
 
   updateResults(value: any) {
 
-
     this.calculateFormDto = this.calculateForm.value;
     this.calculateResultsDto = this.submitForm.value;
 
-    if(this.showMore) {
+    if(this.showMore && this.areValuesBlank()) {
 
       this.calculatorService
-        .sendDataDetailed(this.getCombinedData())
+        .getDetailedFormCalculationResultsButton(this.getCombinedData())
         .subscribe((data: CalculateResultsDto) => {
           this.calculateResultsDto = data;
         });
     } else {
       this.calculatorService
-        .sendData(this.calculateFormDto)
+        .getFormCalculationResultsButton(this.calculateFormDto)
         .subscribe((data: CalculateResultsDto) => {
           this.calculateResultsDto = data;
         });
@@ -498,8 +497,6 @@ export class CalculatorFormComponent implements OnInit {
           this.spinnerOn = false;
         });
 
-      this.updateResults(this.calculateFormDto);
-
       this.actionText = 'Calculated';
       this.showColumn2 = true;
       this.actionText = 'Submitted form';
@@ -508,14 +505,34 @@ export class CalculatorFormComponent implements OnInit {
 
   handleButtonClick() {
     if (this.calculateForm.valid) {
-      if (this.showMore) {
-        this.onSubmit();
+      if (this.showMore && this.areValuesBlank()) {
+        console.log(this.areValuesBlank());
+        this.onDetailedCalculateButton();
+        this.firstUpdate = true;
       } else {
-        if (this.firstUpdate) {
           this.onCalculateButton();
           this.firstUpdate = false;
-        }
+        
       }
+    }
+  }
+
+  onDetailedCalculateButton() {
+    if (this.calculateForm.valid) {
+      this.calculateFormDto = this.calculateForm.value;
+      this.calculateResultsDto = this.submitForm.value;
+
+      this.spinnerOn = true;
+      this.calculatorService
+        .getDetailedFormCalculationResultsButton(this.getCombinedData())
+        .subscribe((data: CalculateResultsDto) => {
+          this.calculateResultsDto = data;
+          this.spinnerOn = false;
+        });
+
+      this.actionText = 'Calculated';
+      this.showColumn2 = true;
+      this.actionText = 'Submitted form';
     }
   }
 
@@ -524,7 +541,7 @@ export class CalculatorFormComponent implements OnInit {
       this.calculateFormDto = this.calculateForm.value;
       this.calculateResultsDto = this.submitForm.value;
 
-      if (this.showMore) {
+      if (this.showMore && this.areValuesBlank()) {
         this.calculatorService
           .sendDataDetailed(this.getCombinedData())
           .subscribe((data: CalculateResultsDto) => {
@@ -539,6 +556,23 @@ export class CalculatorFormComponent implements OnInit {
       }
       this.updateResults(this.calculateFormDto);
     }
+  }
+
+  areValuesBlank(): boolean {
+    const fieldsToCheck = [
+      'city',
+      'buyOption',
+      'studentLoan',
+      'otherLoan',
+      'politicalyExposed',
+    ];
+    
+    return fieldsToCheck.some(
+      (fieldName) => !this.isBlank(this.calculateForm.get(fieldName)?.value));
+  }
+  
+  isBlank(value: any): boolean {
+    return value === '' || value === undefined || value === null;
   }
 
   getCombinedData(): CalculateFormDto {
