@@ -11,8 +11,15 @@ mat-cell {
   }
 }
 @media only screen and (max-width: 500px) {
-  mat-cell {
-    font-size: 0.8em;
+  mat-table {
+    scale: 60%;
+  }
+  example-element-row {
+    width: 100px;
+  }
+  matColumnDef{
+    width: 100px;
+
   }
 }
 

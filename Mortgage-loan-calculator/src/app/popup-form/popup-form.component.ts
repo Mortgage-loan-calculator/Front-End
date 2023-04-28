@@ -37,7 +37,7 @@ export class PopupFormComponent {
     ],
     phoneNumber: [
       '',
-      [Validators.maxLength(20), Validators.pattern(/^[0-9]\d*$/)],
+      [Validators.minLength(9),Validators.maxLength(20), Validators.pattern(/^\+?\d+$/)],
     ],
     email: [
       '',

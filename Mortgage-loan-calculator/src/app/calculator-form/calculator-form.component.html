@@ -6,8 +6,8 @@
 
   <div class="orange">
     <div class="box">
-      <mat-tab-group>
-        <mat-tab routerLink="/borrow" label="How much can you borrow">
+      <mat-tab-group color="warn">
+        <mat-tab routerLink="/borrow"  label="How much can you borrow">
           <ng-template matTabContent>
             <div class="columns">
               <form class="column" [formGroup]="calculateForm">
@@ -471,6 +471,7 @@
                 class="my-button apply-button"
                 (change)="show()"
                 (click)="calculateMonthly()"
+
               >
                 Calculate
               </button>

@@ -204,6 +204,8 @@ export class CalculatorFormComponent implements OnInit {
         [
           Validators.required,
           Validators.pattern(/^[0-9]+$/),
+          this.validateMaxNumbers.bind(this),
+
           Validators.min(1),
           Validators.maxLength(12),
           (control: FormControl) => {
@@ -329,6 +331,10 @@ export class CalculatorFormComponent implements OnInit {
     { updateOn: 'blur' }
   );
 
+  isSubmitDisabled = false;
+
+
+
   showColumn2 = false;
   ngAfterViewInit() {
     const calculateBtn = document.getElementById('calculate-btn');
@@ -407,13 +413,10 @@ export class CalculatorFormComponent implements OnInit {
   }
 
   updateResults(value: any) {
-
-
     this.calculateFormDto = this.calculateForm.value;
     this.calculateResultsDto = this.submitForm.value;
 
-    if(this.showMore) {
-
+    if (this.showMore) {
       this.calculatorService
         .sendDataDetailed(this.getCombinedData())
         .subscribe((data: CalculateResultsDto) => {
@@ -429,22 +432,19 @@ export class CalculatorFormComponent implements OnInit {
   }
 
   updateResultsMontly(value: any) {
-
     this.monthlyPaymentComponent.monthlyPaymentDto = this.applyForm.value;
     this.monthlyPaymentResultsDto = this.applyForm.value;
 
-      this.monthlyPaymentService
-        .getCalculationResults(value)
-        .subscribe((data: MonthlyPaymentResultsDto) => {
-          this.monthlyPaymentResultsDto = data;
-        });
+    this.monthlyPaymentService
+      .getCalculationResults(value)
+      .subscribe((data: MonthlyPaymentResultsDto) => {
+        this.monthlyPaymentResultsDto = data;
+      });
   }
-  
+
   calculateMonthly() {
     if (this.applyForm.valid) {
-
       this.spinnerOn = true;
-
 
       this.monthlyPaymentComponent.monthlyPaymentDto = this.applyForm.value;
       this.monthlyPaymentResultsDto = this.applyForm.value;
@@ -470,7 +470,7 @@ export class CalculatorFormComponent implements OnInit {
           this.spinnerOn = false;
         });
 
-        this.updateResultsMontly(this.monthlyPaymentResultsDto);
+      this.updateResultsMontly(this.monthlyPaymentResultsDto);
     }
   }
   onUpdate(value: any) {
