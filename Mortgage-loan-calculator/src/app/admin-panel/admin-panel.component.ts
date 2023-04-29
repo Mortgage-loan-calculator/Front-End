@@ -39,7 +39,6 @@ export class AdminPanelComponent implements AfterViewInit, OnInit {
   constructor(private service: CustomerService) {
     this.sort = new MatSort();
     this.selectedDate = new Date();
-
   }
 
   customers: MatTableDataSource<Customer> = new MatTableDataSource<Customer>();
@@ -55,22 +54,29 @@ export class AdminPanelComponent implements AfterViewInit, OnInit {
         const date = new Date(data.time);
         const filterDate = new Date(filter);
         const isNameMatch = name.includes(filter);
-        const isDateMatch = date.toISOString() === filterDate.toISOString();
+        const isDateMatch = date.toDateString() === filterDate.toDateString();
         return isNameMatch || isDateMatch;
       };
     });
   }
+  noResultsFound = false;
+
+  searchCustomers(query: string): void {
+    const filteredCustomers = this.customers.data.filter(
+      (customer: { name: string }) =>
+        customer.name.toLowerCase().includes(query.toLowerCase())
+    );
+
+    this.noResultsFound = filteredCustomers.length === 0;
+
+    this.customers = new MatTableDataSource(filteredCustomers);
+  }
 
   searchByDate(date: Date) {
-    const filteredCustomers = this.customers.data.filter(
-      (customer: Customer) => {
-        const submissionDate = new Date(customer.time);
-        return submissionDate.toDateString() === date.toDateString();
-      }
-    );
-    this.customers.data = filteredCustomers;
+    this.customers.filter = date.toDateString();
     this.customers.paginator?.firstPage();
   }
+
   resetTable() {
     this.customers = new MatTableDataSource<Customer>([]);
     this.service.getCustomer().subscribe((customers) => {
@@ -91,24 +97,7 @@ export class AdminPanelComponent implements AfterViewInit, OnInit {
       this.searchByName(name);
     }
   }
-  // searchByDate(date: string) {
-  //   if (!date) {
-  //     return;
-  //   }
-  //   console.log('date:', date);
-  //   const selectedDate = new Date(date);
-  //   console.log('selectedDate:', selectedDate);
-  //   if (isNaN(selectedDate.getTime())) {
-  //     console.log('Invalid date value');
-  //     return;
-  //   }
-  //   const timezoneOffsetInMs = selectedDate.getTimezoneOffset() * 60 * 1000;
-  //   const localDate = new Date(selectedDate.getTime() - timezoneOffsetInMs);
-  //   const filterValue = localDate.toISOString().slice(0, 10);
-  //   console.log('filterValue:', filterValue);
-  //   this.customers.filter = filterValue;
-  //   this.customers._updateChangeSubscription();
-  // }
+
   @ViewChild(MatSort, { static: true }) sort: MatSort;
   @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator;
   @ViewChild(CalculatorFormComponent)
