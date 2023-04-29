@@ -502,8 +502,7 @@ export class CalculatorFormComponent implements OnInit {
 
   handleButtonClick() {
     if (this.calculateForm.valid) {
-      if (this.showMore && this.areValuesBlank()) {
-        console.log(this.areValuesBlank());
+      if (this.showMore && this.areValuesBlank() && this.calculateForm.value.buyOption != "") {
         this.onDetailedCalculateButton();
       } else {
           this.onCalculateButton();        
@@ -555,7 +554,6 @@ export class CalculatorFormComponent implements OnInit {
   areValuesBlank(): boolean {
     const fieldsToCheck = [
       'citySelect',
-      'buyOption',
       'studentLoan',
       'otherLoan',
       'politicalyExposed',
