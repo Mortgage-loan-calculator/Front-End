@@ -5,13 +5,12 @@
 <h3>Customer, who want to get offer:</h3>
 
 <div class="form-container">
-  <mat-form-field appearance="outline">
-    <input
-      matInput
-      placeholder="Search by Name"
-      #searchInput
-      (keyup.enter)="searchByName(searchInput.value)"
-    />
+  <mat-form-field class="search" appearance="outline">
+    <mat-label>Search</mat-label>
+    <input matInput placeholder="Search by Name, Number, or Email" #searchInput (input)="searchCustomers(searchInput.value)">
+    <button *ngIf="searchInput.value" matSuffix mat-icon-button aria-label="Clear" (click)="searchInput.value=''">
+      <mat-icon>close</mat-icon>
+    </button>
   </mat-form-field>
 
   <mat-form-field appearance="outline" class="example-form-field">

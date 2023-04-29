@@ -79,9 +79,12 @@ tr.example-detail-row {
 
 tr.example-element-row:not(.example-expanded-row):hover {
   background-color: #f2f2f2;
+  font-weight: bold;
 }
 
 tr.example-element-row:not(.example-expanded-row):active {
+  font-weight: bold;
+
   background-color: #f2f2f2;
 }
 
@@ -119,6 +122,7 @@ tr.example-element-row:not(.example-expanded-row):active {
 }
 .example-expanded-row:hover,
 .example-detail-row:hover {
+  font-weight: bold;
   background-color: #f2f2f2 important!;
   border: 2px solid black;
 }
@@ -163,9 +167,19 @@ tr.example-element-row:not(.example-expanded-row):active {
   justify-content: space-between;
   align-items: center;
   margin: 0 auto;
-  max-width: 600px;
+  max-width: 800px;
 }
 
 .example-form-field {
   width: 45%;
+}
+.search {
+  display: flex;
+  align-items: center;
+  width: 320px;
+}
+
+.search icon {
+  flex-grow: 1;
+  margin-right: 320px;
 }

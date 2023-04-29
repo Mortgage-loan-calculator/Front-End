@@ -55,22 +55,31 @@ export class AdminPanelComponent implements AfterViewInit, OnInit {
         const filterDate = new Date(filter);
         const isNameMatch = name.includes(filter);
         const isDateMatch = date.toDateString() === filterDate.toDateString();
-        return isNameMatch || isDateMatch;
+        const isPhoneNumberMatch = data.phoneNumber.includes(filter); // Add this line to check phone number
+
+        return isNameMatch || isDateMatch || isPhoneNumberMatch;
       };
     });
   }
   noResultsFound = false;
 
   searchCustomers(query: string): void {
-    const filteredCustomers = this.customers.data.filter(
-      (customer: { name: string }) =>
-        customer.name.toLowerCase().includes(query.toLowerCase())
+    const searchTerm = query.toLowerCase().trim();
+    if (!searchTerm) {
+      this.customers.filter = '';
+      this.noResultsFound = false;
+      return;
+    }
+    const filteredCustomers = this.customers.data.filter(customer =>
+      customer.name.toLowerCase().includes(searchTerm) ||
+      `${customer.phoneNumber}`.includes(searchTerm)||
+      customer.email.toLowerCase().includes(searchTerm)
     );
-
+    console.log(filteredCustomers);
+    this.customers.filter = searchTerm;
     this.noResultsFound = filteredCustomers.length === 0;
-
-    this.customers = new MatTableDataSource(filteredCustomers);
   }
+
 
   searchByDate(date: Date) {
     this.customers.filter = date.toDateString();
