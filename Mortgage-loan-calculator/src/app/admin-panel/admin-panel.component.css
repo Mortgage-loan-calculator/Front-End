@@ -5,19 +5,6 @@ mat-cell {
   padding: 10px;
   font-size: 1.5em;
 }
-@media only screen and (max-width: 1000px) {
-}
-@media only screen and (max-width: 500px) {
-  .mat-elevation-z8 {
-    scale: 80%;
-  }
-  .header {
-    font-size: 25px;
-  }
-  .mdc-data-table {
-    width: 80%;
-  }
-}
 
 .header {
   display: flex;
@@ -182,4 +169,13 @@ tr.example-element-row:not(.example-expanded-row):active {
 .search icon {
   flex-grow: 1;
   margin-right: 320px;
+}
+
+@media only screen and (max-width: 500px) {
+  .form-container input {
+    font-size: 10px;
+  }
+  .search {
+    width: 200px;
+  }
 }
