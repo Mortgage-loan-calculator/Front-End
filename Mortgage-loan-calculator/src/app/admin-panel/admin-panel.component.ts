@@ -32,35 +32,83 @@ import { MatSort } from '@angular/material/sort';
 })
 export class AdminPanelComponent implements AfterViewInit, OnInit {
   spinerOn = true;
-
   columnsToDisplay = ['name', 'phoneNumber', 'email', 'time', 'action'];
   expandedCustomer: Customer | undefined;
+  selectedDate: Date;
 
   constructor(private service: CustomerService) {
     this.sort = new MatSort();
+    this.selectedDate = new Date();
+
   }
 
   customers: MatTableDataSource<Customer> = new MatTableDataSource<Customer>();
 
   ngOnInit() {
+    this.customers = new MatTableDataSource<Customer>([]);
     this.customers.sort = this.sort;
-  }
-  sortData(sort: MatSort) {
-    const data = this.customers.data.slice();
-    if (!sort.active || sort.direction === '') {
-      this.customers.data = data;
-    }
-
-    this.customers.data = data.sort((a, b) => {
-      const isAsc = sort.direction === 'asc';
-      const timeA = new Date(a.time).getTime();
-      const timeB = new Date(b.time).getTime();
-      return this.compare(timeA, timeB, isAsc);
+    this.service.getCustomer().subscribe((customers) => {
+      const customerArray = customers;
+      this.customers = new MatTableDataSource(customerArray);
+      this.customers.filterPredicate = (data: Customer, filter: string) => {
+        const name = data.name.toLowerCase();
+        const date = new Date(data.time);
+        const filterDate = new Date(filter);
+        const isNameMatch = name.includes(filter);
+        const isDateMatch = date.toISOString() === filterDate.toISOString();
+        return isNameMatch || isDateMatch;
+      };
     });
   }
-  compare(a: number, b: number, isAsc: boolean) {
-    return (a < b ? -1 : 1) * (isAsc ? 1 : -1);
+
+  searchByDate(date: Date) {
+    const filteredCustomers = this.customers.data.filter(
+      (customer: Customer) => {
+        const submissionDate = new Date(customer.time);
+        return submissionDate.toDateString() === date.toDateString();
+      }
+    );
+    this.customers.data = filteredCustomers;
+    this.customers.paginator?.firstPage();
   }
+  resetTable() {
+    this.customers = new MatTableDataSource<Customer>([]);
+    this.service.getCustomer().subscribe((customers) => {
+      const customerArray = customers;
+      this.customers = new MatTableDataSource(customerArray);
+    });
+  }
+
+  searchByName(name: string) {
+    this.customers.filter = name.trim().toLowerCase();
+  }
+
+  searchByNameAndDate(name: string, date: Date) {
+    if (!isNaN(date.getTime())) {
+      this.searchByDate(date);
+    }
+    if (name.trim()) {
+      this.searchByName(name);
+    }
+  }
+  // searchByDate(date: string) {
+  //   if (!date) {
+  //     return;
+  //   }
+  //   console.log('date:', date);
+  //   const selectedDate = new Date(date);
+  //   console.log('selectedDate:', selectedDate);
+  //   if (isNaN(selectedDate.getTime())) {
+  //     console.log('Invalid date value');
+  //     return;
+  //   }
+  //   const timezoneOffsetInMs = selectedDate.getTimezoneOffset() * 60 * 1000;
+  //   const localDate = new Date(selectedDate.getTime() - timezoneOffsetInMs);
+  //   const filterValue = localDate.toISOString().slice(0, 10);
+  //   console.log('filterValue:', filterValue);
+  //   this.customers.filter = filterValue;
+  //   this.customers._updateChangeSubscription();
+  // }
   @ViewChild(MatSort, { static: true }) sort: MatSort;
   @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator;
   @ViewChild(CalculatorFormComponent)

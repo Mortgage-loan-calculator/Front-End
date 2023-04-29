@@ -3,115 +3,145 @@
 </mat-toolbar>
 
 <h3>Customer, who want to get offer:</h3>
+<mat-form-field>
+  <input
+    matInput
+    placeholder="Search by Name"
+    #searchInput
+    (keyup.enter)="searchByName(searchInput.value)"
+  />
+</mat-form-field>
 
-<div class="mat-elevation-z8">
-  <table mat-table [dataSource]="customers" matSort multiTemplateDataRows>
-    <ng-container class="cell" matColumnDef="name">
-      <th mat-header-cell *matHeaderCellDef>Name</th>
-      <td mat-cell *matCellDef="let customer">{{ customer.name }}</td>
-    </ng-container>
+<mat-form-field appearance="fill" class="example-form-field">
+  <mat-label>Search by Date</mat-label>
+  <input matInput [matDatepicker]="picker" placeholder="MM/DD/YYYY" #searchDate>
+  <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+  <mat-datepicker #picker></mat-datepicker>
+</mat-form-field>
 
-    <ng-container matColumnDef="phoneNumber">
-      <th mat-header-cell *matHeaderCellDef>Phone Number</th>
-      <td mat-cell *matCellDef="let customer">{{ customer.phoneNumber }}</td>
-    </ng-container>
+<button mat-raised-button (click)="resetTable()">Reset</button>
 
-    <ng-container matColumnDef="email">
-      <th mat-header-cell *matHeaderCellDef>Email</th>
-      <td mat-cell *matCellDef="let customer">{{ customer.email }}</td>
-    </ng-container>
+<button mat-button (click)="searchByNameAndDate(searchInput.value, selectedDate)">
+  Search
+</button>
+<div *ngIf="customers">
+  <div class="mat-elevation-z8">
+    <table
+      mat-table
+      [dataSource]="customers"
+      matSort
+      multiTemplateDataRows
+      *ngIf="customers.data.length"
+    >
+      <ng-container class="cell" matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef>Name</th>
+        <td mat-cell *matCellDef="let customer">{{ customer.name }}</td>
+      </ng-container>
 
-    <ng-container matColumnDef="time">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>Submission time</th>
-      <td mat-cell *matCellDef="let customer">{{ customer.time.slice(0, 10) + " " + customer.time.substring(11, 19) }}</td>
-    </ng-container>
+      <ng-container matColumnDef="phoneNumber">
+        <th mat-header-cell *matHeaderCellDef>Phone Number</th>
+        <td mat-cell *matCellDef="let customer">{{ customer.phoneNumber }}</td>
+      </ng-container>
 
-    <ng-container matColumnDef="action">
-      <th mat-header-cell *matHeaderCellDef>Action</th>
-      <td mat-cell *matCellDef="let customer">{{ customer.action }}</td>
+      <ng-container matColumnDef="email">
+        <th mat-header-cell *matHeaderCellDef>Email</th>
+        <td mat-cell *matCellDef="let customer">{{ customer.email }}</td>
+      </ng-container>
 
-    </ng-container>
+      <ng-container matColumnDef="time">
+        <th mat-header-cell *matHeaderCellDef>Submission time</th>
+        <td mat-cell *matCellDef="let customer">
+          {{
+            customer.time.slice(0, 10) + " " + customer.time.substring(11, 19)
+          }}
+        </td>
+      </ng-container>
 
+      <ng-container matColumnDef="action">
+        <th mat-header-cell *matHeaderCellDef>Action</th>
+        <td mat-cell *matCellDef="let customer">{{ customer.action }}</td>
+      </ng-container>
 
-    <ng-container matColumnDef="expandedDetail">
-      <td
-        mat-cell
-        *matCellDef="let customer"
-        [attr.colspan]="columnsToDisplay.length"
-      >
-        <div
-          class="example-element-detail"
-          [@detailExpand]="
-            customer == expandedCustomer ? 'expanded' : 'collapsed'
-          "
-          (click)="getCalculateFormDto(customer)"
+      <ng-container matColumnDef="expandedDetail">
+        <td
+          mat-cell
+          *matCellDef="let customer"
+          [attr.colspan]="columnsToDisplay.length"
         >
+          <div
+            class="example-element-detail"
+            [@detailExpand]="
+              customer == expandedCustomer ? 'expanded' : 'collapsed'
+            "
+            (click)="getCalculateFormDto(customer)"
+          >
+            <div class="example-element-description-column">
+              <div class="example-element-description-title">Home price:</div>
+              <div class="example-element-description-answer">
+                {{ customer.calculateForm.homePrice }}€
+              </div>
+              <div class="example-element-description-title">
+                Monthly family income:
+              </div>
+              <div class="example-element-description-answer">
+                {{ customer.calculateForm.monthlyFamilyIncome }}€
+              </div>
+              <div class="example-element-description-title">Loan term:</div>
+              <div class="example-element-description-answer">
+                {{ customer.calculateForm.loanTerm }} years
+              </div>
+              <div class="example-element-description-title">
+                Number of family members:
+              </div>
+              <div class="example-element-description-answer">
+                {{ customer.calculateForm.familyMembers }}
+              </div>
+              <div class="example-element-description-title">Has children:</div>
+              <div class="example-element-description-answer">
+                {{ customer.calculateForm.haveChildren ? "yes" : "no" }}
+              </div>
+            </div>
 
-          <div class="example-element-description-column">
-            <div class="example-element-description-title">Home price:</div>
-            <div class="example-element-description-answer">
-              {{ customer.calculateForm.homePrice }}€
-            </div>
-            <div class="example-element-description-title">
-              Monthly family income:
-            </div>
-            <div class="example-element-description-answer">
-              {{ customer.calculateForm.monthlyFamilyIncome }}€
-            </div>
-            <div class="example-element-description-title">Loan term:</div>
-            <div class="example-element-description-answer">
-              {{ customer.calculateForm.loanTerm }} years
-            </div>
-            <div class="example-element-description-title">
-              Number of family members:
-            </div>
-            <div class="example-element-description-answer">
-              {{ customer.calculateForm.familyMembers }}
-            </div>
-            <div class="example-element-description-title">Has children:</div>
-            <div class="example-element-description-answer">
-              {{ customer.calculateForm.haveChildren ? "yes" : "no" }}
+            <div class="example-element-description-button">
+              <button
+                mat-stroked-button
+                color="warn"
+                (click)="deleteCustomer(customer.id)"
+              >
+                Delete
+              </button>
             </div>
           </div>
+        </td>
+      </ng-container>
 
-          <div class="example-element-description-button">
-            <button
-              mat-stroked-button
-              color="warn"
-              (click)="deleteCustomer(customer.id)"
-            >
-              Delete
-            </button>
-          </div>
-        </div>
-      </td>
-    </ng-container>
+      <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
 
-    <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
+      <tr
+        mat-row
+        *matRowDef="let customer; columns: columnsToDisplay"
+        class="example-element-row"
+        [class.example-expanded-row]="expandedCustomer === customer"
+        (click)="
+          expandedCustomer = expandedCustomer === customer ? null : customer
+        "
+      ></tr>
 
-    <tr
-      mat-row
-      *matRowDef="let customer; columns: columnsToDisplay"
-      class="example-element-row"
-      [class.example-expanded-row]="expandedCustomer === customer"
-      (click)="
-        expandedCustomer = expandedCustomer === customer ? null : customer
-      "
-    ></tr>
+      <tr
+        mat-row
+        *matRowDef="let row; columns: ['expandedDetail']"
+        class="example-detail-row"
+      ></tr>
+    </table>
 
-    <tr
-
-      mat-row
-      *matRowDef="let row; columns: ['expandedDetail']"
-      class="example-detail-row"
-    ></tr>
-  </table>
-  <mat-paginator
-    [length]="length"
-    [pageSize]="pageSize"
-    [pageSizeOptions]="pageSizeOptions"
-    (page)="onPageChange($event)"
-  ></mat-paginator>
+    <mat-paginator
+      [length]="length"
+      [pageSize]="pageSize"
+      [pageSizeOptions]="pageSizeOptions"
+      (page)="onPageChange($event)"
+    ></mat-paginator>
+  </div>
+  <p *ngIf="!customers.data.length">No results found</p>
 </div>
 <div class="spinner-container" *ngIf="spinerOn">
   <div class="spinner-overlay"></div>

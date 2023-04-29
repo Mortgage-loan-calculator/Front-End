@@ -14,18 +14,11 @@ mat-cell {
   .header {
     font-size: 25px;
   }
-
   .mdc-data-table {
     width: 80%;
   }
 }
-.mat-sort-header {
-  user-select: none;
-}
 
-::ng-deep .mat-sort-header-arrow {
-color: red; /*change color of arrow*/
-}
 .header {
   display: flex;
   justify-content: center;

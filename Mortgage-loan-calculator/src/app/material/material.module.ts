@@ -19,6 +19,8 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatRadioModule } from '@angular/material/radio';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatSortModule } from '@angular/material/sort';
+import {MatDatepickerModule} from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
 
 const MaterialComponents = [
   BrowserAnimationsModule,
@@ -38,7 +40,10 @@ const MaterialComponents = [
   MatSliderModule,
   MatProgressSpinnerModule,
   MatRadioModule,
-  MatSortModule
+  MatSortModule,
+  MatInputModule,
+  MatDatepickerModule,
+  MatNativeDateModule 
 ];
 
 @NgModule({
