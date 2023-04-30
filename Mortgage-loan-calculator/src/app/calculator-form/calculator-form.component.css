@@ -1,6 +1,7 @@
 .formBlock {
   background-color: #ebebe8;
-  background: url("../../assets/home-key blur.jpg") no-repeat center center/cover;
+  background: url("../../assets/home-key blur.jpg") no-repeat center
+    center/cover;
   height: 100%;
   position: relative;
 }
@@ -248,8 +249,9 @@ mat-slider {
   display: inline-block;
 }
 
-.monthlyIncome1 {
-  margin-top: 20px;
+.homePrice,
+.montlyIncome {
+  margin-bottom: 12px;
 }
 
 .icon-button-container {
@@ -336,10 +338,12 @@ mat-form-field {
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
 }
 
-
+::ng-deep .mat-tab-list .mat-tab-labels .mat-tab-label-active {
+  color: red;
+  background-color: green;
+}
 .calculate-button {
-  margin-top: 75px;
-
+  margin-top: 40px;
 }
 
 .calculate-button,
@@ -585,22 +589,6 @@ mat-error {
   --mat-mdc-radio-checked-ripple-color: #cc8b65;
 }
 
-/*::ng-deep {
-
-  .mat-tab-label {
-    &:nth-of-type(1){
-      background-color: green;
-    }
-    &:nth-of-type(2){
-      background-color: red;
-    }
-    &:nth-of-type(3){
-      background-color: brown;
-    }
-  }
-
-}*/
-
 @media screen and (max-width: 800px) {
   .columns {
     flex-wrap: wrap;
@@ -643,7 +631,7 @@ mat-error {
   }
   .results {
     margin-top: 20px;
-
+    margin-left: 7px;
     order: 2;
   }
   .grid-item {
@@ -651,6 +639,9 @@ mat-error {
   }
   .fullWidth {
     width: 100%;
+  }
+  .apply-button {
+    margin-top: -410px;
   }
 }
 .mat-mdc-progress-spinner {

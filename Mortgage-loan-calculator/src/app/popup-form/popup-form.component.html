@@ -72,6 +72,11 @@
               Input should be only positive numbers.
               </mat-error>
               <mat-error
+              *ngIf="postForm.controls.phoneNumber.errors?.['minlength']"
+            >
+            Phone number must be at least 9 digits long.
+            </mat-error>
+              <mat-error
                 *ngIf="postForm.controls.phoneNumber.errors?.['maxlength']"
               >
                 Maximum input of 20 characters reached.
