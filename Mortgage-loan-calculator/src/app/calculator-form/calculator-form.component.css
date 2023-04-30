@@ -1,8 +1,10 @@
 .formBlock {
   background-color: #ebebe8;
-  background: url("../../assets/home-key blur.jpg") no-repeat center center/cover;
+  background: url("../../assets/home-key blur.jpg") no-repeat center
+    center/cover;
   height: 100%;
   position: relative;
+  margin-top: -20px;
 }
 /* .formBlock:before {
   content: "";
@@ -18,7 +20,7 @@
 } */
 
 h2 {
-  font-family: Verdana, Arial, Helvetica, sans-serif;
+  font-family: Lucida Bright;
   letter-spacing: 0.1rem;
   text-align: center;
   font-size: 24px;
@@ -193,7 +195,7 @@ mat-icon.brightness-3-icon {
 }
 
 .toggle-label {
-  font-size: 13px;
+  font-size: 15px;
   margin-right: 20px;
 }
 
@@ -211,7 +213,7 @@ mat-form-field {
 }
 
 .slider-name {
-  font-size: 13px;
+  font-size: 15px;
   margin-bottom: 2px;
 }
 
@@ -227,7 +229,7 @@ mat-slider {
   justify-content: space-between;
   width: 90%;
   margin-top: -10px;
-  font-size: 13px;
+  font-size: 15px;
 }
 .mat-slider-thumb-label {
   background-color: red !important;
@@ -261,15 +263,15 @@ mat-slider {
   width: 200px;
 }
 .dropdown-label {
-  margin-left: 15px;
+  margin-left: 17px;
 
-  font-size: 13px;
+  font-size: 15px;
   margin-top: 15px;
   margin-bottom: 10px;
 }
-mat-form-field {
+/* mat-form-field {
   scale: 90%;
-}
+} */
 
 /* .results .grid-item.results,
   .results .grid-items.results {
@@ -336,10 +338,8 @@ mat-form-field {
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
 }
 
-
 .calculate-button {
   margin-top: 75px;
-
 }
 
 .calculate-button,
@@ -402,7 +402,7 @@ mat-form-field {
 }
 
 .results div.grid-items.results {
-  font-size: 13px;
+  font-size: 17px;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -501,14 +501,14 @@ mat-error {
   flex-direction: column;
   align-items: center;
   width: 50%;
-  font-size: 13px;
+  font-size: 15px;
 }
 
 .show-more {
   margin-top: 30px;
   margin-bottom: 10px;
 
-  font-size: 13px;
+  font-size: 15px;
 }
 
 .warning {
@@ -662,4 +662,7 @@ mat-error {
 }
 .mat-mdc-progress-spinner {
   --mdc-circular-progress-active-indicator-color: #cc8b65;
+}
+mat-error {
+  font-size: 13px;
 }
