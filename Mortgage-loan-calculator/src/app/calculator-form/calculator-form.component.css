@@ -252,17 +252,16 @@ mat-slider {
 
 .homePrice,
 .montlyIncome,
-.downPayment
- {
+.downPayment {
+
   margin-bottom: 23px;
 }
 .downPayment,
 .loanPeriod {
   margin-top: 10px;
 }
-.monthlyIncome1{
+.monthlyIncome1 {
   margin-top: 20px;
-
 }
 
 .icon-button-container {
@@ -303,7 +302,8 @@ mat-slider {
   }
 
   .submit-button {
-    margin-top: 80px;
+    /* margin-top: 20px; */
+
     width: 200px;
   }
   .amountDisplay {
@@ -316,6 +316,9 @@ mat-slider {
   .down {
     margin-top: 0px;
   }
+  .monthlyIncome1 {
+    /* margin-bottom: 20px; */
+  }
 }
 
 @media screen and (max-width: 600px) {
@@ -327,8 +330,8 @@ mat-slider {
     order: 1;
   }
   .results {
-    margin-top: 20px;
-
+    /* margin-top: 20px; */
+    width: 90%;
     order: 2;
   }
   .grid-item {
@@ -349,14 +352,12 @@ mat-slider {
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
 }
 
-
 ::ng-deep .mat-tab-list .mat-tab-labels .mat-tab-label-active {
   color: red;
   background-color: green;
 }
 .calculate-button {
   margin-top: 77px;
-
 }
 
 .calculate-button,
@@ -606,13 +607,17 @@ mat-error {
   .columns {
     flex-wrap: wrap;
   }
+  .homePrice {
+    margin-bottom: 18px;
+  }
   .column {
     width: 100%;
     order: 1;
   }
   .column2 {
-    width: 100%;
+    width: 70%;
     order: 2;
+    margin-left: -30px;
   }
 
   .submit-button {
