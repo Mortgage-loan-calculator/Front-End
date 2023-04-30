@@ -59,6 +59,18 @@ export class CalculatorService {
     return this.http.post<CalculateFormDto>(
       'https://mortgage-loan-calculator-back-end.onrender.com/calculate/detailed',
       calculateFormDto
+    )
+    .pipe(
+      catchError((error: any) => {
+        const httpError = new HttpErrorResponse({
+          error: error,
+          status: error.status,
+          statusText: error.statusText,
+          url: error.url,
+        });
+        this.errorHandler.handleError(error);
+        return throwError(httpError);
+      })
     );
 
   }
@@ -93,6 +105,28 @@ export class CalculatorService {
       // 'http://localhost:8080/calculate/results',
       'https://mortgage-loan-calculator-back-end.onrender.com/calculate/results',
       calculateFormDto
+    );
+  }
+
+  getDetailedFormCalculationResultsButton(
+    calculateFormDto: CalculateFormDto
+  ): Observable<CalculateFormDto> {
+    return this.http.post<CalculateFormDto>(
+      // 'http://localhost:8080/calculate/results',
+      'https://mortgage-loan-calculator-back-end.onrender.com/calculate/detailed/results',
+      calculateFormDto
+    )
+    .pipe(
+      catchError((error: any) => {
+        const httpError = new HttpErrorResponse({
+          error: error,
+          status: error.status,
+          statusText: error.statusText,
+          url: error.url,
+        });
+        this.errorHandler.handleError(error);
+        return throwError(httpError);
+      })
     );
   }
 
