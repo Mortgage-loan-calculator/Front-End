@@ -81,8 +81,12 @@ export class AdminPanelComponent implements AfterViewInit, OnInit {
   }
 
 
-  searchByDate(date: Date) {
-    this.customers.filter = date.toDateString();
+  searchByDate(date: Date | null) {
+    if (date) {
+      this.customers.filter = date.toDateString();
+    } else {
+      this.customers.filter = '';
+    }
     this.customers.paginator?.firstPage();
   }
 
