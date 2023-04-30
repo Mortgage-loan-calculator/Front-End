@@ -253,7 +253,6 @@ mat-slider {
 .homePrice,
 .montlyIncome,
 .downPayment {
-
   margin-bottom: 23px;
 }
 .downPayment,
@@ -300,6 +299,9 @@ mat-slider {
     width: 100%;
     order: 2;
   }
+  .column3 {
+    width: 100%;
+  }
 
   .submit-button {
     /* margin-top: 20px; */
@@ -316,9 +318,6 @@ mat-slider {
   .down {
     margin-top: 0px;
   }
-  .monthlyIncome1 {
-    /* margin-bottom: 20px; */
-  }
 }
 
 @media screen and (max-width: 600px) {
@@ -330,8 +329,8 @@ mat-slider {
     order: 1;
   }
   .results {
-    /* margin-top: 20px; */
-    width: 90%;
+    margin-top: 20px;
+
     order: 2;
   }
   .grid-item {
@@ -426,10 +425,6 @@ mat-slider {
   justify-content: space-between;
 }
 
-.apply-button {
-  margin-top: 50px;
-}
-
 .mat-error {
   color: red;
   border: 1px solid red;
@@ -448,6 +443,11 @@ mat-slider {
 
   display: flex;
   justify-content: space-between;
+}
+.button-containers2 {
+  margin-top: 60px;
+  display: flex;
+  margin-left: 8px;
 }
 .button-container > *:first-child {
   margin-right: 20px;
@@ -645,11 +645,19 @@ mat-error {
     flex-direction: column;
   }
   .user {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
     order: 1;
   }
+
   .results {
+    width: 90%;
+    justify-content: space-between;
+    justify-self: center;
     margin-top: 20px;
-    margin-left: 7px;
+    margin-left: 25px;
     order: 2;
   }
   .grid-item {
@@ -657,9 +665,6 @@ mat-error {
   }
   .fullWidth {
     width: 100%;
-  }
-  .apply-button {
-    margin-top: -410px;
   }
 }
 .mat-mdc-progress-spinner {

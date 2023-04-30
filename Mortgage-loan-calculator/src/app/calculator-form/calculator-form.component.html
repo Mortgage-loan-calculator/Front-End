@@ -6,8 +6,8 @@
 
   <div class="orange">
     <div class="box">
-      <mat-tab-group >
-        <mat-tab routerLink="/borrow"  label="How much can you borrow">
+      <mat-tab-group>
+        <mat-tab routerLink="/borrow" label="How much can you borrow">
           <ng-template matTabContent>
             <div class="columns">
               <form class="column" [formGroup]="calculateForm">
@@ -423,8 +423,18 @@
                     >
                   </mat-form-field>
                 </div>
+                <div class="button-containers2">
+                  <button
+                    mat-button
+                    type="submit"
+                    class="my-button apply-button"
+                    (change)="show()"
+                    (click)="calculateMonthly()"
+                  >
+                    Calculate
+                  </button>
+                </div>
               </div>
-
               <div class="results">
                 <div class="grid-items results">
                   <span matPrefix>Your estimated monthly payment: </span>
@@ -462,19 +472,7 @@
                   <strong>{{ totalPaymenSum }}€ </strong>
                 </div>
               </div>
-            </div>
 
-            <div class="button-containers">
-              <button
-                mat-button
-                type="submit"
-                class="my-button apply-button"
-                (change)="show()"
-                (click)="calculateMonthly()"
-
-              >
-                Calculate
-              </button>
               <!-- <button
                 mat-button
                 type="submit"
