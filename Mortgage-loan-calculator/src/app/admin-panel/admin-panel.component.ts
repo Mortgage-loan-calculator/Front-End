@@ -13,6 +13,7 @@ import {
   trigger,
 } from '@angular/animations';
 import { CalculateResultsDto } from '../calculator-form/calculate-form-dto';
+import { MatSort } from '@angular/material/sort';
 
 @Component({
   selector: 'app-admin-panel',
@@ -31,16 +32,83 @@ import { CalculateResultsDto } from '../calculator-form/calculate-form-dto';
 })
 export class AdminPanelComponent implements AfterViewInit, OnInit {
   spinerOn = true;
-
   columnsToDisplay = ['name', 'phoneNumber', 'email', 'time', 'action'];
   expandedCustomer: Customer | undefined;
+  selectedDate: Date;
 
-  constructor(private service: CustomerService) {}
-  ngOnInit() {}
+  constructor(private service: CustomerService) {
+    this.sort = new MatSort();
+    this.selectedDate = new Date();
+  }
 
   customers: MatTableDataSource<Customer> = new MatTableDataSource<Customer>();
 
-   @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator;
+  ngOnInit() {
+    this.customers = new MatTableDataSource<Customer>([]);
+    this.customers.sort = this.sort;
+    this.service.getCustomer().subscribe((customers) => {
+      const customerArray = customers;
+      this.customers = new MatTableDataSource(customerArray);
+      this.customers.filterPredicate = (data: Customer, filter: string) => {
+        const name = data.name.toLowerCase();
+        const date = new Date(data.time);
+        const filterDate = new Date(filter);
+        const isNameMatch = name.includes(filter);
+        const isDateMatch = date.toDateString() === filterDate.toDateString();
+        const isPhoneNumberMatch = data.phoneNumber.includes(filter); // Add this line to check phone number
+
+        return isNameMatch || isDateMatch || isPhoneNumberMatch;
+      };
+    });
+  }
+  noResultsFound = false;
+
+  searchCustomers(query: string): void {
+    const searchTerm = query.toLowerCase().trim();
+    if (!searchTerm) {
+      this.customers.filter = '';
+      this.noResultsFound = false;
+      return;
+    }
+    const filteredCustomers = this.customers.data.filter(customer =>
+      customer.name.toLowerCase().includes(searchTerm) ||
+      `${customer.phoneNumber}`.includes(searchTerm)||
+      customer.email.toLowerCase().includes(searchTerm)
+    );
+    console.log(filteredCustomers);
+    this.customers.filter = searchTerm;
+    this.noResultsFound = filteredCustomers.length === 0;
+  }
+
+
+  searchByDate(date: Date) {
+    this.customers.filter = date.toDateString();
+    this.customers.paginator?.firstPage();
+  }
+
+  resetTable() {
+    this.customers = new MatTableDataSource<Customer>([]);
+    this.service.getCustomer().subscribe((customers) => {
+      const customerArray = customers;
+      this.customers = new MatTableDataSource(customerArray);
+    });
+  }
+
+  searchByName(name: string) {
+    this.customers.filter = name.trim().toLowerCase();
+  }
+
+  searchByNameAndDate(name: string, date: Date) {
+    if (!isNaN(date.getTime())) {
+      this.searchByDate(date);
+    }
+    if (name.trim()) {
+      this.searchByName(name);
+    }
+  }
+
+  @ViewChild(MatSort, { static: true }) sort: MatSort;
+  @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator;
   @ViewChild(CalculatorFormComponent)
   calculatorFormComponent?: CalculatorFormComponent;
   length = 0;

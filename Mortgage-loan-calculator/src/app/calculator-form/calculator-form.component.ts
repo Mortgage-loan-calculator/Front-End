@@ -89,7 +89,6 @@ export class CalculatorFormComponent implements OnInit {
   myControl = new FormControl<string | City>('');
   options: City[] = [];
   filteredOptions!: Observable<City[]>;
-  firstUpdate: boolean = true;
 
   monthlyPaymentResultsDto: MonthlyPaymentResultsDto =
     {} as MonthlyPaymentResultsDto;
@@ -137,9 +136,7 @@ export class CalculatorFormComponent implements OnInit {
       .pipe(
         distinctUntilChanged(),
         tap((value) => {
-          if (!this.firstUpdate) {
             this.onUpdate(value);
-          }
         }),
         takeUntil(this.destroy$)
       )
@@ -204,6 +201,8 @@ export class CalculatorFormComponent implements OnInit {
         [
           Validators.required,
           Validators.pattern(/^[0-9]+$/),
+          this.validateMaxNumbers.bind(this),
+
           Validators.min(1),
           Validators.maxLength(12),
           (control: FormControl) => {
@@ -329,6 +328,10 @@ export class CalculatorFormComponent implements OnInit {
     { updateOn: 'blur' }
   );
 
+  isSubmitDisabled = false;
+
+
+
   showColumn2 = false;
   ngAfterViewInit() {
     const calculateBtn = document.getElementById('calculate-btn');
@@ -405,23 +408,20 @@ export class CalculatorFormComponent implements OnInit {
     const column2 = document.querySelector('.column2');
     const calculateBtn = document.getElementById('calculate-btn');
   }
-
-  updateResults(value: any) {
-
-
+ updateResults(value: any) {
     this.calculateFormDto = this.calculateForm.value;
     this.calculateResultsDto = this.submitForm.value;
 
-    if(this.showMore) {
+    if(this.showMore && this.areValuesBlank() && this.calculateForm.value.buyOption != "") {
 
       this.calculatorService
-        .sendDataDetailed(this.getCombinedData())
+        .getDetailedFormCalculationResultsButton(this.getCombinedData())
         .subscribe((data: CalculateResultsDto) => {
           this.calculateResultsDto = data;
         });
     } else {
       this.calculatorService
-        .sendData(this.calculateFormDto)
+        .getFormCalculationResultsButton(this.calculateFormDto)
         .subscribe((data: CalculateResultsDto) => {
           this.calculateResultsDto = data;
         });
@@ -429,22 +429,19 @@ export class CalculatorFormComponent implements OnInit {
   }
 
   updateResultsMontly(value: any) {
-
     this.monthlyPaymentComponent.monthlyPaymentDto = this.applyForm.value;
     this.monthlyPaymentResultsDto = this.applyForm.value;
 
-      this.monthlyPaymentService
-        .getCalculationResults(value)
-        .subscribe((data: MonthlyPaymentResultsDto) => {
-          this.monthlyPaymentResultsDto = data;
-        });
+    this.monthlyPaymentService
+      .getCalculationResults(value)
+      .subscribe((data: MonthlyPaymentResultsDto) => {
+        this.monthlyPaymentResultsDto = data;
+      });
   }
-  
+
   calculateMonthly() {
     if (this.applyForm.valid) {
-
       this.spinnerOn = true;
-
 
       this.monthlyPaymentComponent.monthlyPaymentDto = this.applyForm.value;
       this.monthlyPaymentResultsDto = this.applyForm.value;
@@ -470,7 +467,7 @@ export class CalculatorFormComponent implements OnInit {
           this.spinnerOn = false;
         });
 
-        this.updateResultsMontly(this.monthlyPaymentResultsDto);
+      this.updateResultsMontly(this.monthlyPaymentResultsDto);
     }
   }
   onUpdate(value: any) {
@@ -498,8 +495,6 @@ export class CalculatorFormComponent implements OnInit {
           this.spinnerOn = false;
         });
 
-      this.updateResults(this.calculateFormDto);
-
       this.actionText = 'Calculated';
       this.showColumn2 = true;
       this.actionText = 'Submitted form';
@@ -508,14 +503,30 @@ export class CalculatorFormComponent implements OnInit {
 
   handleButtonClick() {
     if (this.calculateForm.valid) {
-      if (this.showMore) {
-        this.onSubmit();
+      if (this.showMore && this.areValuesBlank() && this.calculateForm.value.buyOption != "") {
+        this.onDetailedCalculateButton();
       } else {
-        if (this.firstUpdate) {
-          this.onCalculateButton();
-          this.firstUpdate = false;
-        }
+          this.onCalculateButton();        
       }
+    }
+  }
+
+  onDetailedCalculateButton() {
+    if (this.calculateForm.valid && this.calculateForm.value.buyOption != "") {
+      this.calculateFormDto = this.calculateForm.value;
+      this.calculateResultsDto = this.submitForm.value;
+
+      this.spinnerOn = true;
+      this.calculatorService
+        .getDetailedFormCalculationResultsButton(this.getCombinedData())
+        .subscribe((data: CalculateResultsDto) => {
+          this.calculateResultsDto = data;
+          this.spinnerOn = false;
+        });
+
+      this.actionText = 'Calculated';
+      this.showColumn2 = true;
+      this.actionText = 'Submitted form';
     }
   }
 
@@ -524,7 +535,7 @@ export class CalculatorFormComponent implements OnInit {
       this.calculateFormDto = this.calculateForm.value;
       this.calculateResultsDto = this.submitForm.value;
 
-      if (this.showMore) {
+      if (this.showMore && this.areValuesBlank()) {
         this.calculatorService
           .sendDataDetailed(this.getCombinedData())
           .subscribe((data: CalculateResultsDto) => {
@@ -541,6 +552,22 @@ export class CalculatorFormComponent implements OnInit {
     }
   }
 
+  areValuesBlank(): boolean {
+    const fieldsToCheck = [
+      'citySelect',
+      'studentLoan',
+      'otherLoan',
+      'politicalyExposed',
+    ];
+    
+    return fieldsToCheck.some(
+      (fieldName) => !this.isBlank(this.calculateForm.get(fieldName)?.value));
+  }
+  
+  isBlank(value: any): boolean {
+    return value === '' || value === undefined || value === null;
+  }
+
   getCombinedData(): CalculateFormDto {
     return {
       homePrice: this.calculateForm.value.homePrice,
@@ -549,13 +576,32 @@ export class CalculatorFormComponent implements OnInit {
       familyMembers: this.calculateForm.value.familyMembers,
       haveChildren: this.calculateForm.value.haveChildren,
       detailedFormDto: {
-        city: this.calculateForm.value.citySelect,
+        city: this.cityName,
         buyOption: this.calculateForm.value.buyOption,
         studentLoan: this.calculateForm.value.studentLoan,
         otherLoan: this.calculateForm.value.otherLoan,
         politicalyExposed: this.calculateForm.value.politicalyExposed,
       },
     };
+  }
+
+  get cityName(): string {
+    const citySelectValue = this.calculateForm.get('citySelect')?.value;
+
+    if (typeof citySelectValue === 'string') {
+      try {
+        const cityObject = JSON.parse(citySelectValue);
+        if (cityObject && typeof cityObject === 'object' && 'name' in cityObject) {
+          return cityObject.name;
+        }
+      } catch (error) {
+        return citySelectValue;
+      }
+    } else if (citySelectValue && typeof citySelectValue === 'object' && 'name' in citySelectValue) {
+      return citySelectValue.name;
+    }
+
+    return '';
   }
 
   handleResultsCalculated(results: MonthlyPaymentResultsDto): void {
