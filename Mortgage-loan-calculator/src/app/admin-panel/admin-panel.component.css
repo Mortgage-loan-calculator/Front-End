@@ -178,4 +178,7 @@ tr.example-element-row:not(.example-expanded-row):active {
   .search {
     width: 200px;
   }
+  .mat-elevation-z8 {
+    width: 300%;
+  }
 }
