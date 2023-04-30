@@ -408,7 +408,7 @@ export class CalculatorFormComponent implements OnInit {
     const column2 = document.querySelector('.column2');
     const calculateBtn = document.getElementById('calculate-btn');
   }
-
+ updateResults(value: any) {
     this.calculateFormDto = this.calculateForm.value;
     this.calculateResultsDto = this.submitForm.value;
 
