@@ -251,8 +251,18 @@ mat-slider {
 }
 
 .homePrice,
-.montlyIncome {
-  margin-bottom: 12px;
+.montlyIncome,
+.downPayment,
+ {
+  margin-bottom: 23px;
+}
+.downPayment,
+.loanPeriod {
+  margin-top: 10px;
+}
+.monthlyIncome1{
+  margin-top: 20px;
+
 }
 
 .icon-button-container {
@@ -345,7 +355,7 @@ mat-slider {
   background-color: green;
 }
 .calculate-button {
-  margin-top: 40px;
+  margin-top: 77px;
 
 }
 
@@ -658,5 +668,5 @@ mat-error {
   --mdc-circular-progress-active-indicator-color: #cc8b65;
 }
 mat-error {
-  font-size: 13px;
+  font-size: 10px;
 }
