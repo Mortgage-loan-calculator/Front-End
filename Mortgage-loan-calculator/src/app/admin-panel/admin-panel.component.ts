@@ -75,7 +75,7 @@ export class AdminPanelComponent implements AfterViewInit, OnInit {
       `${customer.phoneNumber}`.includes(searchTerm)||
       customer.email.toLowerCase().includes(searchTerm)
     );
-    console.log(filteredCustomers);
+   // console.log(filteredCustomers);
     this.customers.filter = searchTerm;
     this.noResultsFound = filteredCustomers.length === 0;
   }
