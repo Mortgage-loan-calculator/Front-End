@@ -80,7 +80,7 @@ export class PopupFormComponent {
         .saveCustomerInfo(this.postForm.value as unknown as Customer)
         .pipe(
           tap(() => {
-            console.log('Post added: ', this.postForm.value);
+          //  console.log('Post added: ', this.postForm.value);
             this.hideFormBody = true;
             this.postForm.reset();
           })
