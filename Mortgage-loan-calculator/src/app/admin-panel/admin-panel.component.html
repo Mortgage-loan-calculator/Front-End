@@ -7,7 +7,7 @@
 <div class="form-container">
   <mat-form-field class="search" appearance="outline">
     <mat-label>Search</mat-label>
-    <input matInput placeholder="Search by Name, Number, or Email" #searchInput (input)="searchCustomers(searchInput.value)">
+    <input matInput placeholder="Search by Name or Number" #searchInput (input)="searchCustomers(searchInput.value)">
     <button *ngIf="searchInput.value" matSuffix mat-icon-button aria-label="Clear" (click)="searchInput.value=''">
       <mat-icon>close</mat-icon>
     </button>
@@ -137,12 +137,12 @@
       ></tr>
     </table>
 
-    <mat-paginator
+    <!-- <mat-paginator
       [length]="length"
       [pageSize]="pageSize"
       [pageSizeOptions]="pageSizeOptions"
       (page)="onPageChange($event)"
-    ></mat-paginator>
+    ></mat-paginator> -->
   </div>
   <p *ngIf="noResultsFound">No results found</p>
 </div>

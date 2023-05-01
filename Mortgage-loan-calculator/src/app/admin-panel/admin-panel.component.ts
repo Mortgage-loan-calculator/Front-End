@@ -55,7 +55,7 @@ export class AdminPanelComponent implements AfterViewInit, OnInit {
         const filterDate = new Date(filter);
         const isNameMatch = name.includes(filter);
         const isDateMatch = date.toDateString() === filterDate.toDateString();
-        const isPhoneNumberMatch = data.phoneNumber.includes(filter); // Add this line to check phone number
+        const isPhoneNumberMatch = data.phoneNumber.includes(filter);
 
         return isNameMatch || isDateMatch || isPhoneNumberMatch;
       };
@@ -73,8 +73,10 @@ export class AdminPanelComponent implements AfterViewInit, OnInit {
     const filteredCustomers = this.customers.data.filter(customer =>
       customer.name.toLowerCase().includes(searchTerm) ||
       `${customer.phoneNumber}`.includes(searchTerm)||
-      customer.email.toLowerCase().includes(searchTerm)
-    );
+      `${customer.email}`.includes(searchTerm)
+
+      // customer.email.toLowerCase().includes(searchTerm)
+      );
    // console.log(filteredCustomers);
     this.customers.filter = searchTerm;
     this.noResultsFound = filteredCustomers.length === 0;
